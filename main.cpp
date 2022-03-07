@@ -1,24 +1,18 @@
-#include <iostream>
-#include <SFML/graphics.hpp>
+#include "AppDelegate.hpp"
 
 
-int main ()
+
+int main()
 {
-    std::cout << "Hello, World!" << std::endl;
+    auto ad = AppDelegate::Get();
 
-    sf::Window window(sf::VideoMode(800, 600), "Four Wins!");
+    ad->SetWindow(800, 600, "Four Wins!");
 
-    while (window.isOpen())
+    while (ad->Update())
     {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
-        }
     }
+
+    ad->Delete();
 
     return 0;
 }
