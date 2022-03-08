@@ -2,13 +2,15 @@
 // Created by Brendan Berg on 07.03.22.
 //
 
-#ifndef FOURWINS_APPDELEGATE_HPP
-#define FOURWINS_APPDELEGATE_HPP
+#pragma once
 
 #include <memory>
 #include <string>
+#include <vector>
 
-#include <SFML/graphics.hpp>
+#include <SFML/Graphics.hpp>
+
+class BaseView;
 
 
 class AppDelegate
@@ -20,17 +22,19 @@ public:
 
     static AppDelegate* Get();
 
+    static void Delete();
+
     void SetWindow(unsigned int width, unsigned int height, const std::string& title);
+
+    std::shared_ptr<sf::RenderWindow> GetWindow();
 
     void RegisterModel();
 
-    void RegisterView();
+    void RegisterView(const std::shared_ptr<BaseView>& view);
 
     void RegisterController();
 
     bool Update();
-
-    void Delete();
 
 
 private:
@@ -39,10 +43,9 @@ private:
 
     static AppDelegate* instance;
 
-    std::shared_ptr<sf::Window> m_Window;
+    std::shared_ptr<sf::RenderWindow> m_Window;
+
+    std::vector<std::weak_ptr<BaseView>> m_ViewContainer;
 
 
 };
-
-
-#endif //FOURWINS_APPDELEGATE_HPP
