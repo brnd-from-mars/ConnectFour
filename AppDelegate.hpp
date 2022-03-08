@@ -10,7 +10,9 @@
 
 #include <SFML/Graphics.hpp>
 
+class BaseModel; // forward-declaration to avoid cyclic include
 class BaseView;
+class BaseController;
 
 
 class AppDelegate
@@ -28,11 +30,11 @@ public:
 
     std::shared_ptr<sf::RenderWindow> GetWindow();
 
-    void RegisterModel();
+    void RegisterModel(const std::shared_ptr<BaseModel>& model);
 
     void RegisterView(const std::shared_ptr<BaseView>& view);
 
-    void RegisterController();
+    void RegisterController(const std::shared_ptr<BaseController>& controller);
 
     bool Update();
 
@@ -45,7 +47,11 @@ private:
 
     std::shared_ptr<sf::RenderWindow> m_Window;
 
+    std::list<std::weak_ptr<BaseModel>> m_ModelContainer;
+
     std::list<std::weak_ptr<BaseView>> m_ViewContainer;
+
+    std::list<std::weak_ptr<BaseController>> m_ControllerContainer;
 
 
 };

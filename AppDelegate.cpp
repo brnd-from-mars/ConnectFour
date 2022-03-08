@@ -6,7 +6,9 @@
 
 #include <iostream>
 
+#include "BaseModel.hpp"
 #include "BaseView.hpp"
+#include "BaseController.hpp"
 
 
 AppDelegate* AppDelegate::instance = nullptr;
@@ -56,9 +58,9 @@ std::shared_ptr<sf::RenderWindow> AppDelegate::GetWindow()
 }
 
 
-void AppDelegate::RegisterModel()
+void AppDelegate::RegisterModel(const std::shared_ptr<BaseModel>& model)
 {
-
+    m_ModelContainer.push_back(model);
 }
 
 
@@ -79,14 +81,16 @@ void AppDelegate::RegisterView(const std::shared_ptr<BaseView>& view)
 }
 
 
-void AppDelegate::RegisterController()
+void AppDelegate::RegisterController(const std::shared_ptr<BaseController>& controller)
 {
-
+    m_ControllerContainer.push_back(controller);
 }
 
 
 bool AppDelegate::Update()
 {
+    // TODO: garbage collection
+
     if (m_Window == nullptr)
     {
         throw std::runtime_error("AppDelegate Update was called before SetWindow");
@@ -100,6 +104,38 @@ bool AppDelegate::Update()
         if (event.type == sf::Event::Closed)
         {
             m_Window->close();
+        }
+
+        if (event.type == sf::Event::MouseButtonPressed)
+        {
+            // TODO: send ResetFocus event
+
+            for (auto& wView : m_ViewContainer) // TODO: reverse iteration order
+            {
+                if (auto view = wView.lock())
+                {
+                    if (view->Handle(event))
+                    {
+                        break; // TODO: replace with function call and use return instead of break
+                    }
+                }
+            }
+        }
+    }
+
+    for (auto& wModel : m_ModelContainer)
+    {
+        if (auto model = wModel.lock())
+        {
+            model->Update();
+        }
+    }
+
+    for (auto& wController : m_ControllerContainer)
+    {
+        if (auto controller = wController.lock())
+        {
+            controller->Update();
         }
     }
 

@@ -4,12 +4,12 @@
 
 #pragma once
 
-#include <iostream>
+#include "EventObserver.hpp"
 
-class AppDelegate;
+class AppDelegate; // forward-declaration to avoid cyclic include
 
 
-class BaseView
+class BaseView : public EventObserver
 {
 
 public:
@@ -24,8 +24,6 @@ public:
     {
         return m_Layer;
     }
-
-
 
 
 protected:
