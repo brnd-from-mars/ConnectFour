@@ -1,18 +1,50 @@
-#include "AppDelegate.hpp"
+#include <string>
 
+#include "AppDelegate.hpp"
+#include "BaseView.hpp"
+
+
+class ChipView : public BaseView
+{
+
+public:
+
+    explicit ChipView(float centerX, sf::Color color)
+        : m_Circle(100)
+    {
+        m_Circle.setPosition(centerX-100, 200);
+        m_Circle.setFillColor(color);
+    }
+
+    void Draw() override
+    {
+        AppDelegate::Get()->GetWindow()->draw(m_Circle);
+    }
+
+
+private:
+
+    sf::CircleShape m_Circle;
+
+
+};
 
 
 int main()
 {
-    auto ad = AppDelegate::Get();
+    AppDelegate::Get()->SetWindow(2560, 1440, "Four Wins!");
 
-    ad->SetWindow(800, 600, "Four Wins!");
+    auto chip1 = std::make_shared<ChipView>(200.0f, sf::Color(84, 122, 165));
+    auto chip2 = std::make_shared<ChipView>(600.0f, sf::Color(204, 68, 75));
 
-    while (ad->Update())
+    AppDelegate::Get()->RegisterView(chip1);
+    AppDelegate::Get()->RegisterView(chip2);
+
+    while (AppDelegate::Get()->Update())
     {
     }
 
-    ad->Delete();
+    AppDelegate::Delete();
 
     return 0;
 }

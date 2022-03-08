@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+#include "BaseView.hpp"
+
 
 AppDelegate* AppDelegate::instance = nullptr;
 
@@ -30,13 +32,27 @@ AppDelegate* AppDelegate::Get()
 }
 
 
+void AppDelegate::Delete()
+{
+    delete instance;
+}
+
+
 void AppDelegate::SetWindow(unsigned int width, unsigned int height, const std::string& title)
 {
     if (m_Window != nullptr)
     {
         m_Window->close();
     }
-    m_Window = std::make_shared<sf::Window>(sf::VideoMode(width, height), title);
+    m_Window = std::make_shared<sf::RenderWindow>(sf::VideoMode(width, height),
+                                                  title,
+                                                  sf::Style::Titlebar | sf::Style::Close);
+}
+
+
+std::shared_ptr<sf::RenderWindow> AppDelegate::GetWindow()
+{
+    return m_Window;
 }
 
 
@@ -46,9 +62,9 @@ void AppDelegate::RegisterModel()
 }
 
 
-void AppDelegate::RegisterView()
+void AppDelegate::RegisterView(const std::shared_ptr<BaseView>& view)
 {
-
+    m_ViewContainer.push_back(view);
 }
 
 
@@ -65,7 +81,9 @@ bool AppDelegate::Update()
         throw std::runtime_error("AppDelegate Update was called before SetWindow");
     }
 
-    sf::Event event;
+    m_Window->clear(sf::Color(41, 49, 50));
+
+    auto event = sf::Event();
     while (m_Window->pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
@@ -74,6 +92,16 @@ bool AppDelegate::Update()
         }
     }
 
+    for (auto& wView : m_ViewContainer)
+    {
+        if (auto view = wView.lock())
+        {
+            view->Draw();
+        }
+    }
+
+    m_Window->display();
+    m_Window->setFramerateLimit(30);
     return m_Window->isOpen();
 }
 
@@ -86,10 +114,4 @@ AppDelegate::AppDelegate()
     }
 
     std::clog << "AppDelegate constructed" << std::endl;
-}
-
-
-void AppDelegate::Delete()
-{
-    delete instance;
 }
