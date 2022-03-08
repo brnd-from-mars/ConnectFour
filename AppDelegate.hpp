@@ -6,7 +6,7 @@
 
 #include <memory>
 #include <string>
-#include <vector>
+#include <list>
 
 #include <SFML/Graphics.hpp>
 
@@ -45,7 +45,7 @@ private:
 
     std::shared_ptr<sf::RenderWindow> m_Window;
 
-    std::vector<std::weak_ptr<BaseView>> m_ViewContainer;
+    std::list<std::weak_ptr<BaseView>> m_ViewContainer;
 
 
 };

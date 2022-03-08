@@ -64,7 +64,18 @@ void AppDelegate::RegisterModel()
 
 void AppDelegate::RegisterView(const std::shared_ptr<BaseView>& view)
 {
-    m_ViewContainer.push_back(view);
+    auto layer = view->GetLayer();
+    auto it = std::find_if(m_ViewContainer.begin(),
+                           m_ViewContainer.end(),
+                           [layer](const std::weak_ptr<BaseView>& wIt) -> bool
+                           {
+                               if (auto it = wIt.lock())
+                               {
+                                   return (it->GetLayer() >= layer);
+                               }
+                               return false;
+                           });
+    m_ViewContainer.insert(it, view);
 }
 
 
@@ -110,6 +121,7 @@ AppDelegate::AppDelegate()
 {
     if (instance != nullptr)
     {
+        // singleton implementation does not guarantee single instance creation (e.g. in multi-threading)
         throw std::runtime_error("Singleton AppDelegate was constructed multiple times");
     }
 

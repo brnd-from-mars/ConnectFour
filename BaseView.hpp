@@ -14,10 +14,23 @@ class BaseView
 
 public:
 
+    BaseView()
+        : m_Layer(0)
+    {}
+
     virtual void Draw() = 0;
 
+    int GetLayer() const
+    {
+        return m_Layer;
+    }
 
-private:
+
+
+
+protected:
+
+    int m_Layer;
 
 
 };
