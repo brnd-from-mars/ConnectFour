@@ -16,7 +16,7 @@ int main()
 
     std::vector<std::shared_ptr<ChipController>> chips;
 
-    for (int x = 0; x < 25; ++x)
+    for (int x = 0; x < 20; ++x)
     {
         for (int y = 0; y < 10; ++y)
         {
