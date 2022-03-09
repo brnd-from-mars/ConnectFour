@@ -18,7 +18,7 @@ int main()
 
     for (int x = 0; x < 25; ++x)
     {
-        for (int y = 0; y < 20; ++y)
+        for (int y = 0; y < 10; ++y)
         {
             chips.push_back(ChipController::MakeChip(1, x, y));
         }
