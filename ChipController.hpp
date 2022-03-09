@@ -25,6 +25,8 @@ public:
 
     ChipController(int player, int column, int row);
 
+    void HandleResetFocus();
+
     void HandleClick();
 
     void UpdateView();

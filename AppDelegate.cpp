@@ -108,7 +108,13 @@ bool AppDelegate::Update()
 
         if (event.type == sf::Event::MouseButtonPressed)
         {
-            // TODO: send ResetFocus event
+            for (auto& wView : m_ViewContainer)
+            {
+                if (auto view = wView.lock())
+                {
+                    view->ResetFocus();
+                }
+            }
 
             for (auto& wView : m_ViewContainer) // TODO: reverse iteration order
             {
