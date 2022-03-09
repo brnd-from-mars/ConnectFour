@@ -52,7 +52,7 @@ void ChipController::UpdateView()
 {
     sf::Color playerColors[2] = {sf::Color(84, 122, 165), sf::Color(204, 68, 75)};
 
-    m_ChipView->SetPosition(100.0f * m_ChipModel->m_Column, 100.0f * (14 - m_ChipModel->m_Row));
+    m_ChipView->SetPosition(50.0f + 50.0f * m_ChipModel->m_Column, 50.0f + 50.0f * (19 - m_ChipModel->m_Row));
     m_ChipView->SetFillColor(playerColors[m_ChipModel->m_Player - 1]);
     m_ChipView->EnableRing(m_ChipModel->m_Highlighted);
 }

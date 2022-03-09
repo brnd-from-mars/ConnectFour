@@ -1,6 +1,7 @@
 #include <string>
 #include <cmath>
 #include <iostream>
+#include <vector>
 
 #include "AppDelegate.hpp"
 
@@ -13,9 +14,15 @@ int main()
 {
     AppDelegate::Get()->SetWindow(2560, 1440, "Four Wins!");
 
-    auto chip1 = ChipController::MakeChip(1, 0, 0);
-    auto chip2 = ChipController::MakeChip(1, 1, 0);
-    auto chip3 = ChipController::MakeChip(2, 1, 1);
+    std::vector<std::shared_ptr<ChipController>> chips;
+
+    for (int x = 0; x < 25; ++x)
+    {
+        for (int y = 0; y < 20; ++y)
+        {
+            chips.push_back(ChipController::MakeChip(1, x, y));
+        }
+    }
 
     while (AppDelegate::Get()->Update())
     {
