@@ -12,7 +12,7 @@
 
 int main()
 {
-    AppDelegate::Get()->SetWindow(2560, 1440, "Four Wins!");
+    AppDelegate::Get()->SetWindow(1280, 720, "Four Wins!");
 
     std::vector<std::shared_ptr<ChipController>> chips;
 
