@@ -1,5 +1,9 @@
-# Project exclude paths
+# CMake exclude paths
+/CMakeLists.txt
 /cmake-build-debug/
+/cmake-build-release/
+
+# Visual Studio exclude paths
 /sfml*
 /openal32.dll
 /FourWins.vcx*
