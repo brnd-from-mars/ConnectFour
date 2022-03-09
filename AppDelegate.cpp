@@ -112,7 +112,7 @@ bool AppDelegate::Update()
             {
                 if (auto view = wView.lock())
                 {
-                    view->ResetFocus();
+                    view->HandleFocusReset();
                 }
             }
 

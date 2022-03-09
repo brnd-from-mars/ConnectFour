@@ -46,11 +46,11 @@ void ChipView::Draw()
 }
 
 
-bool ChipView::ResetFocus()
+bool ChipView::HandleFocusReset()
 {
     if (auto controller = m_ChipController.lock())
     {
-        controller->HandleResetFocus();
+        controller->HandleFocusReset();
     }
     return false;
 }
