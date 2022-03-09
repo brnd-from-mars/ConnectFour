@@ -48,6 +48,10 @@ void ChipView::Draw()
 
 bool ChipView::ResetFocus()
 {
+    if (auto controller = m_ChipController.lock())
+    {
+        controller->HandleResetFocus();
+    }
     return false;
 }
 
@@ -56,7 +60,6 @@ bool ChipView::Handle(sf::Event event)
 {
     if (event.type == sf::Event::MouseButtonPressed)
     {
-        // TODO: check if left click
         auto dx = event.mouseButton.x - (m_Circle.getPosition().x + m_OuterRadius);
         auto dy = event.mouseButton.y - (m_Circle.getPosition().y + m_OuterRadius);
         if (sqrt(dx * dx + dy * dy) <= m_OuterRadius)

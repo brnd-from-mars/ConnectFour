@@ -34,6 +34,13 @@ ChipController::ChipController(int player, int column, int row)
 }
 
 
+void ChipController::HandleResetFocus()
+{
+    m_ChipModel->SetHighlight(false);
+    UpdateView();
+}
+
+
 void ChipController::HandleClick()
 {
     m_ChipModel->SetHighlight(true);
