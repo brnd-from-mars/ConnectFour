@@ -5,9 +5,9 @@
 
 #include "AppDelegate.hpp"
 
-#include "ChipModel.hpp"
-#include "ChipView.hpp"
 #include "ChipController.hpp"
+
+#include "TextFieldController.hpp"
 
 
 int main()
@@ -23,6 +23,12 @@ int main()
             chips.push_back(ChipController::MakeChip(1, x, y));
         }
     }
+
+    auto tf = TextFieldController::MakeTextField(100.0f, 100.0f, 400.0f);
+    tf->HandleTextEntry('4');
+    tf->HandleTextEntry('2');
+    tf->HandleTextEntry('0');
+    tf->HandleDeleteKeyPress();
 
     while (AppDelegate::Get()->Update())
     {

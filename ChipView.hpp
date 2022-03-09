@@ -27,7 +27,7 @@ public:
 
     void Draw() override;
 
-    bool ResetFocus() override;
+    bool HandleFocusReset() override;
 
     bool Handle(sf::Event event) override;
 

@@ -25,13 +25,13 @@ public:
 
     ChipController(int player, int column, int row);
 
-    void HandleResetFocus();
-
-    void HandleClick();
-
-    void UpdateView();
-
     void Update() override;
+
+    void HandleFocusReset(); // TODO: make private
+
+    void HandleClick(); // TODO: make private
+
+    void UpdateView(); // TODO: make private
 
 
 private:
