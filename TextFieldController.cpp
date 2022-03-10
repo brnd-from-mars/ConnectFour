@@ -15,6 +15,8 @@ std::shared_ptr<TextFieldController> TextFieldController::MakeTextField(float x,
     auto controller = std::make_shared<TextFieldController>(x, y, width);
     AppDelegate::Get()->RegisterController(controller);
 
+    controller->m_TextFieldView->m_TextFieldController = controller;
+
     return controller;
 }
 

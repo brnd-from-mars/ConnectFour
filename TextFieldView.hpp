@@ -2,10 +2,16 @@
 #include "BaseView.hpp"
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <memory>
+
+class TextFieldController;
+
 
 class TextFieldView :
     public BaseView
 {
+    friend TextFieldController;
+
 public:
     TextFieldView();
     void Draw() override;
@@ -15,6 +21,8 @@ public:
     void UpdateView();
 
 private:
+    std::weak_ptr<TextFieldController> m_TextFieldController;
+
     sf::RectangleShape m_TextField;
     sf::Text m_TextShape;
     std::string m_Text;
