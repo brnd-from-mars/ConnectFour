@@ -8,7 +8,7 @@ class TextFieldView :
 public:
     TextFieldView();
     void Draw() override;
-    bool ResetFocus() override;
+    bool HandleFocusReset() override;
     bool Handle(sf::Event event) override;
 
 private:

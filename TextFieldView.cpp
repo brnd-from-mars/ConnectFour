@@ -14,7 +14,7 @@ void TextFieldView::Draw() {
     AppDelegate::Get()->GetWindow()->draw(m_TextField);
 }
 
-bool TextFieldView::ResetFocus() {
+bool TextFieldView::HandleFocusReset() {
 	return false;
 }
 
