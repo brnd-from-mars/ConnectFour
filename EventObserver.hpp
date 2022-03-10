@@ -14,7 +14,7 @@ class EventObserver
 
 public:
 
-    virtual bool ResetFocus() = 0;
+    virtual bool HandleFocusReset() = 0;
 
     virtual bool Handle(sf::Event event) = 0;
 
