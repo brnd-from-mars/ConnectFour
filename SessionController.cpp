@@ -9,6 +9,8 @@
 
 #include "AppDelegate.hpp"
 
+#include "SessionModel.hpp"
+
 #include "GameController.hpp"
 
 
@@ -18,6 +20,7 @@ SessionController::MakeSessionController(const std::weak_ptr<GameController>& ga
     auto controller = std::make_shared<SessionController>(gameController);
     AppDelegate::Get()->RegisterController(controller);
 
+    controller->m_SessionModel->m_SessionController = controller;
     controller->m_SessionController = controller;
 
     controller->InitGrid();
@@ -29,6 +32,9 @@ SessionController::MakeSessionController(const std::weak_ptr<GameController>& ga
 SessionController::SessionController(std::weak_ptr<GameController> gameController)
     : m_GameController(std::move(gameController))
 {
+    m_SessionModel = std::make_shared<SessionModel>();
+    AppDelegate::Get()->RegisterModel(m_SessionModel);
+
     std::clog << "SessionController constructed" << std::endl;
 }
 
@@ -47,19 +53,7 @@ void SessionController::Update()
 
 void SessionController::HandleColumnClick(int column)
 {
-    // TODO: check if in correct game state
-
-    auto& c = m_Grid[column];
-
-    for (auto& field : c)
-    {
-        if (!field->HasChip()) // check if no chip
-        {
-            field->SetChip(m_CurrentPlayer);
-            m_CurrentPlayer = 3 - m_CurrentPlayer;
-            return;
-        }
-    }
+    m_SessionModel->AddChip(column);
 }
 
 
@@ -83,7 +77,7 @@ void SessionController::InitGrid()
 
 bool SessionController::IsOngoing() const
 {
-    return m_Ongoing;
+    return m_SessionModel->IsOngoing();
 }
 
 

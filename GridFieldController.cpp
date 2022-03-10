@@ -12,7 +12,8 @@
 #include "SessionController.hpp"
 
 
-std::shared_ptr<GridFieldController> GridFieldController::MakeGridFieldController(const std::weak_ptr<SessionController>& sessionController, int column, int row)
+std::shared_ptr<GridFieldController> GridFieldController::MakeGridFieldController(
+        const std::weak_ptr<SessionController>& sessionController, int column, int row)
 {
     auto controller = std::make_shared<GridFieldController>(sessionController, column, row);
     AppDelegate::Get()->RegisterController(controller);
@@ -80,4 +81,16 @@ int GridFieldController::GetPlayer() const
     }
 
     return m_Chip->GetPlayer();
+}
+
+
+int GridFieldController::GetColumn() const
+{
+    return m_GridFieldModel->m_Column;
+}
+
+
+int GridFieldController::GetRow() const
+{
+    return m_GridFieldModel->m_Row;
 }

@@ -7,7 +7,7 @@ find_package(SFML 2.5 COMPONENTS graphics window REQUIRED)
 
 add_executable(FourWins main.cpp AppDelegate.cpp
         GameController.cpp
-        SessionController.cpp
+        SessionModel.cpp SessionController.cpp
         GridFieldModel.cpp GridFieldView.cpp GridFieldController.cpp
         ChipModel.cpp ChipView.cpp ChipController.cpp
         TextFieldModel.cpp TextFieldView.cpp TextFieldController.cpp
