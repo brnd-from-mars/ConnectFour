@@ -8,6 +8,8 @@
 
 #include "BaseController.hpp"
 
+#include "SessionController.hpp"
+
 
 class GameController : public BaseController
 {
@@ -18,14 +20,20 @@ public:
 
     GameController(int columns, int rows);
 
+    virtual ~GameController();
+
     void Update() override;
 
 
 private:
 
+    std::weak_ptr<GameController> m_GameController;
+
     int m_Columns;
 
     int m_Rows;
+
+    std::shared_ptr<SessionController> m_SessionController;
 
 
 };

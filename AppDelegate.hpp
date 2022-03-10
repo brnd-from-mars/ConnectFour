@@ -20,7 +20,7 @@ class AppDelegate
 
 public:
 
-    ~AppDelegate();
+    virtual ~AppDelegate();
 
     static AppDelegate* Get();
 
