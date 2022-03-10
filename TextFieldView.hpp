@@ -12,6 +12,7 @@ public:
     bool HandleFocusReset() override;
     bool Handle(sf::Event event) override;
     void SetText(std::string Text);
+    void UpdateView();
 
 private:
     sf::RectangleShape m_TextField;

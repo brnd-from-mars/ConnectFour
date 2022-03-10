@@ -26,18 +26,14 @@ TextFieldView::TextFieldView() {
 }
 
 void TextFieldView::Draw() {
-    if (m_focus == true) {
-        m_TextField.setOutlineColor(sf::Color::Blue);
-    }
-    else {
-        m_TextField.setOutlineColor(sf::Color::Black);
-    }
+    
     AppDelegate::Get()->GetWindow()->draw(m_TextField);
     AppDelegate::Get()->GetWindow()->draw(m_TextShape);
 }
 
 bool TextFieldView::HandleFocusReset() {
     m_focus = false;
+    UpdateView();
 	return false;
 }
 
@@ -50,10 +46,20 @@ bool TextFieldView::Handle(sf::Event event) {
         if (((dx>=0)&&(dx<=m_TextField.getSize().x)) && ((dy>=0)&&(dy<=m_TextField.getSize().y)))
         {
             m_focus = true;
+            UpdateView();
         }
     }
 	return false;
 }
 void TextFieldView::SetText(std::string Text) {
     m_Text = Text;
+}
+
+void TextFieldView::UpdateView() {
+    if (m_focus == true) {
+        m_TextField.setOutlineColor(sf::Color::Blue);
+    }
+    else {
+        m_TextField.setOutlineColor(sf::Color::Black);
+    }
 }
