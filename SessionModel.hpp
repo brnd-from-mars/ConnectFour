@@ -37,9 +37,7 @@ public:
 
     bool IsOngoing() const;
 
-    int get_winningPlayer(int row, int col); 
-
-    int* get_winningChips();
+    int get_winningPlayer(int row, int col);
 
     int GetPlayerAt(int column, int row) const;
 
@@ -65,7 +63,7 @@ private:
 
     bool full_matchfield();
 
-    int winningChips[2][4]; //enthält 4 Koordinaten der gewinnenden Steine
+    int winningChips[2][4]{}; //enthaelt 4 Koordinaten der gewinnenden Steine
 
 
 };
