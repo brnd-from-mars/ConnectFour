@@ -112,7 +112,7 @@ bool AppDelegate::Update()
             {
                 if (auto view = wView.lock())
                 {
-                    view->ResetFocus();
+                    view->HandleFocusReset();
                 }
             }
 
@@ -155,6 +155,7 @@ bool AppDelegate::Update()
 
     m_Window->display();
     m_Window->setFramerateLimit(30);
+
     return m_Window->isOpen();
 }
 
@@ -166,6 +167,5 @@ AppDelegate::AppDelegate()
         // singleton implementation does not guarantee single instance creation (e.g. in multi-threading)
         throw std::runtime_error("Singleton AppDelegate was constructed multiple times");
     }
-
     std::clog << "AppDelegate constructed" << std::endl;
 }
