@@ -5,6 +5,7 @@
 #include "SessionModel.hpp"
 
 #include "SessionController.hpp"
+#include <iostream>
 
 
 SessionModel::SessionModel(int columns, int rows)
@@ -39,6 +40,8 @@ void SessionModel::AddChip(int column)
                 // TODO: call GameWon here
                 // if (GameWon(column, row)) {}
 
+				std::cout << "WinningPlayer  = " << get_winningPlayer(column, row) << std::endl;
+
                 m_CurrentPlayer = 3 - m_CurrentPlayer;
 
                 return;
@@ -65,27 +68,21 @@ int SessionModel::GetPlayerAt(int column, int row) const
 }
 
 
-int SessionController::GetPlayerAt(int column, int row) const
-{
-	return m_Grid[column][row]->GetPlayer();
-}
+int SessionModel::get_winningPlayer(int col, int row) { /*gibt den Spieler zurück, der gewonnen hat;	0 kein Ergebnis;
+																										1 Spieler 1;
+																										2 Spieler 2;
+																										3 Gleichstand/Spielfeld voll */
 
-
-int get_winningPlayer(int row, int col) { /*gibt den Spieler zurück, der gewonnen hat;	0 kein Ergebnis;
-																						1 Spieler 1;
-																						2 Spieler 2;
-																						3 Gleichstand/Spielfeld voll */
-
-	if (check_diagonal(row, col) != 0) {
-		return check_diagonal(row, col);
+	if (check_diagonal(col, row) != 0) {
+		return check_diagonal(col, row);
 	}
-	if (check_vertical(row, col) != 0) {
-		return check_vertical(row, col);
+	if (check_vertical(col, row) != 0) {
+		return check_vertical(col, row);
 	}
-	if (check_horizontal(row, col) != 0) {
-		return check_horizontal(row, col);
+	if (check_horizontal(col, row) != 0) {
+		return check_horizontal(col, row);
 	}
-	if (full_matchfield(row, col)) { //Gleichstand
+	if (full_matchfield()) { //Gleichstand
 		return 3;
 	}
 	else { //Kein Ergebnis
@@ -94,24 +91,19 @@ int get_winningPlayer(int row, int col) { /*gibt den Spieler zurück, der gewonne
 }
 
 
-int* get_winningChips() { //gibt ein Array mit den x- und y-Koordinaten der 4 gewinnenden Punkte zurück
-	return &winningChips;
-}
+
+int SessionModel::check_diagonal(int col, int row) { //Überprüft, ob in der Nähe des letzten Steins (an Position row;col) 4 gleiche sind in Diagonalen
+
+	int count = 0; //Zählt die hintereinanderfolgenden gleichen Felder
+	int prev = 0; //0, wenn vorher ein leeres Feld war, 1 wenn ein X, 2 wenn ein O war
 
 
-
-
-int count = 0; //Zählt die hintereinanderfolgenden gleichen Felder
-int prev = 0; //0, wenn vorher ein leeres Feld war, 1 wenn ein X, 2 wenn ein O war
-int winningChips[2][4]; //enthält 4 Koordinaten der gewinnenden Steine
-
-int check_diagonal(int row, int col) { //Überprüft, ob in der Nähe des letzten Steins (an Position row;col) 4 gleiche sind in Diagonalen
-
-
-	for (int x = col - 3; int y = row - 3; x <= row + 3 && x <= m_Colums && y <= m_Rows; x++; y++) { //schräg hoch von links
+	int y = row - 3;
+	for (int x = col - 3;  x <= row + 3 && x <= m_Columns && y <= m_Rows; x++) { //schräg hoch von links
 		if (x >= 0 && y >= 0) {
-			check_Chips(x, y);
+			check_Chips(x, y, prev, count);
 		}
+		y++;
 	}
 
 	if (count == 4) { //Wenn 4 gleiche gezählt wurden
@@ -123,11 +115,12 @@ int check_diagonal(int row, int col) { //Überprüft, ob in der Nähe des letzten S
 	prev = 0;
 
 
-
-	for (int x = col - 3; int y = row + 3; x <= row + 3 && x <= m_Colums && y >= 0; x++; y--) { //schräg runter von links
-		if (x >= 0 && y <= m_Colums) {
-			check_Chips(x, y);
+	y = row + 3;
+	for (int x = col - 3;  x <= row + 3 && x <= m_Columns && y >= 0; x++) { //schräg runter von links
+		if (x >= 0 && y <= m_Columns) {
+			check_Chips(x, y, prev, count);
 		}
+		y--;
 	}
 	if (count == 4) { //Wenn 4 gleiche gezählt wurden
 		return prev; //Spieler, der 4 Gleiche hat returnen
@@ -136,29 +129,29 @@ int check_diagonal(int row, int col) { //Überprüft, ob in der Nähe des letzten S
 	return 0;
 }
 
-int check_vertical(int row, int col) {
+int SessionModel::check_vertical(int col, int row) {
 
-	count = 0; //Reset der Laufvariablen
-	prev = 0;
+	int count = 0; //Reset der Laufvariablen
+	int prev = 0;
 	int x = col;
 	for (int y = row; y >= row - 3 && y >= m_Rows; y--) { //Befinden sich in der Verkikalen unter dem letzten Chip 4 gleiche?
-		check_Chips(x, y);
+		check_Chips(x, y, prev, count);
 	}
-	if (cout == 4) { //Wenn 4 gleiche gezählt wurden
+	if (count == 4) { //Wenn 4 gleiche gezählt wurden
 		return prev; //Spieler, der 4 Gleiche hat returnen
 	}
 
 	return 0;
 }
 
-int check_horizontal(int row, int col) {
+int SessionModel::check_horizontal(int col, int row) {
 
-	count = 0; //Reset der Laufvariablen
-	prev = 0;
-	y = row;
-	for (int x = col - 3; x <= col + 3 && x <= m_Colums; x++) { //Befinden sich in der Horizontalen um den letzten gesetzten Stein 4 Gleiche?
+	int count = 0; //Zählt die hintereinanderfolgenden gleichen Felder
+	int prev = 0; //0, wenn vorher ein leeres Feld war, 1 wenn ein X, 2 wenn ein O war
+	int y = row;
+	for (int x = col - 3; x <= col + 3 && x <= m_Columns; x++) { //Befinden sich in der Horizontalen um den letzten gesetzten Stein 4 Gleiche?
 		if (x >= 0) { //Überprüfen, ob linke spielfeldrand überschritten wurde
-			check_Chips(x, y);
+			check_Chips(x, y, prev, count);
 		}
 
 
@@ -169,8 +162,8 @@ int check_horizontal(int row, int col) {
 
 	return 0;
 }
+void SessionModel::check_Chips(int col, int row, int &prev, int &count) {
 
-void check_Chips(int row, int col) {
 
 	if (GetPlayerAt(col, row) == 1) {
 
@@ -187,7 +180,7 @@ void check_Chips(int row, int col) {
 		prev = 1;
 	}
 
-	if (matrix[row][col] == 2) {
+	if (GetPlayerAt(col, row) == 2) {
 
 		if (prev != 2) {
 			count = 1;
@@ -203,13 +196,13 @@ void check_Chips(int row, int col) {
 	}
 }
 
-bool full_matchfield() {
+bool SessionModel::full_matchfield() {
 
-	for (int x = 0; x <= m_Colums; x++) {
+	for (int x = 0; x <= m_Columns; x++) {
 
 		for (int y = 0; y <= m_Rows; y++) {
 
-			if (matrix[x][y] == 0) {
+			if (GetPlayerAt(x, y) == 0) {
 				return false;
 			}
 

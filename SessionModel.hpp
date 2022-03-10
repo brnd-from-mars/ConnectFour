@@ -61,9 +61,11 @@ private:
 
     int check_horizontal(int row, int col);
 
-    void check_Chips(int row, int col);
+    void check_Chips(int row, int col, int& prev, int& count);
 
     bool full_matchfield();
+
+    int winningChips[2][4]; //enthält 4 Koordinaten der gewinnenden Steine
 
 
 };
