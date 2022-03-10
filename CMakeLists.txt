@@ -10,5 +10,6 @@ add_executable(FourWins main.cpp AppDelegate.cpp
         SessionController.cpp
         GridFieldModel.cpp GridFieldView.cpp GridFieldController.cpp
         ChipModel.cpp ChipView.cpp ChipController.cpp
-        TextFieldModel.cpp TextFieldView.cpp TextFieldController.cpp)
+        TextFieldModel.cpp TextFieldView.cpp TextFieldController.cpp
+        ButtonView.cpp)
 target_link_libraries(FourWins sfml-graphics sfml-window)
