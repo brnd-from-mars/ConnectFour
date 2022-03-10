@@ -7,6 +7,7 @@
 
 #include "GameController.hpp"
 #include "ChipController.hpp"
+#include "TextFieldView.hpp"
 #include "TextFieldController.hpp"
 
 
@@ -27,7 +28,6 @@ int ParseIntegerArgument(int argc, const char** argv, int n, int min, int max)
     {
         return max;
     }
-#include "TextFieldView.hpp"
 
     return m;
 }
@@ -56,7 +56,7 @@ int main(int argc, const char** argv)
     tf->HandleTextEntry('2');
     tf->HandleTextEntry('0');
     tf->HandleDeleteKeyPress();*/
-    }
+
     auto Testfeld = std::make_shared<TextFieldView>();
     AppDelegate::Get()->RegisterView(Testfeld);
 

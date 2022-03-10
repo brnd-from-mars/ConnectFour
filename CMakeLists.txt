@@ -9,5 +9,5 @@ add_executable(FourWins main.cpp AppDelegate.cpp
         GameController.cpp
         SessionController.cpp
         ChipModel.cpp ChipView.cpp ChipController.cpp
-        TextFieldModel.cpp TextFieldController.cpp)
+        TextFieldModel.cpp TextFieldView.cpp TextFieldController.cpp)
 target_link_libraries(FourWins sfml-graphics sfml-window)
