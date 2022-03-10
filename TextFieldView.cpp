@@ -61,7 +61,7 @@ bool TextFieldView::Handle(sf::Event event) {
     }
     if (event.type == sf::Event::KeyPressed) {
         if (m_focus == true) {
-            if (event.text.unicode == 8) {//Typed Backspace
+            if (event.key.code == sf::Keyboard::Backspace) {
                 if (auto a = m_TextFieldController.lock()) {
                     a->HandleDeleteKeyPress();
                 }

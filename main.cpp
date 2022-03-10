@@ -39,9 +39,11 @@ int main(int argc, const char** argv)
     auto columns = ParseIntegerArgument(argc, argv, 1, 4, 25);
     auto rows = ParseIntegerArgument(argc, argv, 2, 4, 20);
 
-    AppDelegate::Get()->SetWindow(2500, 1400, "Four Wins!");
+    AppDelegate::Get()->SetWindow(2500, 1400, "Connect Four!");
 
     auto game = GameController::MakeGameController(columns, rows);
+
+    auto tf = TextFieldController::MakeTextField(1450.0f, 100.0f, 200.0f);
 
     while (AppDelegate::Get()->Update())
     {
