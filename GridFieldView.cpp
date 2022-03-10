@@ -4,6 +4,8 @@
 
 #include "GridFieldView.hpp"
 
+#include <iostream>
+
 #include "AppDelegate.hpp"
 
 #include "GridFieldController.hpp"
@@ -40,7 +42,10 @@ bool GridFieldView::Handle(sf::Event event)
         if (((dx >= 0) && (dx <= m_FieldShape.getSize().x)) &&
             ((dy >= 0) && (dy <= m_FieldShape.getSize().y)))
         {
-            // TODO: call controller
+            if (auto controller = m_GridFieldController.lock())
+            {
+                controller->HandleClick();
+            }
         }
     }
     return false;

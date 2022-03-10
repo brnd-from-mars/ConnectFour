@@ -2,6 +2,7 @@
 /CMakeLists.txt
 /cmake-build-debug/
 /cmake-build-release/
+/.idea/
 
 # Visual Studio exclude paths
 /sfml*

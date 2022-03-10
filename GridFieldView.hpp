@@ -28,7 +28,7 @@ public:
 
 private:
 
-    std::weak_ptr<GridFieldController> m_GridFieldModel;
+    std::weak_ptr<GridFieldController> m_GridFieldController;
 
     sf::RectangleShape m_FieldShape;
 
