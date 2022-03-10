@@ -8,6 +8,9 @@
 
 #include "BaseController.hpp"
 
+class GridFieldModel;
+class GridFieldView;
+
 
 class GridFieldController : public BaseController
 {
@@ -19,5 +22,12 @@ public:
     GridFieldController(int column, int row);
 
     void Update() override;
+
+
+private:
+
+    std::shared_ptr<GridFieldModel> m_GridFieldModel;
+    std::shared_ptr<GridFieldView> m_GridFieldView;
+
 
 };

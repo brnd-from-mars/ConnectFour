@@ -89,7 +89,7 @@ void AppDelegate::RegisterController(const std::shared_ptr<BaseController>& cont
 
 bool AppDelegate::Update()
 {
-    // TODO: garbage collection
+    // TODO: add garbage collection
 
     if (m_Window == nullptr)
     {

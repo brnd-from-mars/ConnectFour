@@ -9,7 +9,7 @@
 
 #include "BaseController.hpp"
 
-#include "ChipController.hpp"
+#include "GridFieldController.hpp"
 
 class GameController;
 
@@ -34,7 +34,7 @@ private:
 
     std::weak_ptr<GameController> m_GameController;
 
-    std::vector<std::vector<std::shared_ptr<ChipController>>> m_ChipContainer;
+    std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
 
     bool m_Ongoing = true; // TODO: outsource to model
 

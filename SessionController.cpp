@@ -27,11 +27,15 @@ SessionController::SessionController(std::weak_ptr<GameController> gameControlle
 {
     if (auto game = m_GameController.lock())
     {
-        m_ChipContainer.resize(game->GetColumns());
-        // TODO: remove
-        m_ChipContainer[0].push_back(ChipController::MakeChip(1, 0, 0));
-        m_ChipContainer[1].push_back(ChipController::MakeChip(2, 1, 0));
-        m_ChipContainer[1].push_back(ChipController::MakeChip(1, 1, 1));
+        m_Grid.resize(game->GetColumns());
+        for (auto column = 0; column < game->GetColumns(); ++column)
+        {
+            m_Grid[column].reserve(game->GetRows());
+            for (auto row = 0; row < game->GetRows(); ++row)
+            {
+                m_Grid[column].push_back(std::make_shared<GridFieldController>(column, row));
+            }
+        }
     }
     std::clog << "SessionController constructed" << std::endl;
 }
