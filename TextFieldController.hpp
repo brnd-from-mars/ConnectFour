@@ -11,13 +11,13 @@
 #include "BaseController.hpp"
 
 class TextFieldModel;
-// class TextFieldView;
+class TextFieldView;
 
 
 class TextFieldController : public BaseController
 {
     friend TextFieldModel;
-    // friend TextFieldView;
+    friend TextFieldView;
 
 public:
 
@@ -33,13 +33,11 @@ public:
 
     void UpdateView(); // TODO: make private
 
-    // NOTE: handle focus only in TextFieldView
-
 
 private:
 
     std::shared_ptr<TextFieldModel> m_TextFieldModel;
-    // std::shared_ptr<TextFieldView> m_TextFieldView;
+    std::shared_ptr<TextFieldView> m_TextFieldView;
 
 
 };

@@ -7,7 +7,7 @@
 #include "AppDelegate.hpp"
 
 #include "TextFieldModel.hpp"
-// #include "TextFieldView.hpp"
+#include "TextFieldView.hpp"
 
 
 std::shared_ptr<TextFieldController> TextFieldController::MakeTextField(float x, float y, float width)
@@ -24,8 +24,8 @@ TextFieldController::TextFieldController(float x, float y, float width)
     m_TextFieldModel = std::make_shared<TextFieldModel>();
     AppDelegate::Get()->RegisterModel(m_TextFieldModel);
 
-    // m_TextFieldView = std::make_shared<TextFieldView>(x, y, width);
-    // AppDelegate::Get()->RegisterView(m_TextFieldView);
+    m_TextFieldView = std::make_shared<TextFieldView>(); // x, y, width
+    AppDelegate::Get()->RegisterView(m_TextFieldView);
 }
 
 
