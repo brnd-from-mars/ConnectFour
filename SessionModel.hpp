@@ -29,7 +29,7 @@ class SessionModel : public BaseModel
 
 public:
 
-    SessionModel();
+    SessionModel(int columns, int rows);
 
     void Update() override;
 
@@ -46,6 +46,10 @@ public:
 private:
 
     std::weak_ptr<SessionController> m_SessionController;
+
+    int m_Columns;
+
+    int m_Rows;
 
     SessionState m_State;
 

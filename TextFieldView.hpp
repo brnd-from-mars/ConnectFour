@@ -26,7 +26,7 @@ private:
     sf::RectangleShape m_TextField;
     sf::Text m_TextShape;
     std::string m_Text;
-    sf::Font m_arial;
+    sf::Font m_Standard;
     bool m_focus = false;
 };
 

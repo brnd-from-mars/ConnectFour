@@ -8,11 +8,15 @@
 
 #include "BaseController.hpp"
 
+#include "GameModel.hpp"
+
 #include "SessionController.hpp"
 
 
 class GameController : public BaseController
 {
+    friend GameModel;
+
 
 public:
 
@@ -24,20 +28,13 @@ public:
 
     void Update() override;
 
-    int GetColumns() const;
-
-    int GetRows() const;
-
 
 private:
 
+    std::shared_ptr<GameModel> m_GameModel;
     std::weak_ptr<GameController> m_GameController;
 
     std::shared_ptr<SessionController> m_SessionController;
-
-    int m_Columns; // TODO: outsource to model
-
-    int m_Rows;
 
 
 };

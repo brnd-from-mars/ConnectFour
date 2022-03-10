@@ -8,18 +8,18 @@
 
 TextFieldView::TextFieldView(float x, float y, float width) {
 
-    if (!m_arial.loadFromFile("arial.ttf"))
+    if (!m_Standard.loadFromFile("Standard.ttf"))
     {
         throw std::runtime_error("FAIL!");
     }
     
     m_TextField.setSize(sf::Vector2f(width, 25.f));
     m_TextField.setPosition(sf::Vector2f(x, y));
-    m_TextField.setFillColor(sf::Color::White);
+    m_TextField.setFillColor(ColorPalette::Pane);
     m_TextField.setOutlineThickness(2.f);
-    m_TextField.setOutlineColor(sf::Color::Black);
+    m_TextField.setOutlineColor(ColorPalette::PrussianBlue);
 
-    m_TextShape.setFont(m_arial);
+    m_TextShape.setFont(m_Standard);
     m_TextShape.setString(m_Text);
     m_TextShape.setCharacterSize(20);
     m_TextShape.setPosition(sf::Vector2f(x+5, y));
@@ -78,9 +78,9 @@ void TextFieldView::SetText(std::string Text) {
 
 void TextFieldView::UpdateView() {
     if (m_focus == true) {
-        m_TextField.setOutlineColor(sf::Color::Blue);
+        m_TextField.setOutlineColor(ColorPalette::Orange);
     }
     else {
-        m_TextField.setOutlineColor(sf::Color::Black);
+        m_TextField.setOutlineColor(ColorPalette::PrussianBlue);
     }
 }
