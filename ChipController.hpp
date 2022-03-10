@@ -33,6 +33,8 @@ public:
 
     void UpdateView(); // TODO: make private
 
+    int GetPlayer() const;
+
 
 private:
 

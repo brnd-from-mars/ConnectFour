@@ -31,6 +31,10 @@ public:
 
     void SetChip(int player);
 
+    bool HasChip() const;
+
+    int GetPlayer() const;
+
 
 private:
 

@@ -45,6 +45,24 @@ void SessionController::Update()
 }
 
 
+void SessionController::HandleColumnClick(int column)
+{
+    // TODO: check if in correct game state
+
+    auto& c = m_Grid[column];
+
+    for (auto& field : c)
+    {
+        if (!field->HasChip()) // check if no chip
+        {
+            field->SetChip(m_CurrentPlayer);
+            m_CurrentPlayer = 3 - m_CurrentPlayer;
+            return;
+        }
+    }
+}
+
+
 void SessionController::InitGrid()
 {
     if (auto game = m_GameController.lock())
@@ -66,4 +84,10 @@ void SessionController::InitGrid()
 bool SessionController::IsOngoing() const
 {
     return m_Ongoing;
+}
+
+
+int SessionController::GetPlayerAt(int column, int row) const
+{
+    return m_Grid[column][row]->GetPlayer();
 }
