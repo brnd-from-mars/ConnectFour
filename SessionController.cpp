@@ -15,9 +15,9 @@
 
 
 std::shared_ptr<SessionController>
-SessionController::MakeSessionController(const std::weak_ptr<GameController>& gameController)
+SessionController::MakeSessionController(const std::weak_ptr<GameController>& gameController, int columns, int rows)
 {
-    auto controller = std::make_shared<SessionController>(gameController);
+    auto controller = std::make_shared<SessionController>(gameController, columns, rows);
     AppDelegate::Get()->RegisterController(controller);
 
     controller->m_SessionModel->m_SessionController = controller;
@@ -29,10 +29,10 @@ SessionController::MakeSessionController(const std::weak_ptr<GameController>& ga
 }
 
 
-SessionController::SessionController(std::weak_ptr<GameController> gameController)
+SessionController::SessionController(std::weak_ptr<GameController> gameController, int columns, int rows)
     : m_GameController(std::move(gameController))
 {
-    m_SessionModel = std::make_shared<SessionModel>();
+    m_SessionModel = std::make_shared<SessionModel>(columns, rows);
     AppDelegate::Get()->RegisterModel(m_SessionModel);
 
     std::clog << "SessionController constructed" << std::endl;
