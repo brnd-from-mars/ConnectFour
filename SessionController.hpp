@@ -28,9 +28,14 @@ public:
 
     void Update() override;
 
+    void HandleColumnClick(int column);
+
     void InitGrid();
 
     bool IsOngoing() const;
+
+    // TODO: outsource to model
+    int GetPlayerAt(int column, int row) const;
 
 
 private:
@@ -42,6 +47,8 @@ private:
     std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
 
     bool m_Ongoing = true; // TODO: outsource to model
+
+    int m_CurrentPlayer = 1;
 
 
 };

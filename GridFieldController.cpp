@@ -4,8 +4,6 @@
 
 #include "GridFieldController.hpp"
 
-#include <iostream>
-
 #include "AppDelegate.hpp"
 
 #include "GridFieldModel.hpp"
@@ -34,6 +32,8 @@ GridFieldController::GridFieldController(const std::weak_ptr<SessionController>&
     m_GridFieldView = std::make_shared<GridFieldView>(100.0f + column * GridFieldView::m_Size,
                                                       1250.0f - row * GridFieldView::m_Size);
     AppDelegate::Get()->RegisterView(m_GridFieldView);
+
+    m_SessionController = sessionController;
 }
 
 
@@ -46,7 +46,10 @@ void GridFieldController::Update()
 void GridFieldController::HandleClick()
 {
     // TODO: feedback to session
-    SetChip(1);
+    if (auto session = m_SessionController.lock())
+    {
+        session->HandleColumnClick(m_GridFieldModel->m_Column);
+    }
 }
 
 
@@ -60,4 +63,21 @@ void GridFieldController::SetChip(int player)
 
     auto center = m_GridFieldView->GetCenter();
     m_Chip = std::make_shared<ChipController>(player, center.x, center.y);
+}
+
+
+bool GridFieldController::HasChip() const
+{
+    return m_Chip != nullptr;
+}
+
+
+int GridFieldController::GetPlayer() const
+{
+    if (!HasChip())
+    {
+        return 0;
+    }
+
+    return m_Chip->GetPlayer();
 }

@@ -61,3 +61,9 @@ void ChipController::UpdateView()
     m_ChipView->SetFillColor(playerColors[m_ChipModel->m_Player - 1]);
     m_ChipView->EnableRing(m_ChipModel->m_Highlighted);
 }
+
+
+int ChipController::GetPlayer() const
+{
+    return m_ChipModel->m_Player;
+}
