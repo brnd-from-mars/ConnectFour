@@ -34,9 +34,9 @@ private:
 
     sf::RectangleShape m_FieldShape;
 
-    static constexpr float m_Size = 50.0;
+    static constexpr float m_Size = 25.0;
 
-    static constexpr float m_Outline = 2.0;
+    static constexpr float m_Outline = 1.0;
 
 
 };

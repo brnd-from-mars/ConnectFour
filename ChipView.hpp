@@ -41,9 +41,9 @@ private:
 
     bool m_RingEnabled = false;
 
-    static constexpr float m_InnerRadius = 21.0f;
+    static constexpr float m_InnerRadius = 10.0f;
 
-    static constexpr float m_OuterRadius = 24.0f;
+    static constexpr float m_OuterRadius = 12.0f;
 
 
 };
