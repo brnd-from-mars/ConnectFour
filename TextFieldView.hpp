@@ -13,7 +13,7 @@ class TextFieldView :
     friend TextFieldController;
 
 public:
-    TextFieldView();
+    TextFieldView(float x, float y, float width);
     void Draw() override;
     bool HandleFocusReset() override;
     bool Handle(sf::Event event) override;

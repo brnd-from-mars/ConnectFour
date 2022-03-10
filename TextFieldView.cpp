@@ -1,19 +1,20 @@
 #include "TextFieldView.hpp"
 #include "AppDelegate.hpp"
+#include "TextFieldController.hpp"
 #include <iostream>
 
 
 
 
-TextFieldView::TextFieldView() {
+TextFieldView::TextFieldView(float x, float y, float width) {
 
     if (!m_arial.loadFromFile("arial.ttf"))
     {
         throw std::runtime_error("FAIL!");
     }
     
-    m_TextField.setSize(sf::Vector2f(400.f, 50.f));
-    m_TextField.setPosition(sf::Vector2f(100.f, 120.f));
+    m_TextField.setSize(sf::Vector2f(width, 50.f));
+    m_TextField.setPosition(sf::Vector2f(x, y));
     m_TextField.setFillColor(sf::Color::White);
     m_TextField.setOutlineThickness(2.f);
     m_TextField.setOutlineColor(sf::Color::Black);
@@ -21,7 +22,7 @@ TextFieldView::TextFieldView() {
     m_TextShape.setFont(m_arial);
     m_TextShape.setString(m_Text);
     m_TextShape.setCharacterSize(40);
-    m_TextShape.setPosition(sf::Vector2f(100.f, 120.f));
+    m_TextShape.setPosition(sf::Vector2f(x+5, y));
     m_TextShape.setFillColor(sf::Color::Black);
 }
 
@@ -49,10 +50,31 @@ bool TextFieldView::Handle(sf::Event event) {
             UpdateView();
         }
     }
+
+    if (event.type == sf::Event::TextEntered) {
+        if (m_focus == true) {
+            if (event.text.unicode < 128)
+                if(auto a=m_TextFieldController.lock()) {
+                    a->HandleTextEntry(static_cast<char>(event.text.unicode));
+                }
+        }
+    }
+    if (event.type = sf::Event::KeyPressed) {
+        if (m_focus == true) {
+            if (event.text.unicode == 8) {//Typed Backspace
+                if (auto a = m_TextFieldController.lock()) {
+                    a->HandleDeleteKeyPress();
+                }
+            }
+        }
+    }
+
+
 	return false;
 }
 void TextFieldView::SetText(std::string Text) {
     m_Text = Text;
+    m_TextShape.setString(m_Text);
 }
 
 void TextFieldView::UpdateView() {
