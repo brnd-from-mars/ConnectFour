@@ -51,14 +51,7 @@ int main(int argc, const char** argv)
         }
     }*/
 
-    /*auto tf = TextFieldController::MakeTextField(100.0f, 100.0f, 400.0f);
-    tf->HandleTextEntry('4');
-    tf->HandleTextEntry('2');
-    tf->HandleTextEntry('0');
-    tf->HandleDeleteKeyPress();*/
-
-    auto Testfeld = std::make_shared<TextFieldView>();
-    AppDelegate::Get()->RegisterView(Testfeld);
+    auto tf = TextFieldController::MakeTextField(100.0f, 100.0f, 400.0f);
 
     while (AppDelegate::Get()->Update())
     {

@@ -4,13 +4,10 @@
 
 #include "TextFieldModel.hpp"
 
-// TODO: remove iostream
-#include <iostream>
-
 
 void TextFieldModel::Update()
 {
-    std::cout << m_Text << std::endl;
+
 }
 
 
