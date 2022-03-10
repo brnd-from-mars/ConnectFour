@@ -8,6 +8,7 @@
 #include "ChipModel.hpp"
 #include "ChipView.hpp"
 #include "ChipController.hpp"
+#include "TextFieldView.hpp"
 
 
 int main()
@@ -23,6 +24,8 @@ int main()
             chips.push_back(ChipController::MakeChip(1, x, y));
         }
     }
+    auto Testfeld = std::make_shared<TextFieldView>();
+    AppDelegate::Get()->RegisterView(Testfeld);
 
     while (AppDelegate::Get()->Update())
     {
