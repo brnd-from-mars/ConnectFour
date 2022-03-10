@@ -41,3 +41,15 @@ void GameController::Update()
         m_SessionController = SessionController::MakeSessionController(m_GameController);
     }
 }
+
+
+int GameController::GetColumns() const
+{
+    return m_Columns;
+}
+
+
+int GameController::GetRows() const
+{
+    return m_Rows;
+}

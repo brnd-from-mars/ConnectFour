@@ -5,8 +5,11 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include "BaseController.hpp"
+
+#include "ChipController.hpp"
 
 class GameController;
 
@@ -16,7 +19,7 @@ class SessionController : public BaseController
 
 public:
 
-    static std::shared_ptr<SessionController> MakeSessionController(std::weak_ptr<GameController> gameController);
+    static std::shared_ptr<SessionController> MakeSessionController(const std::weak_ptr<GameController>& gameController);
 
     explicit SessionController(std::weak_ptr<GameController> gameController);
 
@@ -31,8 +34,9 @@ private:
 
     std::weak_ptr<GameController> m_GameController;
 
-    bool m_Ongoing = true;
+    std::vector<std::vector<std::shared_ptr<ChipController>>> m_ChipContainer;
 
-    int i = 90;
+    bool m_Ongoing = true; // TODO: outsource to model
+
 
 };
