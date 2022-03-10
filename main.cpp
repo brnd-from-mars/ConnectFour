@@ -38,7 +38,7 @@ int main(int argc, const char** argv)
     auto columns = ParseIntegerArgument(argc, argv, 1, 4, 25);
     auto rows = ParseIntegerArgument(argc, argv, 2, 4, 20);
 
-    AppDelegate::Get()->SetWindow(1280, 720, "Four Wins!");
+    AppDelegate::Get()->SetWindow(2560, 1440, "Four Wins!");
 
     auto game = GameController::MakeGameController(columns, rows);
 

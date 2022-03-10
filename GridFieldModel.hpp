@@ -19,8 +19,12 @@ public:
 
     GridFieldModel(int column, int row);
 
+    void Update() override;
+
 
 private:
+
+    std::weak_ptr<GridFieldController> m_TextFieldController;
 
     int m_Column;
 
