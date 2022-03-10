@@ -9,6 +9,7 @@
 #include "ChipController.hpp"
 #include "TextFieldView.hpp"
 #include "TextFieldController.hpp"
+#include "ButtonView.hpp"
 
 
 int ParseIntegerArgument(int argc, const char** argv, int n, int min, int max)
@@ -52,6 +53,8 @@ int main(int argc, const char** argv)
     }*/
 
     auto tf = TextFieldController::MakeTextField(100.0f, 100.0f, 400.0f);
+    auto bt = std::make_shared<ButtonView>();
+    AppDelegate::Get()->RegisterView(bt);
 
     while (AppDelegate::Get()->Update())
     {
