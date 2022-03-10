@@ -22,9 +22,9 @@ class SessionController : public BaseController
 
 public:
 
-    static std::shared_ptr<SessionController> MakeSessionController(const std::weak_ptr<GameController>& gameController);
+    static std::shared_ptr<SessionController> MakeSessionController(const std::weak_ptr<GameController>& gameController, int columns, int rows);
 
-    explicit SessionController(std::weak_ptr<GameController> gameController);
+    explicit SessionController(std::weak_ptr<GameController> gameController, int columns, int rows);
 
     virtual ~SessionController();
 
