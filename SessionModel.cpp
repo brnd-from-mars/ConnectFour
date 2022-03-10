@@ -42,10 +42,13 @@ void SessionModel::AddChip(int column)
 
 				std::cout << get_winningPlayer(column, row) << std::endl;
 
-				if (get_winningPlayer(column, row) != 0) {
+				if (get_winningPlayer(column, row) != 0) { //just fpr debugging
 					std::cout << "Winning Chips are: " << std::endl;
 
-					std:.cout 
+					for (int j = 0; j <= 3; j++) {
+						std::cout << "Chip " << (j + 1) << " row = " << winningChips[0][j] << "; col = " << winningChips[1][j] << std::endl;
+					}
+					
 				}
 
                 m_CurrentPlayer = 3 - m_CurrentPlayer;
@@ -183,10 +186,11 @@ void SessionModel::check_Chips(int col, int row, int &prev, int &count) {
 		}
 		else {
 
+			count++;
 			winningChips[0][count - 1] = row;
 			winningChips[1][count - 1] = col;
 
-			count++;
+			
 		}
 		prev = 1;
 	}
@@ -199,10 +203,12 @@ void SessionModel::check_Chips(int col, int row, int &prev, int &count) {
 			winningChips[1][count - 1] = col;
 		}
 		else {
+			
+			count++;
 			winningChips[0][count - 1] = row;
 			winningChips[1][count - 1] = col;
 
-			count++;
+			
 		}
 		prev = 2;
 
