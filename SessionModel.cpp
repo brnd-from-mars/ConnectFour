@@ -7,8 +7,8 @@
 #include "SessionController.hpp"
 
 
-SessionModel::SessionModel()
-    : m_State(SessionState::inGame) // TODO: change to namePlayer1 after text field is added
+SessionModel::SessionModel(int columns, int rows)
+    : m_Columns(columns), m_Rows(rows), m_State(SessionState::inGame) // TODO: change to namePlayer1 after text field is added
 {
 
 }

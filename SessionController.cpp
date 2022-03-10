@@ -15,9 +15,9 @@
 
 
 std::shared_ptr<SessionController>
-SessionController::MakeSessionController(const std::weak_ptr<GameController>& gameController)
+SessionController::MakeSessionController(const std::weak_ptr<GameController>& gameController, int columns, int rows)
 {
-    auto controller = std::make_shared<SessionController>(gameController);
+    auto controller = std::make_shared<SessionController>(gameController, columns, rows);
     AppDelegate::Get()->RegisterController(controller);
 
     controller->m_SessionModel->m_SessionController = controller;
@@ -29,10 +29,10 @@ SessionController::MakeSessionController(const std::weak_ptr<GameController>& ga
 }
 
 
-SessionController::SessionController(std::weak_ptr<GameController> gameController)
+SessionController::SessionController(std::weak_ptr<GameController> gameController, int columns, int rows)
     : m_GameController(std::move(gameController))
 {
-    m_SessionModel = std::make_shared<SessionModel>();
+    m_SessionModel = std::make_shared<SessionModel>(columns, rows);
     AppDelegate::Get()->RegisterModel(m_SessionModel);
 
     std::clog << "SessionController constructed" << std::endl;
@@ -61,11 +61,11 @@ void SessionController::InitGrid()
 {
     if (auto game = m_GameController.lock())
     {
-        m_Grid.resize(game->GetColumns());
-        for (auto column = 0; column < game->GetColumns(); ++column)
+        m_Grid.resize(m_SessionModel->m_Columns);
+        for (auto column = 0; column < m_SessionModel->m_Columns; ++column)
         {
-            m_Grid[column].reserve(game->GetRows());
-            for (auto row = 0; row < game->GetRows(); ++row)
+            m_Grid[column].reserve(m_SessionModel->m_Rows);
+            for (auto row = 0; row < m_SessionModel->m_Rows; ++row)
             {
                 auto gridField = GridFieldController::MakeGridFieldController(m_SessionController, column, row);
                 m_Grid[column].push_back(gridField);

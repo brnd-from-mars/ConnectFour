@@ -10,6 +10,7 @@
 #include "TextFieldView.hpp"
 #include "TextFieldController.hpp"
 #include "ButtonView.hpp"
+#include "TextView.hpp"
 
 
 int ParseIntegerArgument(int argc, const char** argv, int n, int min, int max)
@@ -43,7 +44,10 @@ int main(int argc, const char** argv)
 
     auto game = GameController::MakeGameController(columns, rows);
 
-    auto tf = TextFieldController::MakeTextField(725.0f, 50.0f, 200.0f);
+    auto tf = TextFieldController::MakeTextField(750.0f, 170.0f, 200.0f);
+
+    auto text1 = std::make_shared<TextView>(50.f, 10.f, 80.f, "Tron","Connect Four",ColorPalette::Cyan);
+    AppDelegate::Get()->RegisterView(text1);
 
     while (AppDelegate::Get()->Update())
     {
