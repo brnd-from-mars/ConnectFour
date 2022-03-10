@@ -43,15 +43,6 @@ int main(int argc, const char** argv)
 
     auto game = GameController::MakeGameController(columns, rows);
 
-    /*std::vector<std::shared_ptr<ChipController>> chips;
-    for (int x = 0; x < 20; ++x)
-    {
-        for (int y = 0; y < 10; ++y)
-        {
-            chips.push_back(ChipController::MakeChip(1, x, y));
-        }
-    }*/
-
     /*auto tf = TextFieldController::MakeTextField(100.0f, 100.0f, 400.0f);
     auto bt = std::make_shared<ButtonView>();
     AppDelegate::Get()->RegisterView(bt);*/

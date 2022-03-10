@@ -20,6 +20,8 @@ class AppDelegate
 
 public:
 
+    // TODO: disallow copy
+
     virtual ~AppDelegate();
 
     static AppDelegate* Get();

@@ -45,5 +45,19 @@ void GridFieldController::Update()
 
 void GridFieldController::HandleClick()
 {
-    std::cout << m_GridFieldModel->m_Column << " was clicked" << std::endl;
+    // TODO: feedback to session
+    SetChip(1);
+}
+
+
+void GridFieldController::SetChip(int player)
+{
+    // chip already exists
+    if (m_Chip)
+    {
+        return;
+    }
+
+    auto center = m_GridFieldView->GetCenter();
+    m_Chip = std::make_shared<ChipController>(player, center.x, center.y);
 }

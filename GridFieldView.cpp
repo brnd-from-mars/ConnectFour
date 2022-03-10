@@ -50,3 +50,11 @@ bool GridFieldView::Handle(sf::Event event)
     }
     return false;
 }
+
+
+sf::Vector2f GridFieldView::GetCenter() const
+{
+    auto pos = m_FieldShape.getPosition();
+    auto size = m_FieldShape.getSize();
+    return sf::Vector2f(pos.x + size.x / 2, pos.y + size.y / 2);
+}

@@ -18,9 +18,7 @@ class ChipView : public BaseView
 
 public:
 
-    ChipView();
-
-    void SetPosition(float x, float y);
+    ChipView(float x, float y);
 
     void SetFillColor(sf::Color color);
 

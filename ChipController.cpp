@@ -10,9 +10,9 @@
 #include "ChipView.hpp"
 
 
-std::shared_ptr<ChipController> ChipController::MakeChip(int player, int column, int row)
+std::shared_ptr<ChipController> ChipController::MakeChip(int player, float x, float y)
 {
-    auto controller = std::make_shared<ChipController>(player, column, row);
+    auto controller = std::make_shared<ChipController>(player, x, y);
     AppDelegate::Get()->RegisterController(controller);
 
     controller->m_ChipModel->m_ChipController = controller;
@@ -22,12 +22,12 @@ std::shared_ptr<ChipController> ChipController::MakeChip(int player, int column,
 }
 
 
-ChipController::ChipController(int player, int column, int row)
+ChipController::ChipController(int player, float x, float y)
 {
-    m_ChipModel = std::make_shared<ChipModel>(player, column, row);
+    m_ChipModel = std::make_shared<ChipModel>(player);
     AppDelegate::Get()->RegisterModel(m_ChipModel);
 
-    m_ChipView = std::make_shared<ChipView>();
+    m_ChipView = std::make_shared<ChipView>(x, y);
     AppDelegate::Get()->RegisterView(m_ChipView);
 
     UpdateView();
@@ -58,7 +58,6 @@ void ChipController::UpdateView()
 {
     sf::Color playerColors[2] = {sf::Color(84, 122, 165), sf::Color(204, 68, 75)};
 
-    m_ChipView->SetPosition(50.0f + 50.0f * m_ChipModel->m_Column, 50.0f + 50.0f * (9 - m_ChipModel->m_Row));
     m_ChipView->SetFillColor(playerColors[m_ChipModel->m_Player - 1]);
     m_ChipView->EnableRing(m_ChipModel->m_Highlighted);
 }

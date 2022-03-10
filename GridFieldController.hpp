@@ -8,6 +8,8 @@
 
 #include "BaseController.hpp"
 
+#include "ChipController.hpp"
+
 class GridFieldModel;
 class GridFieldView;
 
@@ -27,6 +29,8 @@ public:
 
     void HandleClick();
 
+    void SetChip(int player);
+
 
 private:
 
@@ -34,6 +38,8 @@ private:
     std::shared_ptr<GridFieldView> m_GridFieldView;
 
     std::weak_ptr<SessionController> m_SessionController;
+
+    std::shared_ptr<ChipController> m_Chip;
 
 
 };

@@ -11,15 +11,11 @@
 #include "ChipController.hpp"
 
 
-ChipView::ChipView()
+ChipView::ChipView(float x, float y)
     : m_Circle(m_InnerRadius), m_Ring(m_OuterRadius)
 {
     m_Layer = 2;
-}
 
-
-void ChipView::SetPosition(float x, float y)
-{
     m_Ring.setPosition(x - m_OuterRadius, y - m_OuterRadius);
     m_Circle.setPosition(x - m_InnerRadius, y - m_InnerRadius);
 }

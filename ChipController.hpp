@@ -21,9 +21,9 @@ class ChipController : public BaseController
 
 public:
 
-    static std::shared_ptr<ChipController> MakeChip(int player, int column, int row);
+    static std::shared_ptr<ChipController> MakeChip(int player, float x, float y);
 
-    ChipController(int player, int column, int row);
+    ChipController(int player, float x, float y);
 
     void Update() override;
 
