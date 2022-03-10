@@ -17,7 +17,7 @@ class ChipModel : public BaseModel
 
 public:
 
-    ChipModel(int player, int column, int row);
+    explicit ChipModel(int player);
 
     void Update() override;
 
@@ -29,10 +29,6 @@ private:
     std::weak_ptr<ChipController> m_ChipController;
 
     int m_Player;
-
-    int m_Column;
-
-    int m_Row;
 
     bool m_Highlighted = false;
 

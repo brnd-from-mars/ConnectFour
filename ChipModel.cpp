@@ -7,8 +7,8 @@
 #include "ChipController.hpp"
 
 
-ChipModel::ChipModel(int player, int column, int row)
-    : m_Player(player), m_Column(column), m_Row(row)
+ChipModel::ChipModel(int player)
+    : m_Player(player)
 {
 
 }
