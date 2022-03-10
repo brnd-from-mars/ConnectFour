@@ -4,6 +4,8 @@
 
 #include "ChipModel.hpp"
 
+#include "ChipController.hpp"
+
 
 ChipModel::ChipModel(int player, int column, int row)
     : m_Player(player), m_Column(column), m_Row(row)
