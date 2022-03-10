@@ -40,17 +40,6 @@ void SessionModel::AddChip(int column)
                 // TODO: call GameWon here
                 // if (GameWon(column, row)) {}
 
-				std::cout << get_winningPlayer(column, row) << std::endl;
-
-				if (get_winningPlayer(column, row) != 0) { //just fpr debugging
-					std::cout << "Winning Chips are: " << std::endl;
-
-					for (int j = 0; j <= 3; j++) {
-						std::cout << "Chip " << (j + 1) << " row = " << winningChips[0][j] << "; col = " << winningChips[1][j] << std::endl;
-					}
-					
-				}
-
                 m_CurrentPlayer = 3 - m_CurrentPlayer;
 
                 return;
@@ -79,7 +68,6 @@ int SessionModel::GetPlayerAt(int column, int row) const
 	}
 	return 0;
 }
-
 
 int SessionModel::get_winningPlayer(int col, int row) { /*gibt den Spieler zur�ck, der gewonnen hat;	0 kein Ergebnis;
 																										1 Spieler 1;
