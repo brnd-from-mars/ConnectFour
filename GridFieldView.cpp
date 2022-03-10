@@ -17,7 +17,7 @@ GridFieldView::GridFieldView(float x, float y)
 
     m_FieldShape.setPosition(x + m_Outline, y + m_Outline);
     m_FieldShape.setSize(sf::Vector2f(m_Size - 2 * m_Outline, m_Size - 2 * m_Outline));
-    m_FieldShape.setFillColor(sf::Color(51, 59, 60));
+    m_FieldShape.setFillColor(ColorPalette::BasestarDark);
 }
 
 

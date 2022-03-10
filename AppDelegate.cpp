@@ -96,7 +96,7 @@ bool AppDelegate::Update()
         throw std::runtime_error("AppDelegate Update was called before SetWindow");
     }
 
-    m_Window->clear(sf::Color(41, 49, 50));
+    m_Window->clear(ColorPalette::Basestar);
 
     auto event = sf::Event();
     while (m_Window->pollEvent(event))

@@ -56,7 +56,7 @@ void ChipController::HandleClick()
 
 void ChipController::UpdateView()
 {
-    sf::Color playerColors[2] = {sf::Color(84, 122, 165), sf::Color(204, 68, 75)};
+    sf::Color playerColors[2] = {ColorPalette::Cyan, ColorPalette::Orange};
 
     m_ChipView->SetFillColor(playerColors[m_ChipModel->m_Player - 1]);
     m_ChipView->EnableRing(m_ChipModel->m_Highlighted);
