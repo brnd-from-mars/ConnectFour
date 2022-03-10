@@ -13,7 +13,7 @@ TextFieldView::TextFieldView(float x, float y, float width) {
         throw std::runtime_error("FAIL!");
     }
     
-    m_TextField.setSize(sf::Vector2f(width, 50.f));
+    m_TextField.setSize(sf::Vector2f(width, 25.f));
     m_TextField.setPosition(sf::Vector2f(x, y));
     m_TextField.setFillColor(sf::Color::White);
     m_TextField.setOutlineThickness(2.f);
@@ -21,7 +21,7 @@ TextFieldView::TextFieldView(float x, float y, float width) {
 
     m_TextShape.setFont(m_arial);
     m_TextShape.setString(m_Text);
-    m_TextShape.setCharacterSize(40);
+    m_TextShape.setCharacterSize(20);
     m_TextShape.setPosition(sf::Vector2f(x+5, y));
     m_TextShape.setFillColor(sf::Color::Black);
 }
@@ -68,7 +68,6 @@ bool TextFieldView::Handle(sf::Event event) {
             }
         }
     }
-
 
 	return false;
 }

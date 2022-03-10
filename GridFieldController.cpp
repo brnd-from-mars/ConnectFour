@@ -30,8 +30,8 @@ GridFieldController::GridFieldController(const std::weak_ptr<SessionController>&
     m_GridFieldModel = std::make_shared<GridFieldModel>(column, row);
     AppDelegate::Get()->RegisterModel(m_GridFieldModel);
 
-    m_GridFieldView = std::make_shared<GridFieldView>(100.0f + column * GridFieldView::m_Size,
-                                                      1250.0f - row * GridFieldView::m_Size);
+    m_GridFieldView = std::make_shared<GridFieldView>(50.0f + column * GridFieldView::m_Size,
+                                                      625.0f - row * GridFieldView::m_Size);
     AppDelegate::Get()->RegisterView(m_GridFieldView);
 
     m_SessionController = sessionController;
