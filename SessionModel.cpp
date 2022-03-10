@@ -66,6 +66,11 @@ bool SessionModel::IsOngoing() const
 
 int SessionModel::GetPlayerAt(int column, int row) const
 {
+    if (column < 0 || m_Columns <= column ||
+        row < 0 || m_Rows <= row)
+    {
+        return 0;
+    }
 	if (auto controller = m_SessionController.lock()) {
 		return controller->GetPlayerAt(column, row);
 	}
