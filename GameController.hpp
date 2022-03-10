@@ -24,16 +24,20 @@ public:
 
     void Update() override;
 
+    int GetColumns() const;
+
+    int GetRows() const;
+
 
 private:
 
     std::weak_ptr<GameController> m_GameController;
 
-    int m_Columns;
+    std::shared_ptr<SessionController> m_SessionController;
+
+    int m_Columns; // TODO: outsource to model
 
     int m_Rows;
-
-    std::shared_ptr<SessionController> m_SessionController;
 
 
 };

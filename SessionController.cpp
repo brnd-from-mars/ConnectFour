@@ -13,9 +13,9 @@
 
 
 std::shared_ptr<SessionController>
-SessionController::MakeSessionController(std::weak_ptr<GameController> gameController)
+SessionController::MakeSessionController(const std::weak_ptr<GameController>& gameController)
 {
-    auto controller = std::make_shared<SessionController>(std::move(gameController));
+    auto controller = std::make_shared<SessionController>(gameController);
     AppDelegate::Get()->RegisterController(controller);
 
     return controller;
@@ -25,6 +25,14 @@ SessionController::MakeSessionController(std::weak_ptr<GameController> gameContr
 SessionController::SessionController(std::weak_ptr<GameController> gameController)
     : m_GameController(std::move(gameController))
 {
+    if (auto game = m_GameController.lock())
+    {
+        m_ChipContainer.resize(game->GetColumns());
+        // TODO: remove
+        m_ChipContainer[0].push_back(ChipController::MakeChip(1, 0, 0));
+        m_ChipContainer[1].push_back(ChipController::MakeChip(2, 1, 0));
+        m_ChipContainer[1].push_back(ChipController::MakeChip(1, 1, 1));
+    }
     std::clog << "SessionController constructed" << std::endl;
 }
 
@@ -37,8 +45,7 @@ SessionController::~SessionController()
 
 void SessionController::Update()
 {
-    i--;
-    if (i == 0) m_Ongoing = false;
+
 }
 
 bool SessionController::IsOngoing() const
