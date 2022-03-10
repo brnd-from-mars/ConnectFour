@@ -5,6 +5,7 @@
 #pragma once
 
 #include <memory>
+#include <SFML/Graphics.hpp>
 
 #include "BaseView.hpp"
 
