@@ -21,7 +21,8 @@ class GridFieldController : public BaseController
 
 public:
 
-    static std::shared_ptr<GridFieldController> MakeGridFieldController(const std::weak_ptr<SessionController>& sessionController, int column, int row);
+    static std::shared_ptr<GridFieldController> MakeGridFieldController(
+            const std::weak_ptr<SessionController>& sessionController, int column, int row);
 
     GridFieldController(const std::weak_ptr<SessionController>& sessionController, int column, int row);
 
@@ -34,6 +35,10 @@ public:
     bool HasChip() const;
 
     int GetPlayer() const;
+
+    int GetColumn() const;
+
+    int GetRow() const;
 
 
 private:

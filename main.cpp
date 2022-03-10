@@ -43,10 +43,6 @@ int main(int argc, const char** argv)
 
     auto game = GameController::MakeGameController(columns, rows);
 
-    /*auto tf = TextFieldController::MakeTextField(100.0f, 100.0f, 400.0f);
-    auto bt = std::make_shared<ButtonView>();
-    AppDelegate::Get()->RegisterView(bt);*/
-
     while (AppDelegate::Get()->Update())
     {
     }

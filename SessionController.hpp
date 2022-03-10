@@ -11,15 +11,17 @@
 
 #include "GridFieldController.hpp"
 
+class SessionModel;
+
 class GameController;
 
 
 class SessionController : public BaseController
 {
+    friend SessionModel;
 
 public:
 
-    // TODO: remove parent controller from factory and constructor
     static std::shared_ptr<SessionController> MakeSessionController(const std::weak_ptr<GameController>& gameController);
 
     explicit SessionController(std::weak_ptr<GameController> gameController);
@@ -40,15 +42,12 @@ public:
 
 private:
 
+    std::shared_ptr<SessionModel> m_SessionModel;
     std::weak_ptr<SessionController> m_SessionController;
 
     std::weak_ptr<GameController> m_GameController;
 
     std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
-
-    bool m_Ongoing = true; // TODO: outsource to model
-
-    int m_CurrentPlayer = 1;
 
 
 };
