@@ -24,7 +24,7 @@ public:
 
 private:
 
-    std::weak_ptr<GridFieldController> m_TextFieldController;
+    std::weak_ptr<GridFieldController> m_GridFieldController;
 
     int m_Column;
 

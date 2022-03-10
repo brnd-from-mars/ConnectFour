@@ -18,6 +18,10 @@ SessionController::MakeSessionController(const std::weak_ptr<GameController>& ga
     auto controller = std::make_shared<SessionController>(gameController);
     AppDelegate::Get()->RegisterController(controller);
 
+    controller->m_SessionController = controller;
+
+    controller->InitGrid();
+
     return controller;
 }
 
@@ -25,18 +29,6 @@ SessionController::MakeSessionController(const std::weak_ptr<GameController>& ga
 SessionController::SessionController(std::weak_ptr<GameController> gameController)
     : m_GameController(std::move(gameController))
 {
-    if (auto game = m_GameController.lock())
-    {
-        m_Grid.resize(game->GetColumns());
-        for (auto column = 0; column < game->GetColumns(); ++column)
-        {
-            m_Grid[column].reserve(game->GetRows());
-            for (auto row = 0; row < game->GetRows(); ++row)
-            {
-                m_Grid[column].push_back(std::make_shared<GridFieldController>(column, row));
-            }
-        }
-    }
     std::clog << "SessionController constructed" << std::endl;
 }
 
@@ -51,6 +43,25 @@ void SessionController::Update()
 {
 
 }
+
+
+void SessionController::InitGrid()
+{
+    if (auto game = m_GameController.lock())
+    {
+        m_Grid.resize(game->GetColumns());
+        for (auto column = 0; column < game->GetColumns(); ++column)
+        {
+            m_Grid[column].reserve(game->GetRows());
+            for (auto row = 0; row < game->GetRows(); ++row)
+            {
+                auto gridField = GridFieldController::MakeGridFieldController(m_SessionController, column, row);
+                m_Grid[column].push_back(gridField);
+            }
+        }
+    }
+}
+
 
 bool SessionController::IsOngoing() const
 {

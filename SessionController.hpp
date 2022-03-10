@@ -19,6 +19,7 @@ class SessionController : public BaseController
 
 public:
 
+    // TODO: remove parent controller from factory and constructor
     static std::shared_ptr<SessionController> MakeSessionController(const std::weak_ptr<GameController>& gameController);
 
     explicit SessionController(std::weak_ptr<GameController> gameController);
@@ -27,10 +28,14 @@ public:
 
     void Update() override;
 
+    void InitGrid();
+
     bool IsOngoing() const;
 
 
 private:
+
+    std::weak_ptr<SessionController> m_SessionController;
 
     std::weak_ptr<GameController> m_GameController;
 
