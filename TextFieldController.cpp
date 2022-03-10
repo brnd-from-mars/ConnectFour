@@ -53,5 +53,5 @@ void TextFieldController::HandleDeleteKeyPress()
 
 void TextFieldController::UpdateView()
 {
-    // TODO: update view text
+    m_TextFieldView->SetText(m_TextFieldModel->m_Text);
 }

@@ -1,5 +1,6 @@
 #include "TextFieldView.hpp"
 #include "AppDelegate.hpp"
+#include "TextFieldController.hpp"
 #include <iostream>
 
 
@@ -49,10 +50,31 @@ bool TextFieldView::Handle(sf::Event event) {
             UpdateView();
         }
     }
+
+    if (event.type == sf::Event::TextEntered) {
+        if (m_focus == true) {
+            if (event.text.unicode < 128)
+                if(auto a=m_TextFieldController.lock()) {
+                    a->HandleTextEntry(static_cast<char>(event.text.unicode));
+                }
+        }
+    }
+    if (event.type = sf::Event::KeyPressed) {
+        if (m_focus == true) {
+            if (event.text.unicode == 8) {//Typed Backspace
+                if (auto a = m_TextFieldController.lock()) {
+                    a->HandleDeleteKeyPress();
+                }
+            }
+        }
+    }
+
+
 	return false;
 }
 void TextFieldView::SetText(std::string Text) {
     m_Text = Text;
+    m_TextShape.setString(m_Text);
 }
 
 void TextFieldView::UpdateView() {
