@@ -26,7 +26,7 @@ TextFieldController::TextFieldController(float x, float y, float width)
     m_TextFieldModel = std::make_shared<TextFieldModel>();
     AppDelegate::Get()->RegisterModel(m_TextFieldModel);
 
-    m_TextFieldView = std::make_shared<TextFieldView>(); // x, y, width
+    m_TextFieldView = std::make_shared<TextFieldView>(x, y, width); // x, y, width
     AppDelegate::Get()->RegisterView(m_TextFieldView);
 }
 
@@ -53,5 +53,5 @@ void TextFieldController::HandleDeleteKeyPress()
 
 void TextFieldController::UpdateView()
 {
-    // TODO: update view text
+    m_TextFieldView->SetText(m_TextFieldModel->m_Text);
 }
