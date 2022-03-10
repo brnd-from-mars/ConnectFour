@@ -81,7 +81,3 @@ bool SessionController::IsOngoing() const
 }
 
 
-int SessionController::GetPlayerAt(int column, int row) const
-{
-    return m_Grid[column][row]->GetPlayer();
-}

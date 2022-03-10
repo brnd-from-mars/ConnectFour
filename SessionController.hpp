@@ -40,6 +40,8 @@ public:
     int GetPlayerAt(int column, int row) const;
 
 
+
+
 private:
 
     std::shared_ptr<SessionModel> m_SessionModel;
@@ -48,6 +50,8 @@ private:
     std::weak_ptr<GameController> m_GameController;
 
     std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
+
+   
 
 
 };

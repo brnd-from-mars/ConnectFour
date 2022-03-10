@@ -25,6 +25,7 @@ enum class SessionState
 class SessionModel : public BaseModel
 {
     friend SessionController;
+ 
 
 public:
 
@@ -36,6 +37,11 @@ public:
 
     bool IsOngoing() const;
 
+    int get_winningPlayer(int row, int col); 
+
+    int* get_winningChips();
+
+    int GetPlayerAt(int column, int row) const;
 
 private:
 
@@ -44,5 +50,16 @@ private:
     SessionState m_State;
 
     int m_CurrentPlayer = 1;
+
+    int check_diagonal(int row, int col);
+
+    int check_vertical(int row, int col);
+
+    int check_horizontal(int row, int col);
+
+    void check_Chips(int row, int col);
+
+    bool full_matchfield();
+
 
 };
