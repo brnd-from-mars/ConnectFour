@@ -8,7 +8,7 @@
 
 TextFieldView::TextFieldView(float x, float y, float width) {
 
-    if (!m_arial.loadFromFile("arial.ttf"))
+    if (!m_Standard.loadFromFile("Standard.ttf"))
     {
         throw std::runtime_error("FAIL!");
     }
@@ -19,7 +19,7 @@ TextFieldView::TextFieldView(float x, float y, float width) {
     m_TextField.setOutlineThickness(2.f);
     m_TextField.setOutlineColor(sf::Color::Black);
 
-    m_TextShape.setFont(m_arial);
+    m_TextShape.setFont(m_Standard);
     m_TextShape.setString(m_Text);
     m_TextShape.setCharacterSize(20);
     m_TextShape.setPosition(sf::Vector2f(x+5, y));
