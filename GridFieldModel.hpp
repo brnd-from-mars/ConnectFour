@@ -15,6 +15,7 @@ class GridFieldModel : public BaseModel
 {
     friend GridFieldController;
 
+
 public:
 
     GridFieldModel(int column, int row);
@@ -27,7 +28,6 @@ private:
     std::weak_ptr<GridFieldController> m_GridFieldController;
 
     int m_Column;
-
     int m_Row;
 
 
