@@ -4,11 +4,9 @@
 
 #include "GridFieldView.hpp"
 
-#include <iostream>
+#include "GridFieldController.hpp"
 
 #include "AppDelegate.hpp"
-
-#include "GridFieldController.hpp"
 
 
 GridFieldView::GridFieldView(float x, float y)

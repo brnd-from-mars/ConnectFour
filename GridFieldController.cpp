@@ -39,14 +39,11 @@ GridFieldController::GridFieldController(const std::weak_ptr<SessionController>&
 
 
 void GridFieldController::Update()
-{
-
-}
+{ }
 
 
 void GridFieldController::HandleClick()
 {
-    // TODO: feedback to session
     if (auto session = m_SessionController.lock())
     {
         session->HandleColumnClick(m_GridFieldModel->m_Column);

@@ -5,6 +5,7 @@
 #pragma once
 
 #include <memory>
+
 #include <SFML/Graphics.hpp>
 
 #include "BaseView.hpp"
@@ -15,6 +16,7 @@ class GridFieldController;
 class GridFieldView : public BaseView
 {
     friend GridFieldController;
+
 
 public:
 
@@ -28,6 +30,7 @@ public:
 
     sf::Vector2f GetCenter() const;
 
+
 private:
 
     std::weak_ptr<GridFieldController> m_GridFieldController;
@@ -35,7 +38,6 @@ private:
     sf::RectangleShape m_FieldShape;
 
     static constexpr float m_Size = 25.0;
-
     static constexpr float m_Outline = 1.0;
 
 
