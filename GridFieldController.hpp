@@ -18,6 +18,9 @@ class SessionController;
 
 class GridFieldController : public BaseController
 {
+    friend GridFieldModel;
+    friend GridFieldView;
+
 
 public:
 

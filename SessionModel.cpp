@@ -33,7 +33,7 @@ void SessionModel::AddChip(int column)
                 auto row = field->GetRow();
                 if (GetWinState(column, row) != PlayerState::none)
                 {
-                    // game over
+                    m_State = State::terminated;
                 }
 
                 m_CurrentPlayer = 3 - m_CurrentPlayer;
@@ -47,7 +47,7 @@ void SessionModel::AddChip(int column)
 
 bool SessionModel::IsOngoing() const
 {
-    return m_State != State::finished;
+    return m_State != State::terminated;
 }
 
 
