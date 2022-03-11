@@ -29,7 +29,7 @@ ChipController::ChipController(int player, float x, float y)
     m_ChipModel = std::make_shared<ChipModel>(player);
     AppDelegate::Get()->RegisterModel(m_ChipModel);
 
-    sf::Color playerColors[2] = {ColorPalette::Cyan, ColorPalette::Orange};
+    sf::Color playerColors[2] = {ColorPalette::Cyan, ColorPalette::Pred};
 
     m_ChipView = std::make_shared<ChipView>(x, y,
                                             playerColors[player - 1],

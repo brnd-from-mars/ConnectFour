@@ -21,17 +21,18 @@ class TextFieldController : public BaseController
 
 public:
 
-    static std::shared_ptr<TextFieldController> MakeTextField(float x, float y, float width);
+    static std::shared_ptr<TextFieldController> MakeTextField(float x, float y, float width,
+                                                              const std::string& placeholder, sf::Color highlightColor);
 
-    TextFieldController(float x, float y, float width);
+    TextFieldController(float x, float y, float width, const std::string& placeholder, sf::Color highlightColor);
 
     void Update() override;
 
-    void HandleTextEntry(char character); // TODO: make private
+    void HandleTextEntry(char character);
 
-    void HandleDeleteKeyPress(); // TODO: make private
+    void HandleDeleteKeyPress();
 
-    void UpdateView(); // TODO: make private
+    void UpdateView();
 
 
 private:

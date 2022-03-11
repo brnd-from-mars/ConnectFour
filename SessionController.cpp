@@ -35,6 +35,9 @@ SessionController::SessionController(std::weak_ptr<GameController> gameControlle
     m_SessionModel = std::make_shared<SessionModel>(columns, rows);
     AppDelegate::Get()->RegisterModel(m_SessionModel);
 
+    m_NamePlayer1 = TextFieldController::MakeTextField(750.0f, 150.0f, 300.0f, "Player1", ColorPalette::Pred);
+    m_NamePlayer2 = TextFieldController::MakeTextField(875.0f, 200.0f, 300.0f, "Player2", ColorPalette::Cyan);
+
     std::clog << "SessionController constructed" << std::endl;
 }
 

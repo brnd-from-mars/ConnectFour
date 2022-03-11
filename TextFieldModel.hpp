@@ -16,6 +16,7 @@ class TextFieldModel : public BaseModel
 {
     friend TextFieldController;
 
+
 public:
 
     void Update() override;

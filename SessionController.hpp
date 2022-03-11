@@ -10,6 +10,7 @@
 #include "BaseController.hpp"
 
 #include "GridFieldController.hpp"
+#include "TextFieldController.hpp"
 
 class SessionModel;
 
@@ -40,8 +41,6 @@ public:
     int GetPlayerAt(int column, int row) const;
 
 
-
-
 private:
 
     std::shared_ptr<SessionModel> m_SessionModel;
@@ -51,7 +50,8 @@ private:
 
     std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
 
-   
+    std::shared_ptr<TextFieldController> m_NamePlayer1;
+    std::shared_ptr<TextFieldController> m_NamePlayer2;
 
 
 };

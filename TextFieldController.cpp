@@ -10,9 +10,11 @@
 #include "TextFieldView.hpp"
 
 
-std::shared_ptr<TextFieldController> TextFieldController::MakeTextField(float x, float y, float width)
+std::shared_ptr<TextFieldController> TextFieldController::MakeTextField(float x, float y, float width,
+                                                                        const std::string& placeholder,
+                                                                        sf::Color highlightColor)
 {
-    auto controller = std::make_shared<TextFieldController>(x, y, width);
+    auto controller = std::make_shared<TextFieldController>(x, y, width, placeholder, highlightColor);
     AppDelegate::Get()->RegisterController(controller);
 
     controller->m_TextFieldView->m_TextFieldController = controller;
@@ -21,12 +23,13 @@ std::shared_ptr<TextFieldController> TextFieldController::MakeTextField(float x,
 }
 
 
-TextFieldController::TextFieldController(float x, float y, float width)
+TextFieldController::TextFieldController(float x, float y, float width,
+                                         const std::string& placeholder, sf::Color highlightColor)
 {
     m_TextFieldModel = std::make_shared<TextFieldModel>();
     AppDelegate::Get()->RegisterModel(m_TextFieldModel);
 
-    m_TextFieldView = std::make_shared<TextFieldView>(x, y, width); // x, y, width
+    m_TextFieldView = std::make_shared<TextFieldView>(x, y, width, placeholder, highlightColor);
     AppDelegate::Get()->RegisterView(m_TextFieldView);
 }
 
