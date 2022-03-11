@@ -3,7 +3,6 @@
 //
 
 #include "GameModel.hpp"
-
 #include "GameController.hpp"
 
 
