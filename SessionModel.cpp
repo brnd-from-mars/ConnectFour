@@ -72,6 +72,12 @@ SessionModel::PlayerState SessionModel::GetPlayerAt(int column, int row) const
     return PlayerState::none;
 }
 
+/*!  fn PlayerState getWinState(int column, int row)
+*   \brief Function that returns if either player 1 won, player 2 won or there is a tie as an enum PlayerState
+*   \param column Column of the last set Chip
+*   \param row Row of the last set Chip
+*
+*/
 
 SessionModel::PlayerState SessionModel::GetWinState(int column, int row)
 {
@@ -101,8 +107,17 @@ SessionModel::PlayerState SessionModel::GetWinState(int column, int row)
         return winState;
     }
 
-	return PlayerState::none;
+    return PlayerState::none;
+
 }
+
+/*!  fn  void CheckVertical(int column, int row, PlayerState& prev, int& count)
+*   \brief Function checks, if the previous Chip was similar to the current one and counts the quantity of consecutive similar Chips
+*   \param column Column of the current Chip
+*   \param row of the current Chip
+*   \param prev contains the Playerstate of the previous chip as an enum
+*   \param count saves the quantity of consecutive similar chips  
+*/
 
 
 void SessionModel::CheckChips(int column, int row, PlayerState& prev, int& count)
@@ -130,6 +145,11 @@ void SessionModel::CheckChips(int column, int row, PlayerState& prev, int& count
     prev = current;
 }
 
+/*!  fn  PlayerState CheckVertical(int column, int row)
+*   \brief Function checks, if there are 4 similar Chips in a horizontal line within a radius of 3 fields around the last set Chip and returns the winning player as an enum
+*   \param column Column of the last set Chip
+*   \param row of the last set Chip
+*/
 
 SessionModel::PlayerState SessionModel::CheckHorizontal(int column, int row) {
 
@@ -149,6 +169,12 @@ SessionModel::PlayerState SessionModel::CheckHorizontal(int column, int row) {
 }
 
 
+/*!  fn  CheckVertical(int column, int row)
+*   \brief Function checks, if there are 4 similar Chips in a vertical line within a radius of 3 fields around the last set Chip and returns the winning player as an enum
+*   \param column Column of the last set Chip
+*   \param row of the last set Chip
+*/
+
 SessionModel::PlayerState SessionModel::CheckVertical(int column, int row) {
 
     int count = 0; // number of adjacent chips of same color
@@ -166,6 +192,12 @@ SessionModel::PlayerState SessionModel::CheckVertical(int column, int row) {
     return PlayerState::none;
 }
 
+
+/*!  fn  CheckDiagonal(int column, int row)
+*   \brief Function checks, if there are 4 similar Chips in a diagonal line within a radius of 3 fields around the last set Chip and returns the winning player as an enum
+*   \param column Column of the last set Chip
+*   \param row of the last set Chip
+*/
 
 SessionModel::PlayerState SessionModel::CheckDiagonal(int column, int row)
 {
@@ -201,6 +233,10 @@ SessionModel::PlayerState SessionModel::CheckDiagonal(int column, int row)
 	return PlayerState::none;
 }
 
+
+/*!  fn  CheckFieldFull()
+*   \brief Function checks, if every free space in Grid is filled with a Chip and returns the PlayerState as an enum
+*/
 
 SessionModel::PlayerState SessionModel::CheckFieldFull() const
 {
