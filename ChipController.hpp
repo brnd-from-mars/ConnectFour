@@ -27,11 +27,11 @@ public:
 
     void Update() override;
 
-    void HandleFocusReset(); // TODO: make private
+    void HandleFocusReset();
 
-    void HandleClick(); // TODO: make private
+    void HandleClick();
 
-    void UpdateView(); // TODO: make private
+    void UpdateView();
 
     int GetPlayer() const;
 

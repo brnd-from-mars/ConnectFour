@@ -15,6 +15,7 @@ class ChipModel : public BaseModel
 {
     friend ChipController;
 
+
 public:
 
     explicit ChipModel(int player);

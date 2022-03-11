@@ -2,6 +2,8 @@
 // Created by Brendan Berg on 09.03.22.
 //
 
+#include <iostream>
+
 #include "ChipController.hpp"
 
 #include "AppDelegate.hpp"
@@ -27,7 +29,11 @@ ChipController::ChipController(int player, float x, float y)
     m_ChipModel = std::make_shared<ChipModel>(player);
     AppDelegate::Get()->RegisterModel(m_ChipModel);
 
-    m_ChipView = std::make_shared<ChipView>(x, y);
+    sf::Color playerColors[2] = {ColorPalette::Cyan, ColorPalette::Orange};
+
+    m_ChipView = std::make_shared<ChipView>(x, y,
+                                            playerColors[player - 1],
+                                            playerColors[(3 - player) - 1]);
     AppDelegate::Get()->RegisterView(m_ChipView);
 
     UpdateView();
@@ -35,9 +41,7 @@ ChipController::ChipController(int player, float x, float y)
 
 
 void ChipController::Update()
-{
-
-}
+{ }
 
 
 void ChipController::HandleFocusReset()
@@ -56,9 +60,6 @@ void ChipController::HandleClick()
 
 void ChipController::UpdateView()
 {
-    sf::Color playerColors[2] = {ColorPalette::Cyan, ColorPalette::Orange};
-
-    m_ChipView->SetFillColor(playerColors[m_ChipModel->m_Player - 1]);
     m_ChipView->EnableRing(m_ChipModel->m_Highlighted);
 }
 

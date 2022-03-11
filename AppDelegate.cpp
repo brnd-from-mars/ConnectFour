@@ -116,7 +116,6 @@ bool AppDelegate::Update()
         {
             m_Window->close();
         }
-
         else if (event.type == sf::Event::MouseButtonPressed)
         {
             for (auto& wView : m_ViewContainer)
@@ -126,27 +125,15 @@ bool AppDelegate::Update()
                     view->HandleFocusReset();
                 }
             }
-
-            for (auto& wView : m_ViewContainer) // TODO: reverse iteration order
-            {
-                if (auto view = wView.lock())
-                {
-                    if (view->Handle(event))
-                    {
-                        break; // TODO: replace with function call and use return instead of break
-                    }
-                }
-            }
         }
-        else {
-            for (auto& wView : m_ViewContainer) // TODO: reverse iteration order
+
+        for (auto wView = m_ViewContainer.rbegin(); wView != m_ViewContainer.rend(); ++wView)
+        {
+            if (auto view = wView->lock())
             {
-                if (auto view = wView.lock())
+                if (view->Handle(event))
                 {
-                    if (view->Handle(event))
-                    {
-                        break; // TODO: replace with function call and use return instead of break
-                    }
+                    break;
                 }
             }
         }

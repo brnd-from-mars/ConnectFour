@@ -60,7 +60,7 @@ void GridFieldController::SetChip(int player)
     }
 
     auto center = m_GridFieldView->GetCenter();
-    m_Chip = std::make_shared<ChipController>(player, center.x, center.y);
+    m_Chip = ChipController::MakeChip(player, center.x, center.y);
 }
 
 
