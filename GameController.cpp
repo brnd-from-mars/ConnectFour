@@ -2,9 +2,9 @@
 // Created by Brendan Berg on 10.03.22.
 //
 
-#include "GameController.hpp"
-
 #include <iostream>
+
+#include "GameController.hpp"
 
 #include "AppDelegate.hpp"
 

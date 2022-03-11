@@ -28,7 +28,6 @@ private:
     std::weak_ptr<GameController> m_GameController;
 
     int m_Columns;
-
     int m_Rows;
 
 
