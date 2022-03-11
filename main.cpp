@@ -1,15 +1,10 @@
-#include <string>
 #include <cmath>
-#include <iostream>
 #include <vector>
 
 #include "AppDelegate.hpp"
 
 #include "GameController.hpp"
-#include "ChipController.hpp"
-#include "TextFieldView.hpp"
 #include "TextFieldController.hpp"
-#include "ButtonView.hpp"
 #include "TextView.hpp"
 
 
@@ -46,9 +41,9 @@ int main(int argc, const char** argv)
 
     auto tf = TextFieldController::MakeTextField(750.0f, 170.0f, 200.0f);
 
-    auto text1 = std::make_shared<TextView>(48.0f, 22.0f, 75.0f, "Tron", "C0nnect F0UR", ColorPalette::Cyan);
+    auto text1 = std::make_shared<TextView>(48.0f, 22.0f, 75.0f, "Tron", "C0nnect F0ur", ColorPalette::Cyan);
     AppDelegate::Get()->RegisterView(text1);
-    auto text2 = std::make_shared<TextView>(52.0f, 26.0f, 75.0f, "Tron", "C0nnect F0UR", ColorPalette::Orange);
+    auto text2 = std::make_shared<TextView>(52.0f, 26.0f, 75.0f, "Tron", "C0nnect F0ur", ColorPalette::Orange);
     AppDelegate::Get()->RegisterView(text2);
 
     while (AppDelegate::Get()->Update())

@@ -22,7 +22,8 @@ class SessionController : public BaseController
 
 public:
 
-    static std::shared_ptr<SessionController> MakeSessionController(const std::weak_ptr<GameController>& gameController, int columns, int rows);
+    static std::shared_ptr<SessionController> MakeSessionController(const std::weak_ptr<GameController>& gameController,
+                                                                    int columns, int rows);
 
     explicit SessionController(std::weak_ptr<GameController> gameController, int columns, int rows);
 
@@ -36,7 +37,6 @@ public:
 
     bool IsOngoing() const;
 
-    // TODO: outsource to model
     int GetPlayerAt(int column, int row) const;
 
 

@@ -35,6 +35,10 @@ namespace ColorPalette
 class AppDelegate
 {
 
+private:
+
+    AppDelegate();
+
 public:
 
     // TODO: disallow copy
@@ -60,16 +64,12 @@ public:
 
 private:
 
-    AppDelegate();
-
     static AppDelegate* instance;
 
     std::shared_ptr<sf::RenderWindow> m_Window;
 
     std::list<std::weak_ptr<BaseModel>> m_ModelContainer;
-
     std::list<std::weak_ptr<BaseView>> m_ViewContainer;
-
     std::list<std::weak_ptr<BaseController>> m_ControllerContainer;
 
 

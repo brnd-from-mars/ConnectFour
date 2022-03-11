@@ -2,9 +2,9 @@
 // Created by Brendan Berg on 07.03.22.
 //
 
-#include "AppDelegate.hpp"
-
 #include <iostream>
+
+#include "AppDelegate.hpp"
 
 #include "BaseModel.hpp"
 #include "BaseView.hpp"
@@ -12,6 +12,17 @@
 
 
 AppDelegate* AppDelegate::instance = nullptr;
+
+
+AppDelegate::AppDelegate()
+{
+    if (instance != nullptr)
+    {
+        // singleton implementation does not guarantee single instance creation (e.g. in multi-threading)
+        throw std::runtime_error("Singleton AppDelegate was constructed multiple times");
+    }
+    std::clog << "AppDelegate constructed" << std::endl;
+}
 
 
 AppDelegate::~AppDelegate()
@@ -169,15 +180,4 @@ bool AppDelegate::Update()
     m_Window->setFramerateLimit(30);
 
     return m_Window->isOpen();
-}
-
-
-AppDelegate::AppDelegate()
-{
-    if (instance != nullptr)
-    {
-        // singleton implementation does not guarantee single instance creation (e.g. in multi-threading)
-        throw std::runtime_error("Singleton AppDelegate was constructed multiple times");
-    }
-    std::clog << "AppDelegate constructed" << std::endl;
 }
