@@ -19,6 +19,7 @@ namespace ColorPalette
 {
     const sf::Color Basestar = sf::Color(12, 20, 31);
     const sf::Color BasestarDark = sf::Color(8, 13, 21);
+    const sf::Color BasestarLight = sf::Color(16, 27, 41);
 
     const sf::Color Orange = sf::Color(233, 126, 22);
     const sf::Color Cyan = sf::Color(0, 255, 255);

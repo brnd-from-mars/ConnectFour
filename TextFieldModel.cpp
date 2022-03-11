@@ -6,14 +6,13 @@
 
 
 void TextFieldModel::Update()
-{
-
-}
+{ }
 
 
 void TextFieldModel::AddCharacter(char character)
 {
-    if (31 < character && character<127) {
+    if (31 < character && character < 127)
+    {
         m_Text.push_back(character);
     }
 }

@@ -1,69 +1,90 @@
-#include "TextFieldView.hpp"
-#include "AppDelegate.hpp"
-#include "TextFieldController.hpp"
+//
+// Created by Florian Wolff on 09.03.22.
+//
+
 #include <iostream>
 
+#include "TextFieldView.hpp"
+#include "TextFieldController.hpp"
+
+#include "AppDelegate.hpp"
 
 
+TextFieldView::TextFieldView(float x, float y, float width, const std::string& placeholder, sf::Color highlightColor)
+    : m_HighlightColor(highlightColor)
+{
+    m_Layer = 1;
 
-TextFieldView::TextFieldView(float x, float y, float width) {
-
-    if (!m_Standard.loadFromFile("Standard.ttf"))
+    if (!m_Font.loadFromFile("Standard.ttf"))
     {
-        throw std::runtime_error("FAIL!");
+        throw std::runtime_error("Error while loading Standard.ttf");
     }
     
-    m_TextField.setSize(sf::Vector2f(width, 25.f));
+    m_TextField.setSize(sf::Vector2f(width, 25.0f));
     m_TextField.setPosition(sf::Vector2f(x, y));
-    m_TextField.setFillColor(ColorPalette::Pane);
-    m_TextField.setOutlineThickness(2.f);
-    m_TextField.setOutlineColor(ColorPalette::PrussianBlue);
+    m_TextField.setFillColor(ColorPalette::BasestarLight);
+    m_TextField.setOutlineThickness(2.0f);
 
-    m_TextShape.setFont(m_Standard);
-    m_TextShape.setString(m_Text);
+    m_TextShape.setFont(m_Font);
     m_TextShape.setCharacterSize(20);
-    m_TextShape.setPosition(sf::Vector2f(x+5, y));
-    m_TextShape.setFillColor(sf::Color::Black);
-}
+    m_TextShape.setPosition(sf::Vector2f(x + 5.0f, y));
+    m_TextShape.setFillColor(m_HighlightColor);
 
-void TextFieldView::Draw() {
-    
-    AppDelegate::Get()->GetWindow()->draw(m_TextField);
-    AppDelegate::Get()->GetWindow()->draw(m_TextShape);
-}
+    m_PlaceholderShape.setString(placeholder);
+    m_PlaceholderShape.setFont(m_Font);
+    m_PlaceholderShape.setCharacterSize(20);
+    m_PlaceholderShape.setPosition(sf::Vector2f(x + 5.0f, y));
+    m_PlaceholderShape.setFillColor(ColorPalette::BasestarDark);
 
-bool TextFieldView::HandleFocusReset() {
-    m_focus = false;
     UpdateView();
-	return false;
 }
 
-bool TextFieldView::Handle(sf::Event event) {
 
+void TextFieldView::Draw()
+{
+    AppDelegate::Get()->GetWindow()->draw(m_TextField);
+    AppDelegate::Get()->GetWindow()->draw(m_TextShape.getString().isEmpty() ? m_PlaceholderShape : m_TextShape);
+}
+
+
+bool TextFieldView::HandleFocusReset()
+{
+    m_InFocus = false;
+    UpdateView();
+	return true;
+}
+
+
+bool TextFieldView::Handle(sf::Event event)
+{
     if (event.type == sf::Event::MouseButtonPressed)
     {
         auto dx = event.mouseButton.x - (m_TextField.getPosition().x);
         auto dy = event.mouseButton.y - (m_TextField.getPosition().y);
-        if (((dx>=0)&&(dx<=m_TextField.getSize().x)) && ((dy>=0)&&(dy<=m_TextField.getSize().y)))
+        if (((dx >= 0) && (dx <= m_TextField.getSize().x)) && ((dy >= 0) && (dy <= m_TextField.getSize().y)))
         {
-            m_focus = true;
+            m_InFocus = true;
             UpdateView();
+            return true;
         }
     }
 
-    if (event.type == sf::Event::TextEntered) {
-        if (m_focus == true) {
-            if (event.text.unicode < 128)
-                if(auto a=m_TextFieldController.lock()) {
-                    a->HandleTextEntry(static_cast<char>(event.text.unicode));
+    if (m_InFocus)
+    {
+        if (auto controller = m_TextFieldController.lock())
+        {
+            if (event.type == sf::Event::TextEntered)
+            {
+                if (event.text.unicode < 128)
+                {
+                    controller->HandleTextEntry(static_cast<char>(event.text.unicode));
                 }
-        }
-    }
-    if (event.type == sf::Event::KeyPressed) {
-        if (m_focus == true) {
-            if (event.key.code == sf::Keyboard::Backspace) {
-                if (auto a = m_TextFieldController.lock()) {
-                    a->HandleDeleteKeyPress();
+            }
+            else if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.code == sf::Keyboard::Backspace)
+                {
+                    controller->HandleDeleteKeyPress();
                 }
             }
         }
@@ -71,16 +92,15 @@ bool TextFieldView::Handle(sf::Event event) {
 
 	return false;
 }
-void TextFieldView::SetText(std::string Text) {
-    m_Text = Text;
-    m_TextShape.setString(m_Text);
+
+
+void TextFieldView::SetText(const std::string& text)
+{
+    m_TextShape.setString(text);
 }
 
-void TextFieldView::UpdateView() {
-    if (m_focus == true) {
-        m_TextField.setOutlineColor(ColorPalette::Orange);
-    }
-    else {
-        m_TextField.setOutlineColor(ColorPalette::PrussianBlue);
-    }
+
+void TextFieldView::UpdateView()
+{
+    m_TextField.setOutlineColor(m_InFocus ? m_HighlightColor : ColorPalette::BasestarDark);
 }

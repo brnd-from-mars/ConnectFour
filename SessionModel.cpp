@@ -2,6 +2,8 @@
 // Created by Brendan Berg on 10.03.22.
 //
 
+#include <iostream>
+
 #include "SessionModel.hpp"
 #include "SessionController.hpp"
 
@@ -204,7 +206,7 @@ SessionModel::PlayerState SessionModel::CheckDiagonal(int column, int row)
 
 SessionModel::PlayerState SessionModel::CheckFieldFull() const
 {
-	for (int x = 0; x <= m_Columns; ++x)
+	for (int x = 0; x < m_Columns; ++x)
 	{
 		if (GetPlayerAt(x, m_Rows - 1) == PlayerState::none)
 		{
