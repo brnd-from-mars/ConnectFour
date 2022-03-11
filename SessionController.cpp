@@ -46,9 +46,7 @@ SessionController::~SessionController()
 
 
 void SessionController::Update()
-{
-
-}
+{ }
 
 
 void SessionController::HandleColumnClick(int column)
@@ -59,17 +57,14 @@ void SessionController::HandleColumnClick(int column)
 
 void SessionController::InitGrid()
 {
-    if (auto game = m_GameController.lock())
+    m_Grid.resize(m_SessionModel->m_Columns);
+    for (auto column = 0; column < m_SessionModel->m_Columns; ++column)
     {
-        m_Grid.resize(m_SessionModel->m_Columns);
-        for (auto column = 0; column < m_SessionModel->m_Columns; ++column)
+        m_Grid[column].reserve(m_SessionModel->m_Rows);
+        for (auto row = 0; row < m_SessionModel->m_Rows; ++row)
         {
-            m_Grid[column].reserve(m_SessionModel->m_Rows);
-            for (auto row = 0; row < m_SessionModel->m_Rows; ++row)
-            {
-                auto gridField = GridFieldController::MakeGridFieldController(m_SessionController, column, row);
-                m_Grid[column].push_back(gridField);
-            }
+            auto gridField = GridFieldController::MakeGridFieldController(m_SessionController, column, row);
+            m_Grid[column].push_back(gridField);
         }
     }
 }

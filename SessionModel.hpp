@@ -5,29 +5,40 @@
 #pragma once
 
 #include <memory>
+#include <vector>
+
+#include <SFML/Graphics.hpp>
 
 #include "BaseModel.hpp"
 
 class SessionController;
 
 
-enum class SessionState
-{
-    namePlayer1,
-    namePlayer2,
-    colorPlayerA,
-    colorPlayerB,
-    inGame,
-    finished
-};
-
-
 class SessionModel : public BaseModel
 {
     friend SessionController;
- 
+
 
 public:
+
+    enum class State
+    {
+        namePlayer1,
+        namePlayer2,
+        colorPlayerA,
+        colorPlayerB,
+        inGame,
+        finished,
+        terminated
+    };
+
+    enum class PlayerState
+    {
+        none = 0,
+        player1 = 1,
+        player2 = 2,
+        tie = 3
+    };
 
     SessionModel(int columns, int rows);
 
@@ -37,33 +48,28 @@ public:
 
     bool IsOngoing() const;
 
-    int get_winningPlayer(int row, int col);
+    PlayerState GetPlayerAt(int column, int row) const;
 
-    int GetPlayerAt(int column, int row) const;
+    PlayerState GetWinState(int column, int row);
+
 
 private:
 
     std::weak_ptr<SessionController> m_SessionController;
 
     int m_Columns;
-
     int m_Rows;
 
-    SessionState m_State;
-
+    State m_State = State::inGame; // TODO: change to State::namePlayer1 after text field is added
     int m_CurrentPlayer = 1;
 
-    int check_diagonal(int row, int col);
+    sf::Vector2i m_WinningChips[4];
 
-    int check_vertical(int row, int col);
-
-    int check_horizontal(int row, int col);
-
-    void check_Chips(int row, int col, int& prev, int& count);
-
-    bool full_matchfield();
-
-    int winningChips[2][4]{}; //enthaelt 4 Koordinaten der gewinnenden Steine
+    void CheckChips(int column, int row, PlayerState& prev, int& count);
+    PlayerState CheckHorizontal(int column, int row);
+    PlayerState CheckVertical(int column, int row);
+    PlayerState CheckDiagonal(int column, int row);
+    PlayerState CheckFieldFull() const;
 
 
 };
