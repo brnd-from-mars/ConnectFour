@@ -2,36 +2,31 @@
 // Created by Brendan Berg on 09.03.22.
 //
 
-#include "ChipView.hpp"
-
 #include <cmath>
+#include <iostream>
+
+#include "ChipView.hpp"
+#include "ChipController.hpp"
 
 #include "AppDelegate.hpp"
 
-#include "ChipController.hpp"
 
-
-ChipView::ChipView(float x, float y)
-    : m_Circle(m_InnerRadius), m_Ring(m_OuterRadius)
+ChipView::ChipView(float x, float y, sf::Color circleColor, sf::Color highlightColor)
+    : m_Circle(m_InnerRadius), m_Ring(m_OuterRadius), m_CircleColor(circleColor), m_HighlightColor(highlightColor)
 {
     m_Layer = 2;
 
+    m_Ring.setFillColor(m_CircleColor);
     m_Ring.setPosition(x - m_OuterRadius, y - m_OuterRadius);
+
+    m_Circle.setFillColor(m_CircleColor);
     m_Circle.setPosition(x - m_InnerRadius, y - m_InnerRadius);
-}
-
-
-void ChipView::SetFillColor(sf::Color color)
-{
-    m_Ring.setFillColor(m_RingEnabled ? sf::Color(255, 255, 255) : color);
-    m_Circle.setFillColor(color);
 }
 
 
 void ChipView::EnableRing(bool enable)
 {
-    m_RingEnabled = enable;
-    m_Ring.setFillColor(m_RingEnabled ? sf::Color(255, 255, 255) : m_Circle.getFillColor());
+    m_Ring.setFillColor(enable ? m_HighlightColor : m_CircleColor);
 }
 
 
@@ -47,6 +42,7 @@ bool ChipView::HandleFocusReset()
     if (auto controller = m_ChipController.lock())
     {
         controller->HandleFocusReset();
+        return true;
     }
     return false;
 }
@@ -54,6 +50,11 @@ bool ChipView::HandleFocusReset()
 
 bool ChipView::Handle(sf::Event event)
 {
+    if (!m_HandleEvents)
+    {
+        return false;
+    }
+
     if (event.type == sf::Event::MouseButtonPressed)
     {
         auto dx = event.mouseButton.x - (m_Circle.getPosition().x + m_OuterRadius);
