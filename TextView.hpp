@@ -17,6 +17,9 @@ class TextView : public BaseView
 
 public:
 
+    static std::shared_ptr<TextView> MakeText(float x, float y, float size, const std::string& font,
+                                              const std::string& text, sf::Color color);
+
     TextView(float x, float y, float size, const std::string& font, const std::string& text, sf::Color color);
 
     void Draw() override;

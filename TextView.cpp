@@ -3,6 +3,14 @@
 #include <iostream>
 
 
+std::shared_ptr<TextView> TextView::MakeText(float x, float y, float size, const std::string& font,
+                                             const std::string& text, sf::Color color)
+{
+    auto view = std::make_shared<TextView>(x, y, size, font, text, color);
+    AppDelegate::Get()->RegisterView(view);
+
+    return view;
+}
 
 
 TextView::TextView(float x, float y, float size, const std::string& font, const std::string& text, sf::Color color)
