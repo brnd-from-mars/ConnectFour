@@ -1,10 +1,8 @@
 #include <cmath>
-#include <vector>
 
 #include "AppDelegate.hpp"
 
 #include "GameController.hpp"
-#include "TextFieldController.hpp"
 #include "TextView.hpp"
 
 
@@ -39,12 +37,7 @@ int main(int argc, const char** argv)
 
     auto game = GameController::MakeGameController(columns, rows);
 
-    auto text1 = TextView::MakeText(48.0f, 22.0f, 75.0f, "Tron", "C0nnect F0ur", ColorPalette::Cyan);
-    auto text2 = TextView::MakeText(52.0f, 26.0f, 75.0f, "Tron", "C0nnect F0ur", ColorPalette::Orange);
-
-    while (AppDelegate::Get()->Update())
-    {
-    }
+    while (AppDelegate::Get()->Update());
 
     AppDelegate::Delete();
 
