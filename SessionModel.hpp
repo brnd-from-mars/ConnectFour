@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <vector>
+#include <string>
 
 #include <SFML/Graphics.hpp>
 
@@ -25,8 +26,7 @@ public:
     {
         namePlayer1,
         namePlayer2,
-        colorPlayerA,
-        colorPlayerB,
+        changeColor,
         inGame,
         finished,
         terminated
@@ -44,6 +44,10 @@ public:
 
     void Update() override;
 
+    void HandleNamePlayer1Enter();
+
+    void HandleNamePlayer2Enter();
+
     void AddChip(int column);
 
     bool IsOngoing() const;
@@ -60,7 +64,7 @@ private:
     int m_Columns;
     int m_Rows;
 
-    State m_State = State::inGame; // TODO: change to State::namePlayer1 after text field is added
+    State m_State = State::namePlayer1; // TODO: change to State::namePlayer1 after text field is added
     int m_CurrentPlayer = 1;
 
     sf::Vector2i m_WinningChips[4];
