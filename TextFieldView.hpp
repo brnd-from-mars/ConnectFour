@@ -6,7 +6,6 @@
 
 #include <memory>
 #include <string>
-#include <optional>
 
 #include <SFML/Graphics.hpp>
 
