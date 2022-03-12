@@ -2,8 +2,6 @@
 // Created by Florian Wolff on 09.03.22.
 //
 
-#include <iostream>
-
 #include "TextFieldView.hpp"
 #include "TextFieldController.hpp"
 
@@ -13,7 +11,7 @@
 TextFieldView::TextFieldView(float x, float y, float width, const std::string& placeholder, sf::Color highlightColor)
     : m_HighlightColor(highlightColor)
 {
-    m_Layer = 1;
+    m_Layer = 2;
 
     if (!m_Font.loadFromFile("Standard.ttf"))
     {
