@@ -6,7 +6,6 @@
 
 #include <memory>
 #include <functional>
-#include <iostream>
 
 #include <SFML/Graphics.hpp>
 
@@ -20,6 +19,7 @@ class TextFieldController : public BaseController
 {
     friend TextFieldModel;
     friend TextFieldView;
+
 
 public:
 

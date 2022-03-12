@@ -10,7 +10,7 @@
 #include "BaseController.hpp"
 
 #include "TextFieldController.hpp"
-#include "ButtonView.hpp" // TODO: replace with button controller
+#include "ButtonController.hpp"
 #include "GridFieldController.hpp"
 
 class SessionModel;
@@ -42,11 +42,13 @@ public:
 
     void InitGrid();
 
-    void HandleColumnClick(int column);
+    void HandleTerminateGamePress();
 
     void HandleNamePlayer1Enter();
 
     void HandleNamePlayer2Enter();
+
+    void HandleColumnClick(int column);
 
     bool IsOngoing() const;
 
@@ -62,7 +64,7 @@ private:
 
     std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
 
-    std::shared_ptr<ButtonView> m_TerminateGameButton;
+    std::shared_ptr<ButtonController> m_TerminateGameButton;
     std::shared_ptr<TextFieldController> m_NamePlayer1TextField;
     std::shared_ptr<TextFieldController> m_NamePlayer2TextField;
 };
