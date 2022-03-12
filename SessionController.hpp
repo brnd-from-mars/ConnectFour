@@ -33,11 +33,17 @@ public:
 
     void Update() override;
 
+    void InitNamePlayer1();
+
+    void InitNamePlayer2();
+
+    void InitGrid();
+
     void HandleColumnClick(int column);
 
     void HandleNamePlayer1Enter();
 
-    void InitGrid();
+    void HandleNamePlayer2Enter();
 
     bool IsOngoing() const;
 

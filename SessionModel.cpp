@@ -17,6 +17,24 @@ void SessionModel::Update()
 { }
 
 
+void SessionModel::HandleNamePlayer1Enter()
+{
+    if (m_State == State::namePlayer1)
+    {
+        m_State = State::namePlayer2;
+    }
+}
+
+
+void SessionModel::HandleNamePlayer2Enter()
+{
+    if (m_State == State::namePlayer2)
+    {
+        m_State = State::inGame; // TODO: State::inGame to change to State::changeColor
+    }
+}
+
+
 void SessionModel::AddChip(int column)
 {
     if (m_State != State::inGame)
