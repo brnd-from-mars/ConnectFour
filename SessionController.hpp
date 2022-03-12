@@ -21,6 +21,7 @@ class SessionController : public BaseController
 {
     friend SessionModel;
 
+
 public:
 
     static std::shared_ptr<SessionController> MakeSessionController(const std::weak_ptr<GameController>& gameController,
@@ -33,6 +34,8 @@ public:
     void Update() override;
 
     void HandleColumnClick(int column);
+
+    void HandleNamePlayer1Enter();
 
     void InitGrid();
 

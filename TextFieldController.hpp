@@ -5,6 +5,8 @@
 #pragma once
 
 #include <memory>
+#include <functional>
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 
@@ -30,7 +32,13 @@ public:
 
     void HandleTextEntry(char character);
 
-    void HandleDeleteKeyPress();
+    void HandleBackspaceKeyPress();
+
+    void HandleEnterKeyPress();
+
+    void RegisterEnterKeyPressCallback(const std::function<void()>& callback);
+
+    std::string GetText() const;
 
     void UpdateView();
 
@@ -39,6 +47,8 @@ private:
 
     std::shared_ptr<TextFieldModel> m_TextFieldModel;
     std::shared_ptr<TextFieldView> m_TextFieldView;
+
+    std::optional<std::function<void()>> m_EnterKeyPressCallback = std::nullopt;
 
 
 };
