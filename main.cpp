@@ -39,10 +39,8 @@ int main(int argc, const char** argv)
 
     auto game = GameController::MakeGameController(columns, rows);
 
-    auto text1 = std::make_shared<TextView>(48.0f, 22.0f, 75.0f, "Tron", "C0nnect F0ur", ColorPalette::Cyan);
-    AppDelegate::Get()->RegisterView(text1);
-    auto text2 = std::make_shared<TextView>(52.0f, 26.0f, 75.0f, "Tron", "C0nnect F0ur", ColorPalette::Orange);
-    AppDelegate::Get()->RegisterView(text2);
+    auto text1 = TextView::MakeText(48.0f, 22.0f, 75.0f, "Tron", "C0nnect F0ur", ColorPalette::Cyan);
+    auto text2 = TextView::MakeText(52.0f, 26.0f, 75.0f, "Tron", "C0nnect F0ur", ColorPalette::Orange);
 
     while (AppDelegate::Get()->Update())
     {
