@@ -86,6 +86,7 @@ bool TextFieldView::Handle(sf::Event event)
                         controller->HandleBackspaceKeyPress();
                         break;
                     case sf::Keyboard::Enter:
+                        HandleFocusReset();
                         controller->HandleEnterKeyPress();
                         break;
                     default:
