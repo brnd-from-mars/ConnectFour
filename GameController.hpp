@@ -11,6 +11,7 @@
 #include "GameModel.hpp"
 
 #include "SessionController.hpp"
+#include "TextView.hpp"
 
 
 class GameController : public BaseController
@@ -35,6 +36,9 @@ private:
     std::weak_ptr<GameController> m_GameController;
 
     std::shared_ptr<SessionController> m_SessionController;
+
+    std::shared_ptr<TextView> m_HeadlineCyan;
+    std::shared_ptr<TextView> m_HeadlineOrange;
 
 
 };
