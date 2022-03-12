@@ -82,9 +82,16 @@ bool TextFieldView::Handle(sf::Event event)
             }
             else if (event.type == sf::Event::KeyPressed)
             {
-                if (event.key.code == sf::Keyboard::Backspace)
+                switch (event.key.code)
                 {
-                    controller->HandleDeleteKeyPress();
+                    case sf::Keyboard::Backspace:
+                        controller->HandleBackspaceKeyPress();
+                        break;
+                    case sf::Keyboard::Enter:
+                        controller->HandleEnterKeyPress();
+                        break;
+                    default:
+                        break;
                 }
             }
         }

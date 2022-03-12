@@ -25,6 +25,15 @@ SessionController::MakeSessionController(const std::weak_ptr<GameController>& ga
 
     controller->InitGrid();
 
+    auto wController = controller->m_SessionModel->m_SessionController;
+    controller->m_NamePlayer1->RegisterEnterKeyPressCallback([wController]()
+                                                             {
+                                                                 if (auto controller = wController.lock())
+                                                                 {
+                                                                     controller->HandleNamePlayer1Enter();
+                                                                 }
+                                                             });
+
     return controller;
 }
 
@@ -55,6 +64,12 @@ void SessionController::Update()
 void SessionController::HandleColumnClick(int column)
 {
     m_SessionModel->AddChip(column);
+}
+
+
+void SessionController::HandleNamePlayer1Enter()
+{
+    std::cout << "Player1 Name: " << m_NamePlayer1->GetText() << std::endl;
 }
 
 

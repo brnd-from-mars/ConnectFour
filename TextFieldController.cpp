@@ -2,6 +2,8 @@
 // Created by Brendan Berg on 09.03.22.
 //
 
+#include <iostream>
+
 #include "TextFieldController.hpp"
 
 #include "AppDelegate.hpp"
@@ -35,9 +37,7 @@ TextFieldController::TextFieldController(float x, float y, float width,
 
 
 void TextFieldController::Update()
-{
-
-}
+{ }
 
 
 void TextFieldController::HandleTextEntry(char character)
@@ -47,10 +47,32 @@ void TextFieldController::HandleTextEntry(char character)
 }
 
 
-void TextFieldController::HandleDeleteKeyPress()
+void TextFieldController::HandleBackspaceKeyPress()
 {
     m_TextFieldModel->DeleteCharacter();
     UpdateView();
+}
+
+
+void TextFieldController::HandleEnterKeyPress()
+{
+    if (m_EnterKeyPressCallback)
+    {
+        auto callback = m_EnterKeyPressCallback.value();
+        callback();
+    }
+}
+
+
+void TextFieldController::RegisterEnterKeyPressCallback(const std::function<void()>& callback)
+{
+    m_EnterKeyPressCallback = callback;
+}
+
+
+std::string TextFieldController::GetText() const
+{
+    return m_TextFieldModel->m_Text;
 }
 
 
