@@ -2,14 +2,13 @@
 // Created by Brendan Berg on 10.03.22.
 //
 
+#include "SessionModel.hpp"
 #include "SessionController.hpp"
 
 #include <iostream>
 #include <utility>
 
 #include "AppDelegate.hpp"
-
-#include "SessionModel.hpp"
 
 #include "GameController.hpp"
 
@@ -53,9 +52,16 @@ void SessionController::Update()
 
 void SessionController::InitTerminateGameButton()
 {
-    m_TerminateGameButton = std::make_shared<ButtonView>(982.0f, 625.0f, 218.0f, "TERMINATE GAME",
+    m_TerminateGameButton = ButtonController::MakeButton(982.0f, 625.0f, 218.0f, "TERMINATE GAME",
                                                          ColorPalette::Orange, ColorPalette::BasestarDark);
-    AppDelegate::Get()->RegisterView(m_TerminateGameButton);
+    auto wController = m_SessionController;
+    m_TerminateGameButton->RegisterMousePressCallback([wController]()
+                                                      {
+                                                          if (auto controller = wController.lock())
+                                                          {
+                                                              controller->HandleTerminateGamePress();
+                                                          }
+                                                      });
 }
 
 
@@ -99,6 +105,12 @@ void SessionController::InitGrid()
             m_Grid[column].push_back(gridField);
         }
     }
+}
+
+
+void SessionController::HandleTerminateGamePress()
+{
+    m_SessionModel->m_State = SessionModel::State::terminated;
 }
 
 

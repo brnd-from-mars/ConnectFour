@@ -11,9 +11,13 @@
 
 #include "BaseView.hpp"
 
+class ButtonController;
+
 
 class ButtonView : public BaseView
 {
+    friend ButtonController;
+
 
 public:
 
@@ -30,6 +34,8 @@ public:
 
 
 private:
+
+    std::weak_ptr<ButtonController> m_ButtonController;
 
     sf::RectangleShape m_ButtonField;
     sf::Text m_TextShape;

@@ -2,14 +2,12 @@
 // Created by Brendan Berg on 09.03.22.
 //
 
-#include <iostream>
-
+#include "TextFieldModel.hpp"
+#include "TextFieldView.hpp"
 #include "TextFieldController.hpp"
 
 #include "AppDelegate.hpp"
 
-#include "TextFieldModel.hpp"
-#include "TextFieldView.hpp"
 
 
 std::shared_ptr<TextFieldController> TextFieldController::MakeTextField(float x, float y, float width,
