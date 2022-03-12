@@ -4,17 +4,20 @@
 
 
 std::shared_ptr<TextView> TextView::MakeText(float x, float y, float size, const std::string& font,
-                                             const std::string& text, sf::Color color)
+                                             const std::string& text, sf::Color color, int layer)
 {
-    auto view = std::make_shared<TextView>(x, y, size, font, text, color);
+    auto view = std::make_shared<TextView>(x, y, size, font, text, color, layer);
     AppDelegate::Get()->RegisterView(view);
 
     return view;
 }
 
 
-TextView::TextView(float x, float y, float size, const std::string& font, const std::string& text, sf::Color color)
+TextView::TextView(float x, float y, float size, const std::string& font,
+                   const std::string& text, sf::Color color, int layer)
 {
+    m_Layer = layer;
+
     if (!m_Tron.loadFromFile("Tron.ttf"))
     {
         throw std::runtime_error("FAIL!");
