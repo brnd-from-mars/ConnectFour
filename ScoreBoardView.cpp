@@ -1,10 +1,10 @@
-#include "HighscoreView.hpp"
+#include "ScoreBoardView.hpp"
 #include "AppDelegate.hpp"
 #include "TextFieldController.hpp"
 #include <iostream>
 #include <string>
 
-HighscoreView::HighscoreView(float x, float y) {
+ScoreBoardView::ScoreBoardView(float x, float y) {
 
     if (!m_Standard.loadFromFile("Standard.ttf"))
     {
@@ -51,7 +51,7 @@ HighscoreView::HighscoreView(float x, float y) {
 }
 
 
-void HighscoreView::SetList(std::string Name[5], std::string Score[5]) {
+void ScoreBoardView::SetList(std::string Name[5], std::string Score[5]) {
     for (int i = 0;i < 5;i++) {
         m_Name[i] = Name[i];
         m_NameShape[i].setString(m_Name[i]);
@@ -62,20 +62,20 @@ void HighscoreView::SetList(std::string Name[5], std::string Score[5]) {
     }
 }
 
-void HighscoreView::SetType(float type) {
+void ScoreBoardView::SetType(float type) {
     m_type = type;
     if (m_type == "1") {
         m_TypeShape.setString("Siege nach Anzahl");
     }
     if (m_type == "2") {
-        m_TypeShape.setString("Siege nach wenigsten Zügen");
+        m_TypeShape.setString("Siege nach wenigsten Zï¿½gen");
     }
     if (m_type == "3") {
         m_TypeShape.setString("Siege nach Zeit");
     }
 }
 
-void HighscoreView::Draw() {
+void ScoreBoardView::Draw() {
 
     AppDelegate::Get()->GetWindow()->draw(m_TypeShape);
     for (int i = 0;i < 5;i++) {
@@ -90,18 +90,18 @@ void HighscoreView::Draw() {
     
 }
 
-void HighscoreView::SetText(std::string Text) {
+void ScoreBoardView::SetText(std::string Text) {
 
 }
 
-bool HighscoreView::HandleFocusReset() {
+bool ScoreBoardView::HandleFocusReset() {
 	return false;
 }
 
-bool HighscoreView::Handle(sf::Event event) {
+bool ScoreBoardView::Handle(sf::Event event) {
 	return false;
 }
 
-void HighscoreView::UpdateView() {
+void ScoreBoardView::UpdateView() {
   
 }

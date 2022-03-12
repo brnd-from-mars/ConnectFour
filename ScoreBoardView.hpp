@@ -4,14 +4,14 @@
 #include <string>
 #include <memory>
 
-class HighscoreView : public BaseView
+class ScoreBoardView : public BaseView
 { 
 public:
-    HighscoreView(float x, float y);
+    ScoreBoardView(float x, float y);
     void Draw() override;
     bool HandleFocusReset() override;
     bool Handle(sf::Event event) override;
-    void SetText(std::string Text);//Altered to SetList to display the Highscore
+    void SetText(std::string Text); //Altered to SetList to display the ScoreBoard
     void SetList(std::string Name[5], std::string Score[5]);
     void SetType(float type);
     void UpdateView();
