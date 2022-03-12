@@ -9,8 +9,9 @@
 
 #include "BaseController.hpp"
 
-#include "GridFieldController.hpp"
 #include "TextFieldController.hpp"
+#include "ButtonView.hpp" // TODO: replace with button controller
+#include "GridFieldController.hpp"
 
 class SessionModel;
 
@@ -33,9 +34,11 @@ public:
 
     void Update() override;
 
-    void InitNamePlayer1();
+    void InitTerminateGameButton();
 
-    void InitNamePlayer2();
+    void InitNamePlayer1TextField();
+
+    void InitNamePlayer2TextField();
 
     void InitGrid();
 
@@ -59,8 +62,7 @@ private:
 
     std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
 
-    std::shared_ptr<TextFieldController> m_NamePlayer1;
-    std::shared_ptr<TextFieldController> m_NamePlayer2;
-
-
+    std::shared_ptr<ButtonView> m_TerminateGameButton;
+    std::shared_ptr<TextFieldController> m_NamePlayer1TextField;
+    std::shared_ptr<TextFieldController> m_NamePlayer2TextField;
 };

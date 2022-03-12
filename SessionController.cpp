@@ -23,7 +23,8 @@ SessionController::MakeSessionController(const std::weak_ptr<GameController>& ga
     controller->m_SessionModel->m_SessionController = controller;
     controller->m_SessionController = controller;
 
-    controller->InitNamePlayer1();
+    controller->InitTerminateGameButton();
+    controller->InitNamePlayer1TextField();
     controller->InitGrid();
 
     return controller;
@@ -50,31 +51,39 @@ void SessionController::Update()
 { }
 
 
-void SessionController::InitNamePlayer1()
+void SessionController::InitTerminateGameButton()
 {
-    m_NamePlayer1 = TextFieldController::MakeTextField(750.0f, 150.0f, 300.0f, "Player1", ColorPalette::Pred);
-    auto wController = m_SessionController;
-    m_NamePlayer1->RegisterEnterKeyPressCallback([wController]()
-                                                 {
-                                                     if (auto controller = wController.lock())
-                                                     {
-                                                         controller->HandleNamePlayer1Enter();
-                                                     }
-                                                 });
+    m_TerminateGameButton = std::make_shared<ButtonView>(982.0f, 625.0f, 218.0f, "TERMINATE GAME",
+                                                         ColorPalette::Orange, ColorPalette::BasestarDark);
+    AppDelegate::Get()->RegisterView(m_TerminateGameButton);
 }
 
 
-void SessionController::InitNamePlayer2()
+void SessionController::InitNamePlayer1TextField()
 {
-    m_NamePlayer2 = TextFieldController::MakeTextField(875.0f, 200.0f, 300.0f, "Player2", ColorPalette::Cyan);
+    m_NamePlayer1TextField = TextFieldController::MakeTextField(750.0f, 150.0f, 300.0f, "Player1", ColorPalette::Pred);
     auto wController = m_SessionController;
-    m_NamePlayer2->RegisterEnterKeyPressCallback([wController]()
-                                                 {
-                                                     if (auto controller = wController.lock())
-                                                     {
-                                                         controller->HandleNamePlayer2Enter();
-                                                     }
-                                                 });
+    m_NamePlayer1TextField->RegisterEnterKeyPressCallback([wController]()
+                                                          {
+                                                              if (auto controller = wController.lock())
+                                                              {
+                                                                  controller->HandleNamePlayer1Enter();
+                                                              }
+                                                          });
+}
+
+
+void SessionController::InitNamePlayer2TextField()
+{
+    m_NamePlayer2TextField = TextFieldController::MakeTextField(900.0f, 200.0f, 300.0f, "Player2", ColorPalette::Cyan);
+    auto wController = m_SessionController;
+    m_NamePlayer2TextField->RegisterEnterKeyPressCallback([wController]()
+                                                          {
+                                                              if (auto controller = wController.lock())
+                                                              {
+                                                                  controller->HandleNamePlayer2Enter();
+                                                              }
+                                                          });
 }
 
 
@@ -102,7 +111,7 @@ void SessionController::HandleColumnClick(int column)
 void SessionController::HandleNamePlayer1Enter()
 {
     m_SessionModel->HandleNamePlayer1Enter();
-    InitNamePlayer2();
+    InitNamePlayer2TextField();
 }
 
 
