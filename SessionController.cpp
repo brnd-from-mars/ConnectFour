@@ -60,7 +60,7 @@ void SessionController::Update()
 
 void SessionController::InitTerminateGameButton()
 {
-    m_TerminateGameButton = ButtonController::MakeButton(932.0f, 625.0f, 218.0f, "TERMINATE GAME",
+    m_TerminateGameButton = ButtonController::MakeButton(932.0f, 625.0f, 218.0f, "T3RMINAT3 GAM3",
                                                          ColorPalette::Orange, ColorPalette::BasestarDark);
     auto wController = m_SessionController;
     m_TerminateGameButton->RegisterMousePressCallback([wController]()
@@ -140,6 +140,12 @@ void SessionController::InitPickColorPrompt()
 void SessionController::InitArrow()
 {
     m_CurrentPlayerArrow = ArrowView::MakeArrow(0.0f, 0.0f, ColorPalette::Orange);
+}
+
+
+void SessionController::InitClock()
+{
+    m_Clock = ClockController::MakeClock(995.0f, 25.0f, ColorPalette::Orange);
 }
 
 
@@ -227,6 +233,7 @@ void SessionController::HandleColorPick(bool changeColors)
     m_ColorPickerCyanButton.reset();
 
     InitArrow();
+    InitClock();
     m_SessionModel->HandleColorPick();
 }
 
@@ -240,6 +247,7 @@ void SessionController::HandleColumnClick(int column)
 void SessionController::HandleGameEnd(PlayerState winState)
 {
     m_CurrentPlayerArrow.reset();
+    m_Clock->Stop();
 
     if (winState == PlayerState::none)
     {
@@ -248,7 +256,7 @@ void SessionController::HandleGameEnd(PlayerState winState)
     else if (winState == PlayerState::tie)
     {
         m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard",
-                                                "It's a tie! (-;", ColorPalette::Orange);
+                                                "It's a tie!", ColorPalette::Orange);
     }
     else
     {

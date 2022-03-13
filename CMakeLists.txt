@@ -11,6 +11,7 @@ add_executable(FourWins main.cpp AppDelegate.cpp
         GridFieldModel.cpp GridFieldView.cpp GridFieldController.cpp
         ChipModel.cpp ChipView.cpp ChipController.cpp
         TextFieldModel.cpp TextFieldView.cpp TextFieldController.cpp
+        ClockModel.cpp ClockView.cpp ClockController.cpp
         ButtonView.cpp ButtonController.cpp
         TextView.cpp
         ArrowView.cpp

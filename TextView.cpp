@@ -26,7 +26,7 @@ TextView::TextView(float x, float y, unsigned int size, const std::string& font,
     fontFile.append(".ttf");
     if (!m_Font.loadFromFile(fontFile))
     {
-        throw std::runtime_error("FAIL!");
+        throw std::runtime_error("FAIL!"); // TODO: edit error message
     }
 
     m_TextShape.setString(text);

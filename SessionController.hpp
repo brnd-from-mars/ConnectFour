@@ -11,6 +11,7 @@
 
 #include "ArrowView.hpp"
 #include "TextView.hpp"
+#include "ClockController.hpp"
 #include "ButtonController.hpp"
 #include "TextFieldController.hpp"
 #include "GridFieldController.hpp"
@@ -46,6 +47,8 @@ public:
     void InitPickColorPrompt();
 
     void InitArrow();
+
+    void InitClock();
 
     void InitGrid();
 
@@ -84,6 +87,7 @@ private:
     std::shared_ptr<TextView> m_StatusNameText;
     std::shared_ptr<TextView> m_StatusPromptText;
     std::shared_ptr<ArrowView> m_CurrentPlayerArrow;
+    std::shared_ptr<ClockController> m_Clock;
     std::shared_ptr<ButtonController> m_TerminateGameButton;
     std::shared_ptr<ButtonController> m_ColorPickerPredButton;
     std::shared_ptr<ButtonController> m_ColorPickerCyanButton;
