@@ -9,6 +9,7 @@
 
 #include "BaseController.hpp"
 
+#include "ArrowView.hpp"
 #include "TextView.hpp"
 #include "ButtonController.hpp"
 #include "TextFieldController.hpp"
@@ -43,6 +44,8 @@ public:
 
     void InitPickColorPrompt();
 
+    void InitArrow();
+
     void InitGrid();
 
     void HandleTerminateGamePress();
@@ -72,9 +75,12 @@ private:
     std::weak_ptr<GameController> m_GameController;
 
     int m_ColorPickingPlayer = 0;
+    bool m_ColorChange = false;
+
     std::shared_ptr<TextView> m_VSTextView;
     std::shared_ptr<TextView> m_ColorPickerNameTextView;
     std::shared_ptr<TextView> m_ColorPickerPromptTextView;
+    std::shared_ptr<ArrowView> m_CurrentPlayerArrow;
     std::shared_ptr<ButtonController> m_TerminateGameButton;
     std::shared_ptr<ButtonController> m_ColorPickerPredButton;
     std::shared_ptr<ButtonController> m_ColorPickerCyanButton;
