@@ -111,6 +111,13 @@ void TextFieldView::SetHighlightColor(sf::Color highlightColor)
 void TextFieldView::SetText(const std::string& text)
 {
     m_TextShape.setString(text);
+    if (m_TextShape.getGlobalBounds().width > m_TextField.getGlobalBounds().width - 10.0f)
+    {
+        if (auto controller = m_TextFieldController.lock())
+        {
+            controller->HandleBackspaceKeyPress();
+        }
+    }
 }
 
 
