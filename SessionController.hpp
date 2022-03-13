@@ -16,6 +16,7 @@
 #include "GridFieldController.hpp"
 
 class SessionModel;
+enum class PlayerState;
 
 class GameController;
 
@@ -62,6 +63,8 @@ public:
 
     void HandleColumnClick(int column);
 
+    void HandleGameEnd(PlayerState winState);
+
     bool IsOngoing() const;
 
     int GetPlayerAt(int column, int row) const;
@@ -78,8 +81,8 @@ private:
     bool m_ColorChange = false;
 
     std::shared_ptr<TextView> m_VSTextView;
-    std::shared_ptr<TextView> m_ColorPickerNameTextView;
-    std::shared_ptr<TextView> m_ColorPickerPromptTextView;
+    std::shared_ptr<TextView> m_StatusNameText;
+    std::shared_ptr<TextView> m_StatusPromptText;
     std::shared_ptr<ArrowView> m_CurrentPlayerArrow;
     std::shared_ptr<ButtonController> m_TerminateGameButton;
     std::shared_ptr<ButtonController> m_ColorPickerPredButton;

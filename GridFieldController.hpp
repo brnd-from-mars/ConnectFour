@@ -35,6 +35,8 @@ public:
 
     void SetChip(int player);
 
+    void SetHighlightChip(bool highlight);
+
     bool HasChip() const;
 
     int GetPlayer() const;

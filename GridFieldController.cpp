@@ -64,6 +64,17 @@ void GridFieldController::SetChip(int player)
 }
 
 
+void GridFieldController::SetHighlightChip(bool highlight)
+{
+    if (!m_Chip)
+    {
+        return;
+    }
+
+    m_Chip->SetHighlight(highlight);
+}
+
+
 bool GridFieldController::HasChip() const
 {
     return m_Chip != nullptr;
