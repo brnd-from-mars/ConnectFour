@@ -9,8 +9,9 @@
 
 #include "BaseController.hpp"
 
-#include "TextFieldController.hpp"
+#include "TextView.hpp"
 #include "ButtonController.hpp"
+#include "TextFieldController.hpp"
 #include "GridFieldController.hpp"
 
 class SessionModel;
@@ -40,6 +41,8 @@ public:
 
     void InitNamePlayer2TextField();
 
+    void InitPickColorPrompt();
+
     void InitGrid();
 
     void HandleTerminateGamePress();
@@ -47,6 +50,12 @@ public:
     void HandleNamePlayer1Enter();
 
     void HandleNamePlayer2Enter();
+
+    void HandleColorPickerPredPress();
+
+    void HandleColorPickerCyanPress();
+
+    void HandleColorPick(bool changeColors);
 
     void HandleColumnClick(int column);
 
@@ -62,9 +71,13 @@ private:
 
     std::weak_ptr<GameController> m_GameController;
 
-    std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
-
+    int m_ColorPickingPlayer = 0;
+    std::shared_ptr<TextView> m_VSTextView;
+    std::shared_ptr<TextView> m_ColorPickerPromptTextView;
     std::shared_ptr<ButtonController> m_TerminateGameButton;
+    std::shared_ptr<ButtonController> m_ColorPickerPredButton;
+    std::shared_ptr<ButtonController> m_ColorPickerCyanButton;
     std::shared_ptr<TextFieldController> m_NamePlayer1TextField;
     std::shared_ptr<TextFieldController> m_NamePlayer2TextField;
+    std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
 };

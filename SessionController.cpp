@@ -52,7 +52,7 @@ void SessionController::Update()
 
 void SessionController::InitTerminateGameButton()
 {
-    m_TerminateGameButton = ButtonController::MakeButton(982.0f, 625.0f, 218.0f, "TERMINATE GAME",
+    m_TerminateGameButton = ButtonController::MakeButton(932.0f, 625.0f, 218.0f, "TERMINATE GAME",
                                                          ColorPalette::Orange, ColorPalette::BasestarDark);
     auto wController = m_SessionController;
     m_TerminateGameButton->RegisterMousePressCallback([wController]()
@@ -81,7 +81,9 @@ void SessionController::InitNamePlayer1TextField()
 
 void SessionController::InitNamePlayer2TextField()
 {
-    m_NamePlayer2TextField = TextFieldController::MakeTextField(900.0f, 200.0f, 300.0f, "Player2", ColorPalette::Cyan);
+    m_VSTextView = TextView::MakeText(765.0f, 185.0f, 40, "Tron", "VS.", ColorPalette::Orange);
+
+    m_NamePlayer2TextField = TextFieldController::MakeTextField(850.0f, 200.0f, 300.0f, "Player2", ColorPalette::Cyan);
     auto wController = m_SessionController;
     m_NamePlayer2TextField->RegisterEnterKeyPressCallback([wController]()
                                                           {
@@ -90,6 +92,37 @@ void SessionController::InitNamePlayer2TextField()
                                                                   controller->HandleNamePlayer2Enter();
                                                               }
                                                           });
+}
+
+
+void SessionController::InitPickColorPrompt()
+{
+    m_ColorPickingPlayer = AppDelegate::Get()->GetRandomNumber() % 7 % 2 + 1;
+    auto randomPlayerName = (m_ColorPickingPlayer == 1 ? m_NamePlayer1TextField : m_NamePlayer2TextField)->GetText();
+    auto message = randomPlayerName.append(": Pick your color!");
+    m_ColorPickerPromptTextView = TextView::MakeText(750.0f, 250.0f, 20, "Standard", message, ColorPalette::Orange);
+
+    auto wController = m_SessionController;
+
+    m_ColorPickerPredButton = ButtonController::MakeButton(750.0f, 300.0f, 75.0f, "R3D",
+                                                           ColorPalette::Pred, ColorPalette::BasestarDark);
+    m_ColorPickerPredButton->RegisterMousePressCallback([wController]()
+                                                        {
+                                                            if (auto controller = wController.lock())
+                                                            {
+                                                                controller->HandleColorPickerPredPress();
+                                                            }
+                                                        });
+
+    m_ColorPickerCyanButton = ButtonController::MakeButton(850.0f, 300.0f, 75.0f, "BLU3",
+                                                           ColorPalette::Cyan, ColorPalette::BasestarDark);
+    m_ColorPickerCyanButton->RegisterMousePressCallback([wController]()
+                                                        {
+                                                            if (auto controller = wController.lock())
+                                                            {
+                                                                controller->HandleColorPickerCyanPress();
+                                                            }
+                                                        });
 }
 
 
@@ -122,14 +155,65 @@ void SessionController::HandleColumnClick(int column)
 
 void SessionController::HandleNamePlayer1Enter()
 {
+    if (m_SessionModel->m_State == SessionModel::State::namePlayer1)
+    {
+        InitNamePlayer2TextField();
+    }
+
     m_SessionModel->HandleNamePlayer1Enter();
-    InitNamePlayer2TextField();
 }
 
 
 void SessionController::HandleNamePlayer2Enter()
 {
+    if (m_SessionModel->m_State == SessionModel::State::namePlayer2)
+    {
+        InitPickColorPrompt();
+    }
     m_SessionModel->HandleNamePlayer2Enter();
+}
+
+
+void SessionController::HandleColorPickerPredPress()
+{
+    if (m_SessionModel->m_State != SessionModel::State::colorPick)
+    {
+        return;
+    }
+
+    HandleColorPick(m_ColorPickingPlayer == 2);
+}
+
+
+void SessionController::HandleColorPickerCyanPress()
+{
+    if (m_SessionModel->m_State != SessionModel::State::colorPick)
+    {
+        return;
+    }
+
+    HandleColorPick(m_ColorPickingPlayer == 1);
+}
+
+
+void SessionController::HandleColorPick(bool changeColors)
+{
+    if (m_SessionModel->m_State != SessionModel::State::colorPick)
+    {
+        return;
+    }
+
+    if (changeColors)
+    {
+        m_NamePlayer1TextField->SetHighlightColor(ColorPalette::Cyan);
+        m_NamePlayer2TextField->SetHighlightColor(ColorPalette::Pred);
+    }
+
+    m_ColorPickerPromptTextView.reset();
+    m_ColorPickerPredButton.reset();
+    m_ColorPickerCyanButton.reset();
+
+    m_SessionModel->HandleColorPick();
 }
 
 

@@ -40,6 +40,7 @@ private:
 
     AppDelegate();
 
+
 public:
 
     // TODO: disallow copy
@@ -59,6 +60,8 @@ public:
     void RegisterView(const std::shared_ptr<BaseView>& view);
 
     void RegisterController(const std::shared_ptr<BaseController>& controller);
+
+    int GetRandomNumber();
 
     bool Update();
 

@@ -100,6 +100,14 @@ bool TextFieldView::Handle(sf::Event event)
 }
 
 
+void TextFieldView::SetHighlightColor(sf::Color highlightColor)
+{
+    m_HighlightColor = highlightColor;
+    m_TextShape.setFillColor(m_HighlightColor);
+    UpdateView();
+}
+
+
 void TextFieldView::SetText(const std::string& text)
 {
     m_TextShape.setString(text);
