@@ -19,40 +19,40 @@ void SessionModel::Update()
 
 void SessionModel::HandleNamePlayer1Enter()
 {
-    if (m_State != State::namePlayer1)
+    if (m_State != SessionState::namePlayer1)
     {
         return;
     }
 
-    m_State = State::namePlayer2;
+    m_State = SessionState::namePlayer2;
 }
 
 
 void SessionModel::HandleNamePlayer2Enter()
 {
-    if (m_State != State::namePlayer2)
+    if (m_State != SessionState::namePlayer2)
     {
         return;
     }
 
-    m_State = State::colorPick;
+    m_State = SessionState::colorPick;
 }
 
 
 void SessionModel::HandleColorPick()
 {
-    if (m_State != State::colorPick)
+    if (m_State != SessionState::colorPick)
     {
         return;
     }
 
-    m_State = State::inGame;
+    m_State = SessionState::inGame;
 }
 
 
 void SessionModel::AddChip(int column)
 {
-    if (m_State != State::inGame)
+    if (m_State != SessionState::inGame)
     {
         return;
     }
@@ -66,9 +66,22 @@ void SessionModel::AddChip(int column)
                 field->SetChip(m_CurrentPlayer);
 
                 auto row = field->GetRow();
-                if (GetWinState(column, row) != PlayerState::none)
+                auto winState = GetWinState(column, row);
+
+                if (winState != PlayerState::none)
                 {
-                    m_State = State::finished;
+                    m_State = SessionState::finished;
+
+                    controller->HandleGameEnd(winState);
+
+                    // TODO: outsource to controller
+                    if (winState != PlayerState::tie)
+                    {
+                        for (auto chip : m_WinningChips)
+                        {
+                            controller->m_Grid[chip.x][chip.y]->SetHighlightChip(true);
+                        }
+                    }
                 }
 
                 m_CurrentPlayer = 3 - m_CurrentPlayer;
@@ -82,11 +95,11 @@ void SessionModel::AddChip(int column)
 
 bool SessionModel::IsOngoing() const
 {
-    return m_State != State::terminated;
+    return m_State != SessionState::terminated;
 }
 
 
-SessionModel::PlayerState SessionModel::GetPlayerAt(int column, int row) const
+PlayerState SessionModel::GetPlayerAt(int column, int row) const
 {
     if ((column < 0) || (m_Columns <= column) || (row < 0) || (m_Rows <= row))
     {
@@ -114,7 +127,7 @@ SessionModel::PlayerState SessionModel::GetPlayerAt(int column, int row) const
 *
 */
 
-SessionModel::PlayerState SessionModel::GetWinState(int column, int row)
+PlayerState SessionModel::GetWinState(int column, int row)
 {
     PlayerState winState;
 
@@ -168,9 +181,10 @@ void SessionModel::CheckChips(int column, int row, PlayerState& prev, int& count
         else
         {
             count = 1;
-            m_WinningChips[count - 1].x = column;
-            m_WinningChips[count - 1].y = row;
         }
+
+        m_WinningChips[count - 1].x = column;
+        m_WinningChips[count - 1].y = row;
     }
     else
     {
@@ -186,7 +200,7 @@ void SessionModel::CheckChips(int column, int row, PlayerState& prev, int& count
 *   \param row of the last set Chip
 */
 
-SessionModel::PlayerState SessionModel::CheckHorizontal(int column, int row) {
+PlayerState SessionModel::CheckHorizontal(int column, int row) {
 
     int count = 0; // number of adjacent chips of same color
     PlayerState prev = PlayerState::none; // chip in previous field
@@ -210,7 +224,7 @@ SessionModel::PlayerState SessionModel::CheckHorizontal(int column, int row) {
 *   \param row of the last set Chip
 */
 
-SessionModel::PlayerState SessionModel::CheckVertical(int column, int row) {
+PlayerState SessionModel::CheckVertical(int column, int row) {
 
     int count = 0; // number of adjacent chips of same color
     PlayerState prev = PlayerState::none; // chip in previous field
@@ -234,7 +248,7 @@ SessionModel::PlayerState SessionModel::CheckVertical(int column, int row) {
 *   \param row of the last set Chip
 */
 
-SessionModel::PlayerState SessionModel::CheckDiagonal(int column, int row)
+PlayerState SessionModel::CheckDiagonal(int column, int row)
 {
     int count = 0; // number of adjacent chips of same color
     PlayerState prev = PlayerState::none; // chip in previous field
@@ -273,7 +287,7 @@ SessionModel::PlayerState SessionModel::CheckDiagonal(int column, int row)
 *   \brief Function checks, if every free space in Grid is filled with a Chip and returns the PlayerState as an enum
 */
 
-SessionModel::PlayerState SessionModel::CheckFieldFull() const
+PlayerState SessionModel::CheckFieldFull() const
 {
 	for (int x = 0; x < m_Columns; ++x)
 	{

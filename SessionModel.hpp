@@ -15,30 +15,32 @@
 class SessionController;
 
 
+enum class SessionState
+{
+    namePlayer1,
+    namePlayer2,
+    colorPick,
+    inGame,
+    finished,
+    terminated
+};
+
+
+enum class PlayerState
+{
+    none = 0,
+    player1 = 1,
+    player2 = 2,
+    tie = 3
+};
+
+
 class SessionModel : public BaseModel
 {
     friend SessionController;
 
 
 public:
-
-    enum class State
-    {
-        namePlayer1,
-        namePlayer2,
-        colorPick,
-        inGame,
-        finished,
-        terminated
-    };
-
-    enum class PlayerState
-    {
-        none = 0,
-        player1 = 1,
-        player2 = 2,
-        tie = 3
-    };
 
     SessionModel(int columns, int rows);
 
@@ -66,7 +68,7 @@ private:
     int m_Columns;
     int m_Rows;
 
-    State m_State = State::namePlayer1; // TODO: change to State::namePlayer1 after text field is added
+    SessionState m_State = SessionState::namePlayer1; // TODO: change to SessionState::namePlayer1 after text field is added
     int m_CurrentPlayer = 1;
 
     sf::Vector2i m_WinningChips[4];

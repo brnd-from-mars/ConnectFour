@@ -48,7 +48,7 @@ SessionController::~SessionController()
 
 void SessionController::Update()
 {
-    if (m_SessionModel->m_State == SessionModel::State::inGame)
+    if (m_SessionModel->m_State == SessionState::inGame)
     {
         const sf::Vector2f arrowPositions[2] = {sf::Vector2f(1062.5f, 162.5f), sf::Vector2f(1162.5f, 212.5f)};
         auto currentPlayer = m_SessionModel->m_CurrentPlayer;
@@ -108,10 +108,10 @@ void SessionController::InitPickColorPrompt()
     m_ColorPickingPlayer = AppDelegate::Get()->GetRandomNumber() % 7 % 2 + 1;
     auto playerName = (m_ColorPickingPlayer == 1 ? m_NamePlayer1TextField : m_NamePlayer2TextField)->GetText();
     playerName = playerName.append(":");
-    m_ColorPickerNameTextView = TextView::MakeText(750.0f, 250.0f, 20, "Standard",
-                                                   playerName, ColorPalette::Orange);
-    m_ColorPickerPromptTextView = TextView::MakeText(750.0f, 275.0f, 20, "Standard",
-                                                     "Pick your color!", ColorPalette::Orange);
+    m_StatusNameText = TextView::MakeText(750.0f, 250.0f, 20, "Standard",
+                                          playerName, ColorPalette::Orange);
+    m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard",
+                                            "Pick your color!", ColorPalette::Orange);
 
     auto wController = m_SessionController;
 
@@ -160,19 +160,13 @@ void SessionController::InitGrid()
 
 void SessionController::HandleTerminateGamePress()
 {
-    m_SessionModel->m_State = SessionModel::State::terminated;
-}
-
-
-void SessionController::HandleColumnClick(int column)
-{
-    m_SessionModel->AddChip(column);
+    m_SessionModel->m_State = SessionState::terminated;
 }
 
 
 void SessionController::HandleNamePlayer1Enter()
 {
-    if (m_SessionModel->m_State == SessionModel::State::namePlayer1)
+    if (m_SessionModel->m_State == SessionState::namePlayer1)
     {
         InitNamePlayer2TextField();
     }
@@ -183,7 +177,7 @@ void SessionController::HandleNamePlayer1Enter()
 
 void SessionController::HandleNamePlayer2Enter()
 {
-    if (m_SessionModel->m_State == SessionModel::State::namePlayer2)
+    if (m_SessionModel->m_State == SessionState::namePlayer2)
     {
         InitPickColorPrompt();
     }
@@ -193,7 +187,7 @@ void SessionController::HandleNamePlayer2Enter()
 
 void SessionController::HandleColorPickerPredPress()
 {
-    if (m_SessionModel->m_State != SessionModel::State::colorPick)
+    if (m_SessionModel->m_State != SessionState::colorPick)
     {
         return;
     }
@@ -204,7 +198,7 @@ void SessionController::HandleColorPickerPredPress()
 
 void SessionController::HandleColorPickerCyanPress()
 {
-    if (m_SessionModel->m_State != SessionModel::State::colorPick)
+    if (m_SessionModel->m_State != SessionState::colorPick)
     {
         return;
     }
@@ -215,7 +209,7 @@ void SessionController::HandleColorPickerCyanPress()
 
 void SessionController::HandleColorPick(bool changeColors)
 {
-    if (m_SessionModel->m_State != SessionModel::State::colorPick)
+    if (m_SessionModel->m_State != SessionState::colorPick)
     {
         return;
     }
@@ -227,13 +221,47 @@ void SessionController::HandleColorPick(bool changeColors)
         m_ColorChange = true;
     }
 
-    m_ColorPickerPromptTextView.reset();
-    m_ColorPickerNameTextView.reset();
+    m_StatusPromptText.reset();
+    m_StatusNameText.reset();
     m_ColorPickerPredButton.reset();
     m_ColorPickerCyanButton.reset();
 
     InitArrow();
     m_SessionModel->HandleColorPick();
+}
+
+
+void SessionController::HandleColumnClick(int column)
+{
+    m_SessionModel->AddChip(column);
+}
+
+
+void SessionController::HandleGameEnd(PlayerState winState)
+{
+    m_CurrentPlayerArrow.reset();
+
+    if (winState == PlayerState::none)
+    {
+        return;
+    }
+    else if (winState == PlayerState::tie)
+    {
+        m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard",
+                                                "It's a tie! (-;", ColorPalette::Orange);
+    }
+    else
+    {
+        auto winningPlayerTextField = m_ColorChange != (winState == PlayerState::player1);
+        auto playerName = (winningPlayerTextField ? m_NamePlayer1TextField : m_NamePlayer2TextField)->GetText();
+        playerName = playerName.append(":");
+        m_StatusNameText = TextView::MakeText(750.0f, 250.0f, 20, "Standard",
+                                              playerName, ColorPalette::Orange);
+        m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard",
+                                                "You are the winner!", ColorPalette::Orange);
+    }
+
+
 }
 
 

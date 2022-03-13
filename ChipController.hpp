@@ -31,9 +31,11 @@ public:
 
     void HandleClick();
 
-    void UpdateView();
+    void SetHighlight(bool highlight);
 
     int GetPlayer() const;
+
+    void UpdateView();
 
 
 private:
