@@ -1,6 +1,12 @@
-#include "TextView.hpp"
-#include "AppDelegate.hpp"
+//
+// Created by Florian Wolff on 10.03.22.
+//
+
 #include <iostream>
+
+#include "TextView.hpp"
+
+#include "AppDelegate.hpp"
 
 
 std::shared_ptr<TextView> TextView::MakeText(float x, float y, unsigned int size, const std::string& font,
@@ -18,48 +24,38 @@ TextView::TextView(float x, float y, unsigned int size, const std::string& font,
 {
     m_Layer = layer;
 
-    if (!m_Tron.loadFromFile("Tron.ttf"))
+    auto fontFile = font;
+    fontFile.append(".ttf");
+    if (!m_Font.loadFromFile(fontFile))
     {
         throw std::runtime_error("FAIL!");
     }
 
-    if (!m_Standard.loadFromFile("Standard.ttf"))
-    {
-        throw std::runtime_error("FAIL!");
-    }
-
-
-    if (font == "Standard")
-    {
-        m_TextClass.setFont(m_Standard);
-    }
-
-    if (font == "Tron")
-    {
-        m_TextClass.setFont(m_Tron);
-    }
-
-    m_TextClass.setString(text);
-    m_TextClass.setCharacterSize(size);
-    m_TextClass.setPosition(sf::Vector2f(x , y));
-    m_TextClass.setFillColor(color);
+    m_TextShape.setString(text);
+    m_TextShape.setCharacterSize(size);
+    m_TextShape.setPosition(sf::Vector2f(x , y));
+    m_TextShape.setFillColor(color);
+    m_TextShape.setFont(m_Font);
 }
+
 
 void TextView::Draw()
 {
-    AppDelegate::Get()->GetWindow()->draw(m_TextClass);
+    AppDelegate::Get()->GetWindow()->draw(m_TextShape);
 }
 
 
 void TextView::SetText(const std::string& text)
 {
-    m_TextClass.setString(text);
+    m_TextShape.setString(text);
 }
+
 
 bool TextView::HandleFocusReset()
 {
     return false;
 }
+
 
 bool TextView::Handle(sf::Event event)
 {

@@ -21,7 +21,7 @@ public:
                                               const std::string& text, sf::Color color, int layer = 0);
 
     TextView(float x, float y, unsigned int size, const std::string& font,
-             const std::string& text, sf::Color color, int layer = 0);
+             const std::string& text, sf::Color color, int layer);
 
     void Draw() override;
 
@@ -34,9 +34,8 @@ public:
 
 private:
 
-    sf::Text m_TextClass;
-    sf::Font m_Standard;
-    sf::Font m_Tron;
+    sf::Text m_TextShape;
+    sf::Font m_Font;
 
 
 };
