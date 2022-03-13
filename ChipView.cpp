@@ -39,35 +39,11 @@ void ChipView::Draw()
 
 bool ChipView::HandleFocusReset()
 {
-    if (auto controller = m_ChipController.lock())
-    {
-        controller->HandleFocusReset();
-        return true;
-    }
     return false;
 }
 
 
 bool ChipView::Handle(sf::Event event)
 {
-    if (!m_HandleEvents)
-    {
-        return false;
-    }
-
-    if (event.type == sf::Event::MouseButtonPressed)
-    {
-        auto dx = event.mouseButton.x - (m_Circle.getPosition().x + m_OuterRadius);
-        auto dy = event.mouseButton.y - (m_Circle.getPosition().y + m_OuterRadius);
-        if (sqrt(dx * dx + dy * dy) <= m_OuterRadius)
-        {
-            if (auto controller = m_ChipController.lock())
-            {
-                controller->HandleClick();
-            }
-            return true;
-        }
-    }
-
     return false;
 }

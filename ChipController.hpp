@@ -19,6 +19,7 @@ class ChipController : public BaseController
     friend ChipModel;
     friend ChipView;
 
+
 public:
 
     static std::shared_ptr<ChipController> MakeChip(int player, float x, float y);
@@ -26,10 +27,6 @@ public:
     ChipController(int player, float x, float y);
 
     void Update() override;
-
-    void HandleFocusReset();
-
-    void HandleClick();
 
     void SetHighlight(bool highlight);
 

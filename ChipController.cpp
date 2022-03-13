@@ -2,8 +2,6 @@
 // Created by Brendan Berg on 09.03.22.
 //
 
-#include <iostream>
-
 #include "ChipController.hpp"
 
 #include "AppDelegate.hpp"
@@ -41,20 +39,6 @@ ChipController::ChipController(int player, float x, float y)
 
 void ChipController::Update()
 { }
-
-
-void ChipController::HandleFocusReset()
-{
-    // TODO: remove
-    SetHighlight(false);
-}
-
-
-void ChipController::HandleClick()
-{
-    // TODO: remove
-    SetHighlight(true);
-}
 
 
 void ChipController::SetHighlight(bool highlight)
