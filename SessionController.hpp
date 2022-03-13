@@ -73,6 +73,7 @@ private:
 
     int m_ColorPickingPlayer = 0;
     std::shared_ptr<TextView> m_VSTextView;
+    std::shared_ptr<TextView> m_ColorPickerNameTextView;
     std::shared_ptr<TextView> m_ColorPickerPromptTextView;
     std::shared_ptr<ButtonController> m_TerminateGameButton;
     std::shared_ptr<ButtonController> m_ColorPickerPredButton;

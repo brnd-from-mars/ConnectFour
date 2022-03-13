@@ -98,13 +98,16 @@ void SessionController::InitNamePlayer2TextField()
 void SessionController::InitPickColorPrompt()
 {
     m_ColorPickingPlayer = AppDelegate::Get()->GetRandomNumber() % 7 % 2 + 1;
-    auto randomPlayerName = (m_ColorPickingPlayer == 1 ? m_NamePlayer1TextField : m_NamePlayer2TextField)->GetText();
-    auto message = randomPlayerName.append(": Pick your color!");
-    m_ColorPickerPromptTextView = TextView::MakeText(750.0f, 250.0f, 20, "Standard", message, ColorPalette::Orange);
+    auto playerName = (m_ColorPickingPlayer == 1 ? m_NamePlayer1TextField : m_NamePlayer2TextField)->GetText();
+    playerName = playerName.append(":");
+    m_ColorPickerNameTextView = TextView::MakeText(750.0f, 250.0f, 20, "Standard",
+                                                   playerName, ColorPalette::Orange);
+    m_ColorPickerPromptTextView = TextView::MakeText(750.0f, 275.0f, 20, "Standard",
+                                                     "Pick your color!", ColorPalette::Orange);
 
     auto wController = m_SessionController;
 
-    m_ColorPickerPredButton = ButtonController::MakeButton(750.0f, 300.0f, 75.0f, "R3D",
+    m_ColorPickerPredButton = ButtonController::MakeButton(975.0f, 275.0f, 75.0f, "R3D",
                                                            ColorPalette::Pred, ColorPalette::BasestarDark);
     m_ColorPickerPredButton->RegisterMousePressCallback([wController]()
                                                         {
@@ -114,7 +117,7 @@ void SessionController::InitPickColorPrompt()
                                                             }
                                                         });
 
-    m_ColorPickerCyanButton = ButtonController::MakeButton(850.0f, 300.0f, 75.0f, "BLU3",
+    m_ColorPickerCyanButton = ButtonController::MakeButton(1075.0f, 275.0f, 75.0f, "BLU3",
                                                            ColorPalette::Cyan, ColorPalette::BasestarDark);
     m_ColorPickerCyanButton->RegisterMousePressCallback([wController]()
                                                         {
@@ -210,6 +213,7 @@ void SessionController::HandleColorPick(bool changeColors)
     }
 
     m_ColorPickerPromptTextView.reset();
+    m_ColorPickerNameTextView.reset();
     m_ColorPickerPredButton.reset();
     m_ColorPickerCyanButton.reset();
 
