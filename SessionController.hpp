@@ -32,7 +32,11 @@ public:
     static std::shared_ptr<SessionController> MakeSessionController(const std::weak_ptr<GameController>& gameController,
                                                                     int columns, int rows);
 
-    explicit SessionController(std::weak_ptr<GameController> gameController, int columns, int rows);
+    static std::shared_ptr<SessionController> MakeSessionController(const SessionController& oldSessionController);
+
+    SessionController(std::weak_ptr<GameController> gameController, int columns, int rows);
+
+    SessionController(const SessionController& oldSessionController);
 
     virtual ~SessionController();
 
@@ -51,6 +55,8 @@ public:
 
     void InitClock();
 
+    void InitGameRestartButton();
+
 
     void HandleColumnClick(int column);
 
@@ -60,12 +66,16 @@ public:
 
     void HandleColorPick(int color);
 
+    void HandleGameRestartPress();
+
     void HandleGameEnd(PlayerState winState, std::string winningPlayer);
 
 
     std::string GetName(int index);
 
     bool IsOngoing() const;
+
+    bool IsTerminated() const;
 
     int GetPlayerAt(int column, int row) const;
 
@@ -80,6 +90,7 @@ private:
 
     std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
 
+    std::shared_ptr<ButtonController> m_GameRestartButton;
     std::shared_ptr<ButtonController> m_GameTerminateButton;
 
     std::shared_ptr<TextFieldController> m_NameTextFields[2];

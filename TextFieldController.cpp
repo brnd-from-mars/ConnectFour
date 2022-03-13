@@ -74,6 +74,13 @@ void TextFieldController::SetHighlightColor(sf::Color highlightColor)
 }
 
 
+void TextFieldController::SetText(const std::string& text)
+{
+    m_TextFieldModel->m_Text = text;
+    UpdateView();
+}
+
+
 std::string TextFieldController::GetText() const
 {
     return m_TextFieldModel->m_Text;

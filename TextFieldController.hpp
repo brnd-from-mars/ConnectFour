@@ -41,6 +41,8 @@ public:
 
     void SetHighlightColor(sf::Color highlightColor);
 
+    void SetText(const std::string& text);
+
     std::string GetText() const;
 
     void UpdateView();

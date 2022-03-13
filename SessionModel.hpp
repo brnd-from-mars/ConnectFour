@@ -21,6 +21,7 @@ enum class SessionState
     colorPick,
     inGame,
     finished,
+    restarted,
     terminated
 };
 
@@ -43,6 +44,8 @@ public:
 
     SessionModel(int columns, int rows);
 
+    SessionModel(const SessionModel& oldSessionModel);
+
     void Update() override;
 
     bool HandleInitialNameEnter();
@@ -54,8 +57,6 @@ public:
     int GetCurrentPlayerIndex() const;
 
     void AddChip(int column);
-
-    bool IsOngoing() const;
 
     PlayerState GetPlayerAt(int column, int row) const;
 
@@ -74,7 +75,7 @@ private:
     int m_CurrentPlayer = 1;
 
     int m_RandomNameForColorPick = 0;
-    bool m_ColorChanged = false;
+    bool m_ColorsChanged = false;
 
     sf::Vector2i m_WinningChips[4];
 

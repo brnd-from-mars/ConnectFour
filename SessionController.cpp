@@ -30,10 +30,49 @@ SessionController::MakeSessionController(const std::weak_ptr<GameController>& ga
 }
 
 
+std::shared_ptr<SessionController>
+SessionController::MakeSessionController(const SessionController& oldSessionController)
+{
+    auto controller = std::make_shared<SessionController>(oldSessionController);
+    AppDelegate::Get()->RegisterController(controller);
+
+    controller->m_SessionModel->m_SessionController = controller;
+    controller->m_SessionController = controller;
+
+    controller->InitGrid();
+    controller->InitGameTerminateButton();
+    controller->InitNameTextFields();
+    controller->InitArrow();
+    controller->InitClock();
+    controller->InitGameRestartButton();
+
+    controller->m_NameTextFields[0]->SetText(oldSessionController.m_NameTextFields[0]->GetText());
+    controller->m_NameTextFields[1]->SetText(oldSessionController.m_NameTextFields[1]->GetText());
+
+    if (controller->m_SessionModel->m_ColorsChanged)
+    {
+        controller->m_NameTextFields[0]->SetHighlightColor(ColorPalette::Cyan);
+        controller->m_NameTextFields[1]->SetHighlightColor(ColorPalette::Pred);
+    }
+
+    return controller;
+}
+
+
 SessionController::SessionController(std::weak_ptr<GameController> gameController, int columns, int rows)
     : m_GameController(std::move(gameController))
 {
     m_SessionModel = std::make_shared<SessionModel>(columns, rows);
+    AppDelegate::Get()->RegisterModel(m_SessionModel);
+
+    std::clog << "SessionController constructed" << std::endl;
+}
+
+
+SessionController::SessionController(const SessionController& oldSessionController)
+    : m_GameController(oldSessionController.m_GameController)
+{
+    m_SessionModel = std::make_shared<SessionModel>(*oldSessionController.m_SessionModel);
     AppDelegate::Get()->RegisterModel(m_SessionModel);
 
     std::clog << "SessionController constructed" << std::endl;
@@ -151,6 +190,21 @@ void SessionController::InitClock()
 }
 
 
+void SessionController::InitGameRestartButton()
+{
+    m_GameRestartButton = ButtonController::MakeButton(750.0f, 625.0f, 120.0f, "R3START",
+                                                         ColorPalette::Orange);
+    auto wController = m_SessionController;
+    m_GameRestartButton->RegisterMousePressCallback([wController]()
+                                                    {
+                                                        if (auto controller = wController.lock())
+                                                        {
+                                                            controller->HandleGameRestartPress();
+                                                        }
+                                                    });
+}
+
+
 void SessionController::HandleColumnClick(int column)
 {
     m_SessionModel->AddChip(column);
@@ -181,7 +235,7 @@ void SessionController::HandleColorPick(int color)
         return;
     }
 
-    if (m_SessionModel->m_ColorChanged)
+    if (m_SessionModel->m_ColorsChanged)
     {
         m_NameTextFields[0]->SetHighlightColor(ColorPalette::Cyan);
         m_NameTextFields[1]->SetHighlightColor(ColorPalette::Pred);
@@ -194,6 +248,13 @@ void SessionController::HandleColorPick(int color)
 
     InitArrow();
     InitClock();
+    InitGameRestartButton();
+}
+
+
+void SessionController::HandleGameRestartPress()
+{
+    m_SessionModel->m_State = SessionState::restarted;
 }
 
 
@@ -232,7 +293,14 @@ std::string SessionController::GetName(int index)
 
 bool SessionController::IsOngoing() const
 {
-    return m_SessionModel->IsOngoing();
+    return (m_SessionModel->m_State != SessionState::restarted) &&
+           (m_SessionModel->m_State != SessionState::terminated);
+}
+
+
+bool SessionController::IsTerminated() const
+{
+    return (m_SessionModel->m_State == SessionState::terminated);
 }
 
 
