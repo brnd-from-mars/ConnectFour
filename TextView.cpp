@@ -2,8 +2,6 @@
 // Created by Florian Wolff on 10.03.22.
 //
 
-#include <iostream>
-
 #include "TextView.hpp"
 
 #include "AppDelegate.hpp"

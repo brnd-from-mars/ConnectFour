@@ -47,7 +47,15 @@ SessionController::~SessionController()
 
 
 void SessionController::Update()
-{ }
+{
+    if (m_SessionModel->m_State == SessionModel::State::inGame)
+    {
+        const sf::Vector2f arrowPositions[2] = {sf::Vector2f(1062.5f, 162.5f), sf::Vector2f(1162.5f, 212.5f)};
+        auto currentPlayer = m_SessionModel->m_CurrentPlayer;
+        auto position = arrowPositions[(m_ColorChange ? 3 - currentPlayer : currentPlayer) - 1];
+        m_CurrentPlayerArrow->SetPosition(position.x, position.y);
+    }
+}
 
 
 void SessionController::InitTerminateGameButton()
@@ -126,6 +134,12 @@ void SessionController::InitPickColorPrompt()
                                                                 controller->HandleColorPickerCyanPress();
                                                             }
                                                         });
+}
+
+
+void SessionController::InitArrow()
+{
+    m_CurrentPlayerArrow = ArrowView::MakeArrow(0.0f, 0.0f, ColorPalette::Orange);
 }
 
 
@@ -210,6 +224,7 @@ void SessionController::HandleColorPick(bool changeColors)
     {
         m_NamePlayer1TextField->SetHighlightColor(ColorPalette::Cyan);
         m_NamePlayer2TextField->SetHighlightColor(ColorPalette::Pred);
+        m_ColorChange = true;
     }
 
     m_ColorPickerPromptTextView.reset();
@@ -217,6 +232,7 @@ void SessionController::HandleColorPick(bool changeColors)
     m_ColorPickerPredButton.reset();
     m_ColorPickerCyanButton.reset();
 
+    InitArrow();
     m_SessionModel->HandleColorPick();
 }
 
