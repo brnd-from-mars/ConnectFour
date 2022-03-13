@@ -38,35 +38,32 @@ public:
 
     void Update() override;
 
-    void InitTerminateGameButton();
 
-    void InitNamePlayer1TextField();
+    void InitGrid();
 
-    void InitNamePlayer2TextField();
+    void InitGameTerminateButton();
 
-    void InitPickColorPrompt();
+    void InitNameTextFields();
+
+    void InitColorPickPrompt();
 
     void InitArrow();
 
     void InitClock();
 
-    void InitGrid();
-
-    void HandleTerminateGamePress();
-
-    void HandleNamePlayer1Enter();
-
-    void HandleNamePlayer2Enter();
-
-    void HandleColorPickerPredPress();
-
-    void HandleColorPickerCyanPress();
-
-    void HandleColorPick(bool changeColors);
 
     void HandleColumnClick(int column);
 
-    void HandleGameEnd(PlayerState winState);
+    void HandleGameTerminatePress();
+
+    void HandleNameEnter();
+
+    void HandleColorPick(int color);
+
+    void HandleGameEnd(PlayerState winState, std::string winningPlayer);
+
+
+    std::string GetName(int index);
 
     bool IsOngoing() const;
 
@@ -80,18 +77,19 @@ private:
 
     std::weak_ptr<GameController> m_GameController;
 
-    int m_ColorPickingPlayer = 0;
-    bool m_ColorChange = false;
 
+    std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
+
+    std::shared_ptr<ButtonController> m_GameTerminateButton;
+
+    std::shared_ptr<TextFieldController> m_NameTextFields[2];
     std::shared_ptr<TextView> m_VSTextView;
+
     std::shared_ptr<TextView> m_StatusNameText;
     std::shared_ptr<TextView> m_StatusPromptText;
+
+    std::shared_ptr<ButtonController> m_ColorPickButtons[2];
+
     std::shared_ptr<ArrowView> m_CurrentPlayerArrow;
     std::shared_ptr<ClockController> m_Clock;
-    std::shared_ptr<ButtonController> m_TerminateGameButton;
-    std::shared_ptr<ButtonController> m_ColorPickerPredButton;
-    std::shared_ptr<ButtonController> m_ColorPickerCyanButton;
-    std::shared_ptr<TextFieldController> m_NamePlayer1TextField;
-    std::shared_ptr<TextFieldController> m_NamePlayer2TextField;
-    std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
 };

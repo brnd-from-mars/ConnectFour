@@ -4,7 +4,6 @@
 
 #include <sstream>
 #include <iomanip>
-#include <iostream>
 
 #include "ClockView.hpp"
 

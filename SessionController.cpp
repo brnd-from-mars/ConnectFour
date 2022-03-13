@@ -22,9 +22,9 @@ SessionController::MakeSessionController(const std::weak_ptr<GameController>& ga
     controller->m_SessionModel->m_SessionController = controller;
     controller->m_SessionController = controller;
 
-    controller->InitTerminateGameButton();
-    controller->InitNamePlayer1TextField();
     controller->InitGrid();
+    controller->InitGameTerminateButton();
+    controller->InitNameTextFields();
 
     return controller;
 }
@@ -51,101 +51,9 @@ void SessionController::Update()
     if (m_SessionModel->m_State == SessionState::inGame)
     {
         const sf::Vector2f arrowPositions[2] = {sf::Vector2f(1062.5f, 162.5f), sf::Vector2f(1162.5f, 212.5f)};
-        auto currentPlayer = m_SessionModel->m_CurrentPlayer;
-        auto position = arrowPositions[(m_ColorChange ? 3 - currentPlayer : currentPlayer) - 1];
+        auto position = arrowPositions[m_SessionModel->GetCurrentPlayerIndex()];
         m_CurrentPlayerArrow->SetPosition(position.x, position.y);
     }
-}
-
-
-void SessionController::InitTerminateGameButton()
-{
-    m_TerminateGameButton = ButtonController::MakeButton(932.0f, 625.0f, 218.0f, "T3RMINAT3 GAM3",
-                                                         ColorPalette::Orange, ColorPalette::BasestarDark);
-    auto wController = m_SessionController;
-    m_TerminateGameButton->RegisterMousePressCallback([wController]()
-                                                      {
-                                                          if (auto controller = wController.lock())
-                                                          {
-                                                              controller->HandleTerminateGamePress();
-                                                          }
-                                                      });
-}
-
-
-void SessionController::InitNamePlayer1TextField()
-{
-    m_NamePlayer1TextField = TextFieldController::MakeTextField(750.0f, 150.0f, 300.0f, "Player1", ColorPalette::Pred);
-    auto wController = m_SessionController;
-    m_NamePlayer1TextField->RegisterEnterKeyPressCallback([wController]()
-                                                          {
-                                                              if (auto controller = wController.lock())
-                                                              {
-                                                                  controller->HandleNamePlayer1Enter();
-                                                              }
-                                                          });
-}
-
-
-void SessionController::InitNamePlayer2TextField()
-{
-    m_VSTextView = TextView::MakeText(765.0f, 185.0f, 40, "Tron", "VS.", ColorPalette::Orange);
-
-    m_NamePlayer2TextField = TextFieldController::MakeTextField(850.0f, 200.0f, 300.0f, "Player2", ColorPalette::Cyan);
-    auto wController = m_SessionController;
-    m_NamePlayer2TextField->RegisterEnterKeyPressCallback([wController]()
-                                                          {
-                                                              if (auto controller = wController.lock())
-                                                              {
-                                                                  controller->HandleNamePlayer2Enter();
-                                                              }
-                                                          });
-}
-
-
-void SessionController::InitPickColorPrompt()
-{
-    m_ColorPickingPlayer = AppDelegate::Get()->GetRandomNumber() % 7 % 2 + 1;
-    auto playerName = (m_ColorPickingPlayer == 1 ? m_NamePlayer1TextField : m_NamePlayer2TextField)->GetText();
-    playerName = playerName.append(":");
-    m_StatusNameText = TextView::MakeText(750.0f, 250.0f, 20, "Standard",
-                                          playerName, ColorPalette::Orange);
-    m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard",
-                                            "Pick your color!", ColorPalette::Orange);
-
-    auto wController = m_SessionController;
-
-    m_ColorPickerPredButton = ButtonController::MakeButton(975.0f, 275.0f, 75.0f, "R3D",
-                                                           ColorPalette::Pred, ColorPalette::BasestarDark);
-    m_ColorPickerPredButton->RegisterMousePressCallback([wController]()
-                                                        {
-                                                            if (auto controller = wController.lock())
-                                                            {
-                                                                controller->HandleColorPickerPredPress();
-                                                            }
-                                                        });
-
-    m_ColorPickerCyanButton = ButtonController::MakeButton(1075.0f, 275.0f, 75.0f, "BLU3",
-                                                           ColorPalette::Cyan, ColorPalette::BasestarDark);
-    m_ColorPickerCyanButton->RegisterMousePressCallback([wController]()
-                                                        {
-                                                            if (auto controller = wController.lock())
-                                                            {
-                                                                controller->HandleColorPickerCyanPress();
-                                                            }
-                                                        });
-}
-
-
-void SessionController::InitArrow()
-{
-    m_CurrentPlayerArrow = ArrowView::MakeArrow(0.0f, 0.0f, ColorPalette::Orange);
-}
-
-
-void SessionController::InitClock()
-{
-    m_Clock = ClockController::MakeClock(995.0f, 25.0f, ColorPalette::Orange);
 }
 
 
@@ -164,77 +72,82 @@ void SessionController::InitGrid()
 }
 
 
-void SessionController::HandleTerminateGamePress()
+
+void SessionController::InitGameTerminateButton()
 {
-    m_SessionModel->m_State = SessionState::terminated;
+    m_GameTerminateButton = ButtonController::MakeButton(932.0f, 625.0f, 218.0f, "T3RMINAT3 GAM3",
+                                                         ColorPalette::Orange);
+    auto wController = m_SessionController;
+    m_GameTerminateButton->RegisterMousePressCallback([wController]()
+                                                      {
+                                                          if (auto controller = wController.lock())
+                                                          {
+                                                              controller->HandleGameTerminatePress();
+                                                          }
+                                                      });
 }
 
 
-void SessionController::HandleNamePlayer1Enter()
+void SessionController::InitNameTextFields()
 {
-    if (m_SessionModel->m_State == SessionState::namePlayer1)
-    {
-        InitNamePlayer2TextField();
-    }
+    m_VSTextView = TextView::MakeText(765.0f, 185.0f, 40, "Tron", "VS.", ColorPalette::Orange);
 
-    m_SessionModel->HandleNamePlayer1Enter();
+    auto wController = m_SessionController;
+    auto handler = [wController]()
+                   {
+                       if (auto controller = wController.lock())
+                       {
+                           controller->HandleNameEnter();
+                       }
+                   };
+
+    m_NameTextFields[0] = TextFieldController::MakeTextField(750.0f, 150.0f, 300.0f, "Player1", ColorPalette::Pred);
+    m_NameTextFields[0]->RegisterEnterKeyPressCallback(handler);
+
+    m_NameTextFields[1] = TextFieldController::MakeTextField(850.0f, 200.0f, 300.0f, "Player2", ColorPalette::Cyan);
+    m_NameTextFields[1]->RegisterEnterKeyPressCallback(handler);
 }
 
 
-void SessionController::HandleNamePlayer2Enter()
+void SessionController::InitColorPickPrompt()
 {
-    if (m_SessionModel->m_State == SessionState::namePlayer2)
-    {
-        InitPickColorPrompt();
-    }
-    m_SessionModel->HandleNamePlayer2Enter();
+    auto playerName = m_SessionModel->GetRandomPlayerForColorPick();
+    playerName = playerName.append(":");
+
+    m_StatusNameText = TextView::MakeText(750.0f, 250.0f, 20, "Standard", playerName, ColorPalette::Orange);
+    m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard", "Pick your color!", ColorPalette::Orange);
+
+    auto wController = m_SessionController;
+
+    m_ColorPickButtons[0] = ButtonController::MakeButton(975.0f, 275.0f, 75.0f, "R3D", ColorPalette::Pred);
+    m_ColorPickButtons[0]->RegisterMousePressCallback([wController]()
+                                                      {
+                                                          if (auto controller = wController.lock())
+                                                          {
+                                                              controller->HandleColorPick(0);
+                                                          }
+                                                      });
+
+    m_ColorPickButtons[1] = ButtonController::MakeButton(1075.0f, 275.0f, 75.0f, "BLU3", ColorPalette::Cyan);
+    m_ColorPickButtons[1]->RegisterMousePressCallback([wController]()
+                                                      {
+                                                          if (auto controller = wController.lock())
+                                                          {
+                                                              controller->HandleColorPick(1);
+                                                          }
+                                                      });
 }
 
 
-void SessionController::HandleColorPickerPredPress()
+void SessionController::InitArrow()
 {
-    if (m_SessionModel->m_State != SessionState::colorPick)
-    {
-        return;
-    }
-
-    HandleColorPick(m_ColorPickingPlayer == 2);
+    m_CurrentPlayerArrow = ArrowView::MakeArrow(0.0f, 0.0f, ColorPalette::Orange);
 }
 
 
-void SessionController::HandleColorPickerCyanPress()
+void SessionController::InitClock()
 {
-    if (m_SessionModel->m_State != SessionState::colorPick)
-    {
-        return;
-    }
-
-    HandleColorPick(m_ColorPickingPlayer == 1);
-}
-
-
-void SessionController::HandleColorPick(bool changeColors)
-{
-    if (m_SessionModel->m_State != SessionState::colorPick)
-    {
-        return;
-    }
-
-    if (changeColors)
-    {
-        m_NamePlayer1TextField->SetHighlightColor(ColorPalette::Cyan);
-        m_NamePlayer2TextField->SetHighlightColor(ColorPalette::Pred);
-        m_ColorChange = true;
-    }
-
-    m_StatusPromptText.reset();
-    m_StatusNameText.reset();
-    m_ColorPickerPredButton.reset();
-    m_ColorPickerCyanButton.reset();
-
-    InitArrow();
-    InitClock();
-    m_SessionModel->HandleColorPick();
+    m_Clock = ClockController::MakeClock(995.0f, 25.0f, ColorPalette::Orange);
 }
 
 
@@ -244,7 +157,47 @@ void SessionController::HandleColumnClick(int column)
 }
 
 
-void SessionController::HandleGameEnd(PlayerState winState)
+void SessionController::HandleGameTerminatePress()
+{
+    m_SessionModel->m_State = SessionState::terminated;
+}
+
+
+void SessionController::HandleNameEnter()
+{
+    if (!m_SessionModel->HandleInitialNameEnter())
+    {
+        return;
+    }
+
+    InitColorPickPrompt();
+}
+
+
+void SessionController::HandleColorPick(int color)
+{
+    if (!m_SessionModel->HandleColorPick(color))
+    {
+        return;
+    }
+
+    if (m_SessionModel->m_ColorChanged)
+    {
+        m_NameTextFields[0]->SetHighlightColor(ColorPalette::Cyan);
+        m_NameTextFields[1]->SetHighlightColor(ColorPalette::Pred);
+    }
+
+    m_StatusPromptText.reset();
+    m_StatusNameText.reset();
+    m_ColorPickButtons[0].reset();
+    m_ColorPickButtons[1].reset();
+
+    InitArrow();
+    InitClock();
+}
+
+
+void SessionController::HandleGameEnd(PlayerState winState, std::string playerName)
 {
     m_CurrentPlayerArrow.reset();
     m_Clock->Stop();
@@ -255,21 +208,25 @@ void SessionController::HandleGameEnd(PlayerState winState)
     }
     else if (winState == PlayerState::tie)
     {
-        m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard",
-                                                "It's a tie!", ColorPalette::Orange);
+        m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard", "It's a tie!", ColorPalette::Orange);
     }
     else
     {
-        auto winningPlayerTextField = m_ColorChange != (winState == PlayerState::player1);
-        auto playerName = (winningPlayerTextField ? m_NamePlayer1TextField : m_NamePlayer2TextField)->GetText();
         playerName = playerName.append(":");
-        m_StatusNameText = TextView::MakeText(750.0f, 250.0f, 20, "Standard",
-                                              playerName, ColorPalette::Orange);
-        m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard",
-                                                "You are the winner!", ColorPalette::Orange);
+        m_StatusNameText = TextView::MakeText(750.0f, 250.0f, 20, "Standard", playerName, ColorPalette::Orange);
+        m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard", "You won!", ColorPalette::Orange);
+
+        for (auto chip : m_SessionModel->m_WinningChips)
+        {
+            m_Grid[chip.x][chip.y]->SetHighlightChip(true);
+        }
     }
+}
 
 
+std::string SessionController::GetName(int index)
+{
+    return m_NameTextFields[index]->GetText();
 }
 
 

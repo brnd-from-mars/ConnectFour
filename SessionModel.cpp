@@ -2,10 +2,10 @@
 // Created by Brendan Berg on 10.03.22.
 //
 
-#include <iostream>
-
 #include "SessionModel.hpp"
 #include "SessionController.hpp"
+
+#include "AppDelegate.hpp"
 
 
 SessionModel::SessionModel(int columns, int rows)
@@ -17,36 +17,64 @@ void SessionModel::Update()
 { }
 
 
-void SessionModel::HandleNamePlayer1Enter()
+bool SessionModel::HandleInitialNameEnter()
 {
-    if (m_State != SessionState::namePlayer1)
+    if (m_State != SessionState::nameEnter)
     {
-        return;
+        return false;
     }
 
-    m_State = SessionState::namePlayer2;
-}
-
-
-void SessionModel::HandleNamePlayer2Enter()
-{
-    if (m_State != SessionState::namePlayer2)
+    auto controller = m_SessionController.lock();
+    if (!controller)
     {
-        return;
+        return false;
+    }
+
+    if (controller->GetName(0).empty() || controller->GetName(1).empty())
+    {
+        return false;
     }
 
     m_State = SessionState::colorPick;
+    return true;
 }
 
 
-void SessionModel::HandleColorPick()
+bool SessionModel::HandleColorPick(int color)
 {
     if (m_State != SessionState::colorPick)
     {
-        return;
+        return false;
     }
 
+    m_ColorChanged = color != m_RandomNameForColorPick;
+
     m_State = SessionState::inGame;
+    return true;
+}
+
+
+std::string SessionModel::GetRandomPlayerForColorPick()
+{
+    if (m_State != SessionState::colorPick)
+    {
+        return std::string();
+    }
+
+    auto controller = m_SessionController.lock();
+    if (!controller)
+    {
+        return std::string();
+    }
+
+    m_RandomNameForColorPick = AppDelegate::Get()->GetRandomNumber() % 2;
+    return controller->GetName(m_RandomNameForColorPick);
+}
+
+
+int SessionModel::GetCurrentPlayerIndex() const
+{
+    return (m_ColorChanged ? 3 - m_CurrentPlayer : m_CurrentPlayer) - 1;
 }
 
 
@@ -70,18 +98,16 @@ void SessionModel::AddChip(int column)
 
                 if (winState != PlayerState::none)
                 {
-                    m_State = SessionState::finished;
+                    std::string playerName;
 
-                    controller->HandleGameEnd(winState);
-
-                    // TODO: outsource to controller
                     if (winState != PlayerState::tie)
                     {
-                        for (auto chip : m_WinningChips)
-                        {
-                            controller->m_Grid[chip.x][chip.y]->SetHighlightChip(true);
-                        }
+                        int k = m_ColorChanged == (winState == PlayerState::player1);
+                        playerName = controller->GetName(k);
                     }
+
+                    controller->HandleGameEnd(winState, playerName);
+                    m_State = SessionState::finished;
                 }
 
                 m_CurrentPlayer = 3 - m_CurrentPlayer;

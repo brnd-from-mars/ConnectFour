@@ -12,6 +12,8 @@
 
 #include "BaseController.hpp"
 
+#include "AppDelegate.hpp"
+
 class ButtonView;
 
 
@@ -23,7 +25,8 @@ class ButtonController : public BaseController
 public:
 
     static std::shared_ptr<ButtonController> MakeButton(float x, float y, float width, const std::string& text,
-                                                        sf::Color defaultColor, sf::Color highlightColor);
+                                                        sf::Color defaultColor,
+                                                        sf::Color highlightColor = ColorPalette::BasestarDark);
 
     ButtonController(float x, float y, float width, const std::string& text,
                      sf::Color defaultColor, sf::Color highlightColor);

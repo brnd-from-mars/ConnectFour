@@ -17,8 +17,7 @@ class SessionController;
 
 enum class SessionState
 {
-    namePlayer1, // TODO: rename to namePlayerA
-    namePlayer2,
+    nameEnter,
     colorPick,
     inGame,
     finished,
@@ -46,11 +45,13 @@ public:
 
     void Update() override;
 
-    void HandleNamePlayer1Enter();
+    bool HandleInitialNameEnter();
 
-    void HandleNamePlayer2Enter();
+    bool HandleColorPick(int color);
 
-    void HandleColorPick();
+    std::string GetRandomPlayerForColorPick();
+
+    int GetCurrentPlayerIndex() const;
 
     void AddChip(int column);
 
@@ -68,8 +69,12 @@ private:
     int m_Columns;
     int m_Rows;
 
-    SessionState m_State = SessionState::namePlayer1;
+    SessionState m_State = SessionState::nameEnter;
+
     int m_CurrentPlayer = 1;
+
+    int m_RandomNameForColorPick = 0;
+    bool m_ColorChanged = false;
 
     sf::Vector2i m_WinningChips[4];
 
