@@ -19,19 +19,34 @@ void SessionModel::Update()
 
 void SessionModel::HandleNamePlayer1Enter()
 {
-    if (m_State == State::namePlayer1)
+    if (m_State != State::namePlayer1)
     {
-        m_State = State::namePlayer2;
+        return;
     }
+
+    m_State = State::namePlayer2;
 }
 
 
 void SessionModel::HandleNamePlayer2Enter()
 {
-    if (m_State == State::namePlayer2)
+    if (m_State != State::namePlayer2)
     {
-        m_State = State::inGame; // TODO: State::inGame to change to State::changeColor
+        return;
     }
+
+    m_State = State::colorPick;
+}
+
+
+void SessionModel::HandleColorPick()
+{
+    if (m_State != State::colorPick)
+    {
+        return;
+    }
+
+    m_State = State::inGame;
 }
 
 
@@ -53,7 +68,7 @@ void SessionModel::AddChip(int column)
                 auto row = field->GetRow();
                 if (GetWinState(column, row) != PlayerState::none)
                 {
-                    m_State = State::terminated;
+                    m_State = State::finished;
                 }
 
                 m_CurrentPlayer = 3 - m_CurrentPlayer;

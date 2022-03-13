@@ -29,6 +29,8 @@ public:
 
     bool Handle(sf::Event event) override;
 
+    void SetHighlightColor(sf::Color highlightColor);
+
     void SetText(const std::string& text);
 
     void UpdateView();

@@ -39,6 +39,8 @@ public:
 
     void RegisterEnterKeyPressCallback(const std::function<void()>& callback);
 
+    void SetHighlightColor(sf::Color highlightColor);
+
     std::string GetText() const;
 
     void UpdateView();

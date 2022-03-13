@@ -26,7 +26,7 @@ public:
     {
         namePlayer1,
         namePlayer2,
-        changeColor,
+        colorPick,
         inGame,
         finished,
         terminated
@@ -47,6 +47,8 @@ public:
     void HandleNamePlayer1Enter();
 
     void HandleNamePlayer2Enter();
+
+    void HandleColorPick();
 
     void AddChip(int column);
 

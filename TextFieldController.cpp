@@ -68,6 +68,12 @@ void TextFieldController::RegisterEnterKeyPressCallback(const std::function<void
 }
 
 
+void TextFieldController::SetHighlightColor(sf::Color highlightColor)
+{
+    m_TextFieldView->SetHighlightColor(highlightColor);
+}
+
+
 std::string TextFieldController::GetText() const
 {
     return m_TextFieldModel->m_Text;

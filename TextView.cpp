@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-std::shared_ptr<TextView> TextView::MakeText(float x, float y, float size, const std::string& font,
+std::shared_ptr<TextView> TextView::MakeText(float x, float y, unsigned int size, const std::string& font,
                                              const std::string& text, sf::Color color, int layer)
 {
     auto view = std::make_shared<TextView>(x, y, size, font, text, color, layer);
@@ -13,7 +13,7 @@ std::shared_ptr<TextView> TextView::MakeText(float x, float y, float size, const
 }
 
 
-TextView::TextView(float x, float y, float size, const std::string& font,
+TextView::TextView(float x, float y, unsigned int size, const std::string& font,
                    const std::string& text, sf::Color color, int layer)
 {
     m_Layer = layer;
