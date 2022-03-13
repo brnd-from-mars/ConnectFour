@@ -19,15 +19,17 @@ ButtonView::ButtonView(float x, float y, float width, const std::string& text,
         throw std::runtime_error("Error while loading Standard.ttf");
     }
 
-    m_TextShape.setFont(m_Font);
-    m_TextShape.setCharacterSize(20);
-    m_TextShape.setPosition(sf::Vector2f(x + 5.0f, y));
-    m_TextShape.setString(text);
-
     m_ButtonField.setSize(sf::Vector2f(width, 25.0f));
     m_ButtonField.setPosition(sf::Vector2f(x, y));
     m_ButtonField.setFillColor(ColorPalette::BasestarLight);
     m_ButtonField.setOutlineThickness(2.0f);
+    auto center = x + width / 2;
+
+    m_TextShape.setFont(m_Font);
+    m_TextShape.setCharacterSize(20);
+    m_TextShape.setString(text);
+    auto xText = center - (m_TextShape.getGlobalBounds().width / 2);
+    m_TextShape.setPosition(sf::Vector2f(xText, y));
 
     UpdateView();
 }
