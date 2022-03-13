@@ -17,7 +17,7 @@ class SessionController;
 
 enum class SessionState
 {
-    namePlayer1,
+    namePlayer1, // TODO: rename to namePlayerA
     namePlayer2,
     colorPick,
     inGame,
@@ -68,7 +68,7 @@ private:
     int m_Columns;
     int m_Rows;
 
-    SessionState m_State = SessionState::namePlayer1; // TODO: change to SessionState::namePlayer1 after text field is added
+    SessionState m_State = SessionState::namePlayer1;
     int m_CurrentPlayer = 1;
 
     sf::Vector2i m_WinningChips[4];
