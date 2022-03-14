@@ -54,23 +54,30 @@ void TextFieldController::HandleBackspaceKeyPress()
 
 void TextFieldController::HandleEnterKeyPress()
 {
-    if (m_EnterKeyPressCallback)
+    /*if (m_EnterKeyPressCallback)
     {
         auto callback = m_EnterKeyPressCallback.value();
         callback();
-    }
+    }*/
 }
 
 
-void TextFieldController::RegisterEnterKeyPressCallback(const std::function<void()>& callback)
+/*void TextFieldController::RegisterEnterKeyPressCallback(const std::function<void()>& callback)
 {
     m_EnterKeyPressCallback = callback;
-}
+}*/
 
 
 void TextFieldController::SetHighlightColor(sf::Color highlightColor)
 {
     m_TextFieldView->SetHighlightColor(highlightColor);
+}
+
+
+void TextFieldController::SetText(const std::string& text)
+{
+    m_TextFieldModel->m_Text = text;
+    UpdateView();
 }
 
 

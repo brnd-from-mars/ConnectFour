@@ -42,10 +42,23 @@ GameController::~GameController()
 void GameController::Update()
 {
     // create new session if either no session exists or existing session was finished
-    if (!m_SessionController || !m_SessionController->IsOngoing())
+    if (!m_SessionController)
     {
         m_SessionController = SessionController::MakeSessionController(m_GameController,
                                                                        m_GameModel->m_Columns,
                                                                        m_GameModel->m_Rows);
+    }
+    else if (!m_SessionController->IsOngoing())
+    {
+        if (m_SessionController->IsTerminated())
+        {
+            m_SessionController = SessionController::MakeSessionController(m_GameController,
+                                                                           m_GameModel->m_Columns,
+                                                                           m_GameModel->m_Rows);
+        }
+        else
+        {
+            m_SessionController = SessionController::MakeSessionController(*m_SessionController);
+        }
     }
 }

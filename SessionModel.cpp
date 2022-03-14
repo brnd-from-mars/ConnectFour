@@ -2,10 +2,10 @@
 // Created by Brendan Berg on 10.03.22.
 //
 
-#include <iostream>
-
 #include "SessionModel.hpp"
 #include "SessionController.hpp"
+
+#include "AppDelegate.hpp"
 
 
 SessionModel::SessionModel(int columns, int rows)
@@ -13,40 +13,78 @@ SessionModel::SessionModel(int columns, int rows)
 { }
 
 
+SessionModel::SessionModel(const SessionModel& oldSessionModel)
+    : m_Columns(oldSessionModel.m_Columns), m_Rows(oldSessionModel.m_Rows)
+{
+    m_RandomNameForColorPick = oldSessionModel.m_RandomNameForColorPick;
+    m_ColorsChanged = oldSessionModel.m_ColorsChanged;
+
+    m_State = SessionState::inGame;
+}
+
+
 void SessionModel::Update()
 { }
 
 
-void SessionModel::HandleNamePlayer1Enter()
+bool SessionModel::HandleInitialNameEnter()
 {
-    if (m_State != SessionState::namePlayer1)
+    if (m_State != SessionState::nameEnter)
     {
-        return;
+        return false;
     }
 
-    m_State = SessionState::namePlayer2;
-}
-
-
-void SessionModel::HandleNamePlayer2Enter()
-{
-    if (m_State != SessionState::namePlayer2)
+    auto controller = m_SessionController.lock();
+    if (!controller)
     {
-        return;
+        return false;
+    }
+
+    if (controller->GetName(0).empty() || controller->GetName(1).empty())
+    {
+        return false;
     }
 
     m_State = SessionState::colorPick;
+    return true;
 }
 
 
-void SessionModel::HandleColorPick()
+bool SessionModel::HandleColorPick(int color)
 {
     if (m_State != SessionState::colorPick)
     {
-        return;
+        return false;
     }
 
+    m_ColorsChanged = color != m_RandomNameForColorPick;
+
     m_State = SessionState::inGame;
+    return true;
+}
+
+
+std::string SessionModel::GetRandomPlayerForColorPick()
+{
+    if (m_State != SessionState::colorPick)
+    {
+        return std::string();
+    }
+
+    auto controller = m_SessionController.lock();
+    if (!controller)
+    {
+        return std::string();
+    }
+
+    m_RandomNameForColorPick = AppDelegate::Get()->GetRandomNumber() % 2;
+    return controller->GetName(m_RandomNameForColorPick);
+}
+
+
+int SessionModel::GetCurrentPlayerIndex() const
+{
+    return (m_ColorsChanged ? 3 - m_CurrentPlayer : m_CurrentPlayer) - 1;
 }
 
 
@@ -70,18 +108,16 @@ void SessionModel::AddChip(int column)
 
                 if (winState != PlayerState::none)
                 {
-                    m_State = SessionState::finished;
+                    std::string playerName;
 
-                    controller->HandleGameEnd(winState);
-
-                    // TODO: outsource to controller
                     if (winState != PlayerState::tie)
                     {
-                        for (auto chip : m_WinningChips)
-                        {
-                            controller->m_Grid[chip.x][chip.y]->SetHighlightChip(true);
-                        }
+                        int k = m_ColorsChanged == (winState == PlayerState::player1);
+                        playerName = controller->GetName(k);
                     }
+
+                    controller->HandleGameEnd(winState, playerName);
+                    m_State = SessionState::finished;
                 }
 
                 m_CurrentPlayer = 3 - m_CurrentPlayer;
@@ -90,12 +126,6 @@ void SessionModel::AddChip(int column)
             }
         }
     }
-}
-
-
-bool SessionModel::IsOngoing() const
-{
-    return m_State != SessionState::terminated;
 }
 
 
@@ -120,13 +150,13 @@ PlayerState SessionModel::GetPlayerAt(int column, int row) const
     return PlayerState::none;
 }
 
+
 /*!  fn PlayerState getWinState(int column, int row)
 *   \brief Function that returns if either player 1 won, player 2 won or there is a tie as an enum PlayerState
 *   \param column Column of the last set Chip
 *   \param row Row of the last set Chip
 *
 */
-
 PlayerState SessionModel::GetWinState(int column, int row)
 {
     PlayerState winState;
@@ -159,6 +189,7 @@ PlayerState SessionModel::GetWinState(int column, int row)
 
 }
 
+
 /*!  fn  void CheckVertical(int column, int row, PlayerState& prev, int& count)
 *   \brief Function checks, if the previous Chip was similar to the current one and counts the quantity of consecutive similar Chips
 *   \param column Column of the current Chip
@@ -166,8 +197,6 @@ PlayerState SessionModel::GetWinState(int column, int row)
 *   \param prev contains the Playerstate of the previous chip as an enum
 *   \param count saves the quantity of consecutive similar chips  
 */
-
-
 void SessionModel::CheckChips(int column, int row, PlayerState& prev, int& count)
 {
     PlayerState current = GetPlayerAt(column, row);
@@ -194,12 +223,12 @@ void SessionModel::CheckChips(int column, int row, PlayerState& prev, int& count
     prev = current;
 }
 
+
 /*!  fn  PlayerState CheckVertical(int column, int row)
 *   \brief Function checks, if there are 4 similar Chips in a horizontal line within a radius of 3 fields around the last set Chip and returns the winning player as an enum
 *   \param column Column of the last set Chip
 *   \param row of the last set Chip
 */
-
 PlayerState SessionModel::CheckHorizontal(int column, int row) {
 
     int count = 0; // number of adjacent chips of same color
@@ -223,7 +252,6 @@ PlayerState SessionModel::CheckHorizontal(int column, int row) {
 *   \param column Column of the last set Chip
 *   \param row of the last set Chip
 */
-
 PlayerState SessionModel::CheckVertical(int column, int row) {
 
     int count = 0; // number of adjacent chips of same color
@@ -247,7 +275,6 @@ PlayerState SessionModel::CheckVertical(int column, int row) {
 *   \param column Column of the last set Chip
 *   \param row of the last set Chip
 */
-
 PlayerState SessionModel::CheckDiagonal(int column, int row)
 {
     int count = 0; // number of adjacent chips of same color
@@ -286,7 +313,6 @@ PlayerState SessionModel::CheckDiagonal(int column, int row)
 /*!  fn  CheckFieldFull()
 *   \brief Function checks, if every free space in Grid is filled with a Chip and returns the PlayerState as an enum
 */
-
 PlayerState SessionModel::CheckFieldFull() const
 {
 	for (int x = 0; x < m_Columns; ++x)
