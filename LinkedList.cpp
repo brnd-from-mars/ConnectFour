@@ -1,16 +1,17 @@
 #include "LinkedList.h"
 
 
-void LinkedList::addElement(GameData data) {
-	
-	LinkedListComponent* current = firstElement;
+template <typename T>
+void LinkedList<T>::addElement(T data) {
+
+	LinkedListComponent<T>* current = firstElement;
 
 	while (current->next != NULL) {
 		current = current->next;
 	}
 
-	current->next = new LinkedListComponent;
-	LinkedListComponent* previousElement = current;
+	current->next = new LinkedListComponent<T>;
+	LinkedListComponent<T>* previousElement = current;
 
 	current = current->next;
 
@@ -20,9 +21,10 @@ void LinkedList::addElement(GameData data) {
 
 }
 
-GameData* LinkedList::getElementAt(int index) {
+template <typename T>
+T* LinkedList<T>::getElementAt(int index) {
 
-	LinkedListComponent* current = firstElement;
+	LinkedListComponent<T>* current = firstElement;
 
 	for (int i = 0; i <= index; i++) {
 
@@ -36,9 +38,10 @@ GameData* LinkedList::getElementAt(int index) {
 	return &current->data;
 }
 
-void LinkedList::sort(SortBy search) { //Bubble-Sort Algorhitmus
-	LinkedListComponent* current = firstElement;
-	LinkedListComponent* following;
+template <typename T>
+void LinkedList<T>::sort(std::function<int(T*)> sortValue) { //Bubble-Sort Algorhitmus
+	LinkedListComponent<T>* current = firstElement;
+	LinkedListComponent<T>* following;
 	
 	bool wasChange = true;
 
@@ -50,10 +53,9 @@ void LinkedList::sort(SortBy search) { //Bubble-Sort Algorhitmus
 
 			following = current->next;
 			
-		
-			if (current->data.time > following->data.time) { //if following Element is bigger than current
+		    if (sortValue(&current->data) > sortValue(&following->data)) { //if following Element is bigger than current
 
-				GameData buffer_data = current->data; 
+				T buffer_data = current->data;
 
 				current->data = following->data; //Swap saved Data
 				following->data = buffer_data;
@@ -71,3 +73,8 @@ void LinkedList::sort(SortBy search) { //Bubble-Sort Algorhitmus
 	}
 
 }
+
+
+
+template class LinkedList<GameData>;
+template class LinkedList<PlayerData>;

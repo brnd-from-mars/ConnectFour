@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <functional>
 #include "SessionModel.hpp"
 
 struct GameData {
@@ -16,8 +17,9 @@ struct PlayerData {
 	int wonGames;
 };
 
+template <typename T>
 struct LinkedListComponent {
-	GameData data;
+	T data;
 	LinkedListComponent* next = NULL;
 	LinkedListComponent* previous = NULL;
 };
@@ -30,16 +32,21 @@ enum class SortBy {
 
 
 
+template <typename T>
 class LinkedList
 {
 private:
-	LinkedListComponent* firstElement = new LinkedListComponent; 
+	LinkedListComponent<T>* firstElement = new LinkedListComponent<T>;
 	
 public:
-	
-	void sort(SortBy search);
-	void addElement(GameData data);
-	GameData* getElementAt(int index);
+
+    T* operator[] (int i)
+    {
+        return getElementAt(i);
+    }
+	void sort(std::function<int(T*)> sortValue);
+	void addElement(T data);
+	T* getElementAt(int index);
 	
 };
 

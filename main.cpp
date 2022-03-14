@@ -73,7 +73,7 @@ int main(int argc, const char** argv)
 
     //TEST**********************************************************************************************
 
-    LinkedList list; 
+    LinkedList<GameData> list;
 
     GameData game1;
     GameData game2;
@@ -93,11 +93,15 @@ int main(int argc, const char** argv)
  
     }
 
-    list.sort(SortBy::time);
+    auto sortAfterTime = [](GameData* data) -> int
+                         {
+                             return data->time;
+                         };
+    list.sort(sortAfterTime);
 
-    std::cout << "sorted list: \n" << std::endl;
+    std::cout << std::endl<< "sorted list:" << std::endl;
     for (int i = 0; i < 3; i++) {
-        std::cout << "Game " << i + 1 << " time: " << list.getElementAt(i)->time << std::endl;
+        std::cout << "Game " << i + 1 << " time: " << list[i]->time << std::endl;
     }
 
     //**************************************************************************************************
