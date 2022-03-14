@@ -41,7 +41,7 @@ int main(int argc, const char** argv)
 
     auto game = GameController::MakeGameController(columns, rows);
 
-    if (true)
+    if (false)
     {
         tinyxml2::XMLDocument doc;
         doc.LoadFile("ScoreBoard.xml");
