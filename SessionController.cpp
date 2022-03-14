@@ -117,13 +117,13 @@ void SessionController::InitGameTerminateButton()
     m_GameTerminateButton = ButtonController::MakeButton(932.0f, 625.0f, 218.0f, "T3RMINAT3 GAM3",
                                                          ColorPalette::Orange);
     auto wController = m_SessionController;
-    m_GameTerminateButton->RegisterMousePressCallback([wController]()
+    /*m_GameTerminateButton->RegisterMousePressCallback([wController]()
                                                       {
                                                           if (auto controller = wController.lock())
                                                           {
                                                               controller->HandleGameTerminatePress();
                                                           }
-                                                      });
+                                                      });*/
 }
 
 
@@ -141,10 +141,10 @@ void SessionController::InitNameTextFields()
                    };
 
     m_NameTextFields[0] = TextFieldController::MakeTextField(750.0f, 150.0f, 300.0f, "Player1", ColorPalette::Pred);
-    m_NameTextFields[0]->RegisterEnterKeyPressCallback(handler);
+    //m_NameTextFields[0]->RegisterEnterKeyPressCallback(handler);
 
     m_NameTextFields[1] = TextFieldController::MakeTextField(850.0f, 200.0f, 300.0f, "Player2", ColorPalette::Cyan);
-    m_NameTextFields[1]->RegisterEnterKeyPressCallback(handler);
+    //m_NameTextFields[1]->RegisterEnterKeyPressCallback(handler);
 }
 
 
@@ -159,22 +159,22 @@ void SessionController::InitColorPickPrompt()
     auto wController = m_SessionController;
 
     m_ColorPickButtons[0] = ButtonController::MakeButton(975.0f, 275.0f, 75.0f, "R3D", ColorPalette::Pred);
-    m_ColorPickButtons[0]->RegisterMousePressCallback([wController]()
+    /*m_ColorPickButtons[0]->RegisterMousePressCallback([wController]()
                                                       {
                                                           if (auto controller = wController.lock())
                                                           {
                                                               controller->HandleColorPick(0);
                                                           }
-                                                      });
+                                                      });*/
 
     m_ColorPickButtons[1] = ButtonController::MakeButton(1075.0f, 275.0f, 75.0f, "BLU3", ColorPalette::Cyan);
-    m_ColorPickButtons[1]->RegisterMousePressCallback([wController]()
+    /*m_ColorPickButtons[1]->RegisterMousePressCallback([wController]()
                                                       {
                                                           if (auto controller = wController.lock())
                                                           {
                                                               controller->HandleColorPick(1);
                                                           }
-                                                      });
+                                                      });*/
 }
 
 
@@ -195,13 +195,13 @@ void SessionController::InitGameRestartButton()
     m_GameRestartButton = ButtonController::MakeButton(750.0f, 625.0f, 120.0f, "R3START",
                                                          ColorPalette::Orange);
     auto wController = m_SessionController;
-    m_GameRestartButton->RegisterMousePressCallback([wController]()
+    /*m_GameRestartButton->RegisterMousePressCallback([wController]()
                                                     {
                                                         if (auto controller = wController.lock())
                                                         {
                                                             controller->HandleGameRestartPress();
                                                         }
-                                                    });
+                                                    });*/
 }
 
 
