@@ -59,6 +59,35 @@ bool SessionModel::HandleColorPick(int color)
 
     m_ColorsChanged = color != m_RandomNameForColorPick;
 
+    m_State = SessionState::inGame;
+    return true;
+}
+
+
+std::string SessionModel::GetRandomPlayerForColorPick()
+{
+    if (m_State != SessionState::colorPick)
+    {
+        return std::string();
+    }
+
+    auto controller = m_SessionController.lock();
+    if (!controller)
+    {
+        return std::string();
+    }
+
+    m_RandomNameForColorPick = AppDelegate::Get()->GetRandomNumber() % 2;
+    return controller->GetName(m_RandomNameForColorPick);
+}
+
+
+int SessionModel::GetCurrentPlayerIndex() const
+{
+    return (m_ColorsChanged ? 3 - m_CurrentPlayer : m_CurrentPlayer) - 1;
+}
+
+
 void SessionModel::AddChip(int column)
 {
     if (m_State != SessionState::inGame)
