@@ -1,9 +1,11 @@
 #include <cmath>
+#include <iostream>
 
 #include "AppDelegate.hpp"
 
 #include "GameController.hpp"
-#include "TextView.hpp"
+
+#include "vendor/tinyxml2/tinyxml2.h"
 
 
 int ParseIntegerArgument(int argc, const char** argv, int n, int min, int max)
@@ -36,6 +38,35 @@ int main(int argc, const char** argv)
     AppDelegate::Get()->SetWindow(1200, 700, "Connect Four");
 
     auto game = GameController::MakeGameController(columns, rows);
+
+    if (true)
+    {
+        tinyxml2::XMLDocument doc;
+        doc.LoadFile("ScoreBoard.xml");
+
+        auto root = doc.FirstChild();
+
+        auto session = root->FirstChild();
+        while (session != nullptr)
+        {
+            std::cout << session->FirstChildElement("Player")->GetText() << std::endl;
+            std::cout << session->FirstChildElement("Time")->GetText() << std::endl;
+            session = session->NextSibling();
+        }
+
+        session = doc.NewElement("Game");
+        root->InsertEndChild(session);
+
+        auto element = doc.NewElement("Player");
+        element->SetText("Philip");
+        session->InsertEndChild(element);
+
+        element = doc.NewElement("Time");
+        element->SetText(312);
+        session->InsertEndChild(element);
+
+        doc.SaveFile("ScoreBoard.xml");
+    }
 
     while (AppDelegate::Get()->Update());
 
