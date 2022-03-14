@@ -5,8 +5,8 @@
 #pragma once
 
 #include <memory>
-//#include <optional>
-//#include <functional>
+#include <optional>
+#include <functional>
 
 #include <SFML/Graphics.hpp>
 

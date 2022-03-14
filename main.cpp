@@ -9,7 +9,6 @@
 
 #include "vendor/tinyxml2/tinyxml2.h"
 
-#include "LinkedList.h" //TEST
 
 int ParseIntegerArgument(int argc, const char** argv, int n, int min, int max)
 {
@@ -71,40 +70,6 @@ int main(int argc, const char** argv)
         doc.SaveFile("ScoreBoard.xml");
     }
 
-    //TEST**********************************************************************************************
-
-    LinkedList<GameData> list;
-
-    GameData game1;
-    GameData game2;
-    GameData game3;
-
-    game1.time = 100;
-    game2.time = 50;
-    game3.time = 20;
-
-    list.addElement(game1);
-    list.addElement(game2);
-    list.addElement(game3);
-
-    for (int i = 0; i < 3; i++) {
-        
-        std::cout << "Game " << i + 1 << " time: " << list.getElementAt(i)->time << std::endl;
- 
-    }
-
-    auto sortAfterTime = [](GameData* data) -> int
-                         {
-                             return data->time;
-                         };
-    list.sort(sortAfterTime);
-
-    std::cout << std::endl<< "sorted list:" << std::endl;
-    for (int i = 0; i < 3; i++) {
-        std::cout << "Game " << i + 1 << " time: " << list[i]->time << std::endl;
-    }
-
-    //**************************************************************************************************
 
     while (AppDelegate::Get()->Update());
 

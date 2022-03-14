@@ -24,23 +24,16 @@ struct LinkedListComponent {
 	LinkedListComponent* previous = NULL;
 };
 
-enum class SortBy {
-	time,
-	moves,
-	wonGames
-};
-
-
-
 template <typename T>
 class LinkedList
 {
 private:
 	LinkedListComponent<T>* firstElement = new LinkedListComponent<T>;
 	
+	
 public:
 
-    T* operator[] (int i)
+    T* operator[] (int i) //overloading []-operator  to make code look cooler :)
     {
         return getElementAt(i);
     }
