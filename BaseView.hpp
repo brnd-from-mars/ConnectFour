@@ -14,10 +14,6 @@ class BaseView : public EventObserver
 
 public:
 
-    BaseView()
-        : m_Layer(0)
-    {}
-
     virtual void Draw() = 0;
 
     int GetLayer() const
@@ -28,7 +24,7 @@ public:
 
 protected:
 
-    int m_Layer;
+    int m_Layer = 0;
 
 
 };

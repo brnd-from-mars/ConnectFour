@@ -37,7 +37,7 @@ public:
 
     void HandleEnterKeyPress();
 
-    //void RegisterEnterKeyPressCallback(const std::function<void()>& callback);
+    void RegisterEnterKeyPressCallback(const std::function<void()>& callback);
 
     void SetHighlightColor(sf::Color highlightColor);
 
@@ -53,7 +53,7 @@ private:
     std::shared_ptr<TextFieldModel> m_TextFieldModel;
     std::shared_ptr<TextFieldView> m_TextFieldView;
 
-    //std::optional<std::function<void()>> m_EnterKeyPressCallback = std::nullopt;
+    std::optional<std::function<void()>> m_EnterKeyPressCallback = std::nullopt;
 
 
 };

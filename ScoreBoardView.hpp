@@ -5,7 +5,7 @@
 #include <memory>
 
 class ScoreBoardView : public BaseView
-{ 
+{
 public:
     ScoreBoardView(float x, float y);
     void Draw() override;
@@ -15,6 +15,7 @@ public:
     void SetList(std::string Name[5], std::string Score[5]);
     void SetType(float type);
     void UpdateView();
+
 
 private:
     
@@ -34,4 +35,3 @@ private:
 
     bool m_focus = false;
 };
-
