@@ -26,6 +26,9 @@ GameController::GameController(int columns, int rows)
     m_GameModel = std::make_shared<GameModel>(columns, rows);
     AppDelegate::Get()->RegisterModel(m_GameModel);
 
+    m_HeadlineOrange = TextView::MakeText(52.0f, 26.0f, 75, "Tron", "C0nnect F0ur", ColorPalette::Orange, 1);
+    m_HeadlineCyan = TextView::MakeText(48.0f, 22.0f, 75, "Tron", "C0nnect F0ur", ColorPalette::Cyan, 2);
+
     std::clog << "GameController constructed" << std::endl;
 }
 
@@ -39,10 +42,23 @@ GameController::~GameController()
 void GameController::Update()
 {
     // create new session if either no session exists or existing session was finished
-    if (!m_SessionController || !m_SessionController->IsOngoing())
+    if (!m_SessionController)
     {
         m_SessionController = SessionController::MakeSessionController(m_GameController,
                                                                        m_GameModel->m_Columns,
                                                                        m_GameModel->m_Rows);
+    }
+    else if (!m_SessionController->IsOngoing())
+    {
+        if (m_SessionController->IsTerminated())
+        {
+            m_SessionController = SessionController::MakeSessionController(m_GameController,
+                                                                           m_GameModel->m_Columns,
+                                                                           m_GameModel->m_Rows);
+        }
+        else
+        {
+            m_SessionController = SessionController::MakeSessionController(*m_SessionController);
+        }
     }
 }

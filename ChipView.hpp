@@ -41,8 +41,6 @@ private:
     sf::Color m_CircleColor;
     sf::Color m_HighlightColor;
 
-    bool m_HandleEvents = false;
-
     static constexpr float m_InnerRadius = 10.0f;
     static constexpr float m_OuterRadius = 12.0f;
 

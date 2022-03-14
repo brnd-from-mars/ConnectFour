@@ -1,11 +1,13 @@
 #include <cmath>
-#include <vector>
+#include <iostream>
 
 #include "AppDelegate.hpp"
 
 #include "GameController.hpp"
 #include "TextFieldController.hpp"
 #include "TextView.hpp"
+
+#include "vendor/tinyxml2/tinyxml2.h"
 
 
 int ParseIntegerArgument(int argc, const char** argv, int n, int min, int max)
@@ -35,18 +37,40 @@ int main(int argc, const char** argv)
     auto columns = ParseIntegerArgument(argc, argv, 1, 4, 25);
     auto rows = ParseIntegerArgument(argc, argv, 2, 4, 20);
 
-    AppDelegate::Get()->SetWindow(1250, 700, "Connect Four");
+    AppDelegate::Get()->SetWindow(1200, 700, "Connect Four");
 
     auto game = GameController::MakeGameController(columns, rows);
 
-    auto text1 = std::make_shared<TextView>(48.0f, 22.0f, 75.0f, "Tron", "C0nnect F0ur", ColorPalette::Cyan);
-    AppDelegate::Get()->RegisterView(text1);
-    auto text2 = std::make_shared<TextView>(52.0f, 26.0f, 75.0f, "Tron", "C0nnect F0ur", ColorPalette::Orange);
-    AppDelegate::Get()->RegisterView(text2);
-
-    while (AppDelegate::Get()->Update())
+    if (true)
     {
+        tinyxml2::XMLDocument doc;
+        doc.LoadFile("ScoreBoard.xml");
+
+        auto root = doc.FirstChild();
+
+        auto session = root->FirstChild();
+        while (session != nullptr)
+        {
+            std::cout << session->FirstChildElement("Player")->GetText() << std::endl;
+            std::cout << session->FirstChildElement("Time")->GetText() << std::endl;
+            session = session->NextSibling();
+        }
+
+        session = doc.NewElement("Game");
+        root->InsertEndChild(session);
+
+        auto element = doc.NewElement("Player");
+        element->SetText("Philip");
+        session->InsertEndChild(element);
+
+        element = doc.NewElement("Time");
+        element->SetText(312);
+        session->InsertEndChild(element);
+
+        doc.SaveFile("ScoreBoard.xml");
     }
+
+    while (AppDelegate::Get()->Update());
 
     AppDelegate::Delete();
 

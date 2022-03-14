@@ -1,51 +1,91 @@
+//
+// Created by Florian Wolff on 10.03.22.
+//
+
 #include "ButtonView.hpp"
+#include "ButtonController.hpp"
+
 #include "AppDelegate.hpp"
-#include <iostream>
 
 
+ButtonView::ButtonView(float x, float y, float width, const std::string& text,
+                       sf::Color defaultColor, sf::Color highlightColor)
+    : m_DefaultColor(defaultColor), m_HighlightColor(highlightColor)
+{
+    m_Layer = 2;
 
+    if (!m_Font.loadFromFile("Standard.ttf"))
+    {
+        throw std::runtime_error("Error while loading Standard.ttf");
+    }
 
-ButtonView::ButtonView() {
+    m_ButtonField.setSize(sf::Vector2f(width, 25.0f));
+    m_ButtonField.setPosition(sf::Vector2f(x, y));
+    m_ButtonField.setFillColor(ColorPalette::BasestarLight);
+    m_ButtonField.setOutlineThickness(2.0f);
+    auto center = x + width / 2;
 
-    m_ButtonField.setSize(sf::Vector2f(30.f, 30.f));
-    m_ButtonField.setPosition(sf::Vector2f(200.f, 200.f));
-    m_ButtonField.setFillColor(sf::Color::Red);
-    m_ButtonField.setOutlineThickness(2.f);
-    m_ButtonField.setOutlineColor(sf::Color::Red);
-}
+    m_TextShape.setFont(m_Font);
+    m_TextShape.setCharacterSize(20);
+    m_TextShape.setString(text);
+    auto xText = center - (m_TextShape.getGlobalBounds().width / 2);
+    m_TextShape.setPosition(sf::Vector2f(xText, y));
 
-void ButtonView::Draw() {
-
-    AppDelegate::Get()->GetWindow()->draw(m_ButtonField);
-}
-
-bool ButtonView::HandleFocusReset() {
-    m_focus = false;
     UpdateView();
+}
+
+void ButtonView::Draw()
+{
+    AppDelegate::Get()->GetWindow()->draw(m_ButtonField);
+    AppDelegate::Get()->GetWindow()->draw(m_TextShape);
+}
+
+
+bool ButtonView::HandleFocusReset()
+{
     return false;
 }
 
-bool ButtonView::Handle(sf::Event event) {
 
+bool ButtonView::Handle(sf::Event event)
+{
     if (event.type == sf::Event::MouseButtonPressed)
+    {
+        // TODO outsource to utility function
+        auto dx = event.mouseButton.x - (m_ButtonField.getPosition().x);
+        auto dy = event.mouseButton.y - (m_ButtonField.getPosition().y);
+        if (((dx >= 0) && (dx <= m_ButtonField.getSize().x)) && ((dy >= 0) && (dy <= m_ButtonField.getSize().y)))
+        {
+            m_Pressed = true;
+            UpdateView();
+            return true;
+        }
+    }
+
+    if (event.type == sf::Event::MouseButtonReleased && m_Pressed)
     {
         auto dx = event.mouseButton.x - (m_ButtonField.getPosition().x);
         auto dy = event.mouseButton.y - (m_ButtonField.getPosition().y);
         if (((dx >= 0) && (dx <= m_ButtonField.getSize().x)) && ((dy >= 0) && (dy <= m_ButtonField.getSize().y)))
         {
-            m_focus = true;
-            UpdateView();
+
+            if (auto controller = m_ButtonController.lock())
+            {
+                controller->HandleMousePress();
+            }
         }
+
+        m_Pressed = false;
+        UpdateView();
+        return true;
     }
 
     return false;
 }
 
-void ButtonView::UpdateView() {
-    if (m_focus == true) {
-        m_ButtonField.setOutlineColor(sf::Color::Yellow);
-    }
-    else {
-        m_ButtonField.setOutlineColor(sf::Color::Red);
-    }
+
+void ButtonView::UpdateView()
+{
+    m_ButtonField.setOutlineColor(m_Pressed ? m_HighlightColor : m_DefaultColor);
+    m_TextShape.setFillColor(m_Pressed ? m_HighlightColor : m_DefaultColor);
 }

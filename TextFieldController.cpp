@@ -2,12 +2,12 @@
 // Created by Brendan Berg on 09.03.22.
 //
 
+#include "TextFieldModel.hpp"
+#include "TextFieldView.hpp"
 #include "TextFieldController.hpp"
 
 #include "AppDelegate.hpp"
 
-#include "TextFieldModel.hpp"
-#include "TextFieldView.hpp"
 
 
 std::shared_ptr<TextFieldController> TextFieldController::MakeTextField(float x, float y, float width,
@@ -35,9 +35,7 @@ TextFieldController::TextFieldController(float x, float y, float width,
 
 
 void TextFieldController::Update()
-{
-
-}
+{ }
 
 
 void TextFieldController::HandleTextEntry(char character)
@@ -47,10 +45,45 @@ void TextFieldController::HandleTextEntry(char character)
 }
 
 
-void TextFieldController::HandleDeleteKeyPress()
+void TextFieldController::HandleBackspaceKeyPress()
 {
     m_TextFieldModel->DeleteCharacter();
     UpdateView();
+}
+
+
+void TextFieldController::HandleEnterKeyPress()
+{
+    if (m_EnterKeyPressCallback)
+    {
+        auto callback = m_EnterKeyPressCallback.value();
+        callback();
+    }
+}
+
+
+void TextFieldController::RegisterEnterKeyPressCallback(const std::function<void()>& callback)
+{
+    m_EnterKeyPressCallback = callback;
+}
+
+
+void TextFieldController::SetHighlightColor(sf::Color highlightColor)
+{
+    m_TextFieldView->SetHighlightColor(highlightColor);
+}
+
+
+void TextFieldController::SetText(const std::string& text)
+{
+    m_TextFieldModel->m_Text = text;
+    UpdateView();
+}
+
+
+std::string TextFieldController::GetText() const
+{
+    return m_TextFieldModel->m_Text;
 }
 
 

@@ -6,12 +6,33 @@
 
 #include <memory>
 #include <vector>
+#include <string>
 
 #include <SFML/Graphics.hpp>
 
 #include "BaseModel.hpp"
 
 class SessionController;
+
+
+enum class SessionState
+{
+    nameEnter,
+    colorPick,
+    inGame,
+    finished,
+    restarted,
+    terminated
+};
+
+
+enum class PlayerState
+{
+    none = 0,
+    player1 = 1,
+    player2 = 2,
+    tie = 3
+};
 
 
 class SessionModel : public BaseModel
@@ -21,32 +42,21 @@ class SessionModel : public BaseModel
 
 public:
 
-    enum class State
-    {
-        namePlayer1,
-        namePlayer2,
-        colorPlayerA,
-        colorPlayerB,
-        inGame,
-        finished,
-        terminated
-    };
-
-    enum class PlayerState
-    {
-        none = 0,
-        player1 = 1,
-        player2 = 2,
-        tie = 3
-    };
-
     SessionModel(int columns, int rows);
+
+    SessionModel(const SessionModel& oldSessionModel);
 
     void Update() override;
 
-    void AddChip(int column);
+    bool HandleInitialNameEnter();
 
-    bool IsOngoing() const;
+    bool HandleColorPick(int color);
+
+    std::string GetRandomPlayerForColorPick();
+
+    int GetCurrentPlayerIndex() const;
+
+    void AddChip(int column);
 
     PlayerState GetPlayerAt(int column, int row) const;
 
@@ -60,8 +70,12 @@ private:
     int m_Columns;
     int m_Rows;
 
-    State m_State = State::inGame; // TODO: change to State::namePlayer1 after text field is added
+    SessionState m_State = SessionState::nameEnter;
+
     int m_CurrentPlayer = 1;
+
+    int m_RandomNameForColorPick = 0;
+    bool m_ColorsChanged = false;
 
     sf::Vector2i m_WinningChips[4];
 

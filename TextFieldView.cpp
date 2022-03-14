@@ -2,8 +2,6 @@
 // Created by Florian Wolff on 09.03.22.
 //
 
-#include <iostream>
-
 #include "TextFieldView.hpp"
 #include "TextFieldController.hpp"
 
@@ -13,7 +11,7 @@
 TextFieldView::TextFieldView(float x, float y, float width, const std::string& placeholder, sf::Color highlightColor)
     : m_HighlightColor(highlightColor)
 {
-    m_Layer = 1;
+    m_Layer = 2;
 
     if (!m_Font.loadFromFile("Standard.ttf"))
     {
@@ -82,9 +80,17 @@ bool TextFieldView::Handle(sf::Event event)
             }
             else if (event.type == sf::Event::KeyPressed)
             {
-                if (event.key.code == sf::Keyboard::Backspace)
+                switch (event.key.code)
                 {
-                    controller->HandleDeleteKeyPress();
+                    case sf::Keyboard::Backspace:
+                        controller->HandleBackspaceKeyPress();
+                        break;
+                    case sf::Keyboard::Enter:
+                        HandleFocusReset();
+                        controller->HandleEnterKeyPress();
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -94,9 +100,24 @@ bool TextFieldView::Handle(sf::Event event)
 }
 
 
+void TextFieldView::SetHighlightColor(sf::Color highlightColor)
+{
+    m_HighlightColor = highlightColor;
+    m_TextShape.setFillColor(m_HighlightColor);
+    UpdateView();
+}
+
+
 void TextFieldView::SetText(const std::string& text)
 {
     m_TextShape.setString(text);
+    if (m_TextShape.getGlobalBounds().width > m_TextField.getGlobalBounds().width - 10.0f)
+    {
+        if (auto controller = m_TextFieldController.lock())
+        {
+            controller->HandleBackspaceKeyPress();
+        }
+    }
 }
 
 

@@ -3,6 +3,8 @@
 //
 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 #include "AppDelegate.hpp"
 
@@ -21,6 +23,7 @@ AppDelegate::AppDelegate()
         // singleton implementation does not guarantee single instance creation (e.g. in multi-threading)
         throw std::runtime_error("Singleton AppDelegate was constructed multiple times");
     }
+    srand(static_cast<unsigned int>(time(nullptr)));
     std::clog << "AppDelegate constructed" << std::endl;
 }
 
@@ -95,6 +98,12 @@ void AppDelegate::RegisterView(const std::shared_ptr<BaseView>& view)
 void AppDelegate::RegisterController(const std::shared_ptr<BaseController>& controller)
 {
     m_ControllerContainer.push_back(controller);
+}
+
+
+int AppDelegate::GetRandomNumber()
+{
+    return rand();
 }
 
 

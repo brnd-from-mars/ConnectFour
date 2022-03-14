@@ -1,23 +1,41 @@
-#pragma once
-#include "BaseView.hpp"
-#include <SFML/Graphics.hpp>
-#include <string>
-#include <memory>
+//
+// Created by Florian Wolff on 10.03.22.
+//
 
-class TextView :
-    public BaseView
+#pragma once
+
+#include <memory>
+#include <string>
+
+#include <SFML/Graphics.hpp>
+
+#include "BaseView.hpp"
+
+
+class TextView : public BaseView
 {
+
 public:
-    TextView(float x, float y, float size, std::string font, std::string content, sf::Color color);
+
+    static std::shared_ptr<TextView> MakeText(float x, float y, unsigned int size, const std::string& font,
+                                              const std::string& text, sf::Color color, int layer = 0);
+
+    TextView(float x, float y, unsigned int size, const std::string& font,
+             const std::string& text, sf::Color color, int layer);
+
     void Draw() override;
-    void SetText(std::string Text);
+
+    void SetText(const std::string& text);
+
     bool HandleFocusReset() override;
+
     bool Handle(sf::Event event) override;
 
-private:
-    sf::Text m_TextClass;
-    std::string m_Text;
-    sf::Font m_Standard;
-    sf::Font m_Tron;
-};
 
+private:
+
+    sf::Text m_TextShape;
+    sf::Font m_Font;
+
+
+};
