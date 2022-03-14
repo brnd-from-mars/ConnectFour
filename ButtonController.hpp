@@ -5,8 +5,8 @@
 #pragma once
 
 #include <memory>
-//#include <optional>
-//#include <functional>
+#include <optional>
+#include <functional>
 
 #include <SFML/Graphics.hpp>
 
@@ -35,14 +35,14 @@ public:
 
     void HandleMousePress();
 
-    //void RegisterMousePressCallback(const std::function<void()>& callback);
+    void RegisterMousePressCallback(const std::function<void()>& callback);
 
 
 private:
 
     std::shared_ptr<ButtonView> m_ButtonView;
 
-    //std::optional<std::function<void()>> m_MousePressCallback = std::nullopt;
+    std::optional<std::function<void()>> m_MousePressCallback = std::nullopt;
 
 
 };
