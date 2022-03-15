@@ -120,6 +120,20 @@ bool SessionController::IsTerminated() const
 void SessionController::InitScoreBoard()
 {
     m_ScoreBoard = ScoreBoardController::MakeScoreBoard(750.0f, 350.0f, 400.0f);
+
+    GameData games[8] = {{"Brendan", "Florian", 16, 98},
+                         {"Brendan", "Magnus", 19, 105},
+                         {"Florian", "Brendan", 36, 226},
+                         {"Florian", "Magnus", 41, 164},
+                         {"Brendan", "Florian", 16, 98},
+                         {"Magnus", "Brendan", 9, 134},
+                         {"Brendan", "Florian", 18, 78},
+                         {"Florian", "Brendan", 16, 65}};
+
+    for (auto& game : games)
+    {
+        m_ScoreBoard->AddGame(game);
+    }
 }
 
 

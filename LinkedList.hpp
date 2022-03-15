@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include <functional>
 
 
@@ -24,44 +23,56 @@ private:
 	
 public:
 
-    T* operator[] (int index) //overloading []-operator  to make code look cooler :)
+    void AddElement(T element)
     {
-        //Function returns pointer at Element (type T) at index in the list
-        //starts counting from position 0 (beginning) to position index (if index isn't beyond dimension of list)
-        //starts counting from end of list if index is negative
-
         LinkedListComponent<T>* current = firstElement;
 
-        if (index < 0) {
-            while (current->next != nullptr) { //set current pointer to the last object of the list
-                current = current->next;
-            }
-            for (int i = 1; i <= -index; i++) { //counting to index against in opposite direction
-                if (current != nullptr) {
-                    current = current->previous;
-                }
-                else {
-                    // TODO: throw error
-                    return nullptr;
-                }
-            }
-        } else {
-            for (int i = 0; i <= index; i++) { //counting to index
-                if (current != nullptr) {
-                    current = current->next;
-                }
-                else {
-                    // TODO: throw error
-                    return nullptr;
-                }
-            }
+        while (current->next != nullptr)
+        {
+            current = current->next;
         }
 
-        return &current->data;
+        current->next = new LinkedListComponent<T>;
+        LinkedListComponent<T>* previousElement = current;
+
+        current = current->next;
+
+        current->previous = previousElement;
+        current->next = nullptr;
+        current->data = element;
     }
 
 
-	void sort(std::function<int(T*)> sortValue)
+    void ForEach(std::function<void(T*)> function)
+    {
+        LinkedListComponent<T>* current = firstElement;
+
+        while (current->next != nullptr)
+        {
+            current = current->next;
+            function(&current->data);
+        }
+    }
+
+
+    T* Find(std::function<bool(T*)> filter)
+    {
+        LinkedListComponent<T>* current = firstElement;
+
+        while (current->next != nullptr)
+        {
+            current = current->next;
+            if (filter(&current->data))
+            {
+                return &current->data;
+            }
+        }
+
+        return nullptr;
+    }
+
+
+    /*void Sort(std::function<int(T*)> getSortValue)
     {
         //function sorts linked list with elements of type T with bubble-sort algorithm
         //gets a lambda-function which tells, by which value to sort
@@ -100,23 +111,40 @@ public:
     }
 
 
-	void addElement(T data)
+    T* operator[] (int index) //overloading []-operator  to make code look cooler :)
     {
-        //functions adds an Element of Type T at the end of a double-linked list
+        //Function returns pointer at Element (type T) at index in the list
+        //starts counting from position 0 (beginning) to position index (if index isn't beyond dimension of list)
+        //starts counting from end of list if index is negative
+
         LinkedListComponent<T>* current = firstElement;
 
-        while (current->next != nullptr) { //jumping through list to its end
-            current = current->next;
+        if (index < 0) {
+            while (current->next != nullptr) { //set current pointer to the last object of the list
+                current = current->next;
+            }
+            for (int i = 1; i <= -index; i++) { //counting to index against in opposite direction
+                if (current != nullptr) {
+                    current = current->previous;
+                }
+                else {
+                    // TODO: throw error
+                    return nullptr;
+                }
+            }
+        } else {
+            for (int i = 0; i <= index; i++) { //counting to index
+                if (current != nullptr) {
+                    current = current->next;
+                }
+                else {
+                    // TODO: throw error
+                    return nullptr;
+                }
+            }
         }
 
-        current->next = new LinkedListComponent<T>;
-        LinkedListComponent<T>* previousElement = current;
-
-        current = current->next;
-
-        current->previous = previousElement; //define properties of last (added) element
-        current->next = nullptr;
-        current->data = data;
-    }
+        return &current->data;
+    }*/
 };
 

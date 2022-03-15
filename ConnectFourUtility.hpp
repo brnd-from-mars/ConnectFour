@@ -11,8 +11,8 @@ struct GameData
 {
     std::string winningPlayer;
     std::string loosingPlayer;
-    int time;
     int moves;
+    int time;
 };
 
 

@@ -8,6 +8,8 @@
 
 #include "BaseController.hpp"
 
+#include "ConnectFourUtility.hpp"
+
 class ScoreBoardModel;
 class ScoreBoardView;
 
@@ -24,6 +26,8 @@ public:
     ScoreBoardController(float x, float y, float width);
 
     void Update() override;
+
+    void AddGame(GameData game);
 
 
 private:

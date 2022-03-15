@@ -4,15 +4,15 @@
 
 #include "ScoreBoardModel.hpp"
 
-#include "vendor/tinyxml2/tinyxml2.h"
+#include "ConnectFourUtility.hpp"
 
 #include <iostream>
 
 
 ScoreBoardModel::ScoreBoardModel()
 {
-    tinyxml2::XMLDocument saveFile;
-    if (saveFile.LoadFile("ScoreBoard.xml") != tinyxml2::XML_SUCCESS)
+    tinyxml2::XMLDocument file;
+    if (file.LoadFile("ScoreBoard.xml") != tinyxml2::XML_SUCCESS)
     {
         std::cout << "ScoreBoard.xml not found" << std::endl;
     }
@@ -20,6 +20,115 @@ ScoreBoardModel::ScoreBoardModel()
 
 
 void ScoreBoardModel::Update()
-{
+{ }
 
+
+void ScoreBoardModel::AddGame(GameData data)
+{
+    auto winningPlayerName = data.winningPlayer;
+    auto loosingPlayerName = data.loosingPlayer;
+
+    m_GameList.AddElement(std::move(data));
+
+    auto winningPlayer = m_PlayerList.Find([&winningPlayerName](PlayerData* player)
+                                           {
+                                               return player->name == winningPlayerName;
+                                           });
+    if (winningPlayer)
+    {
+        ++winningPlayer->games;
+        ++winningPlayer->victories;
+    } else {
+        PlayerData player = {winningPlayerName, 1, 1};
+        m_PlayerList.AddElement(player);
+    }
+
+    auto loosingPlayer = m_PlayerList.Find([&loosingPlayerName](PlayerData* player)
+                                           {
+                                               return player->name == loosingPlayerName;
+                                           });
+    if (loosingPlayer)
+    {
+        ++loosingPlayer->games;
+    } else {
+        PlayerData player = {loosingPlayerName, 1, 0};
+        m_PlayerList.AddElement(player);
+    }
+
+    SaveXMLDocument();
+}
+
+
+void ScoreBoardModel::SaveXMLDocument()
+{
+    tinyxml2::XMLDocument file;
+
+    tinyxml2::XMLElement* nScoreBoard = file.NewElement("ScoreBoard");
+    file.InsertFirstChild(nScoreBoard);
+
+    tinyxml2::XMLElement* nGames = file.NewElement("Games");
+    nScoreBoard->InsertEndChild(nGames);
+    m_GameList.ForEach([nGames, &file](GameData* game)
+                       {
+                           /*std::cout << game->winningPlayer << " vs. " << game->loosingPlayer << ": "
+                                     << game->moves << " moves, " << game->time << "s" << std::endl;*/
+                           AddGameToXMLDocument(game, nGames, &file);
+                       });
+
+    tinyxml2::XMLElement* nPlayers = file.NewElement("Players");
+    nScoreBoard->InsertEndChild(nPlayers);
+    m_PlayerList.ForEach([nPlayers, &file](PlayerData* player)
+                         {
+                             //std::cout << player->name << ": " << player->victories << "/" << player->games << std::endl;
+                             AddPlayerToXMLDocument(player, nPlayers, &file);
+                         });
+
+    file.SaveFile("ScoreBoard.xml");
+}
+
+
+void ScoreBoardModel::AddGameToXMLDocument(GameData* game, tinyxml2::XMLElement* nGames, tinyxml2::XMLDocument* file)
+{
+    tinyxml2::XMLElement* nGame = file->NewElement("Game");
+    nGames->InsertEndChild(nGame);
+
+    tinyxml2::XMLElement* nElement = nullptr;
+
+    nElement = file->NewElement("WinningPlayer");
+    nElement->SetText(game->winningPlayer.c_str());
+    nGame->InsertEndChild(nElement);
+
+    nElement = file->NewElement("LoosingPlayer");
+    nElement->SetText(game->loosingPlayer.c_str());
+    nGame->InsertEndChild(nElement);
+
+    nElement = file->NewElement("Moves");
+    nElement->SetText(game->moves);
+    nGame->InsertEndChild(nElement);
+
+    nElement = file->NewElement("Time");
+    nElement->SetText(game->time);
+    nGame->InsertEndChild(nElement);
+}
+
+
+void ScoreBoardModel::AddPlayerToXMLDocument(PlayerData* player,
+                                             tinyxml2::XMLElement* nPlayers, tinyxml2::XMLDocument* file)
+{
+    tinyxml2::XMLNode* nPlayer = file->NewElement("Player");
+    nPlayers->InsertEndChild(nPlayer);
+
+    tinyxml2::XMLElement* nElement = nullptr;
+
+    nElement = file->NewElement("Name");
+    nElement->SetText(player->name.c_str());
+    nPlayer->InsertEndChild(nElement);
+
+    nElement = file->NewElement("Games");
+    nElement->SetText(player->games);
+    nPlayer->InsertEndChild(nElement);
+
+    nElement = file->NewElement("Victories");
+    nElement->SetText(player->victories);
+    nPlayer->InsertEndChild(nElement);
 }
