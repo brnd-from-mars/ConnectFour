@@ -30,6 +30,7 @@ public:
 
 private:
 
+    void LoadXMLDocument();
     void SaveXMLDocument();
 
     static void AddGameToXMLDocument(GameData* game, tinyxml2::XMLElement* nGames, tinyxml2::XMLDocument* file);

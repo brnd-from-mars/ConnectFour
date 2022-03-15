@@ -11,11 +11,7 @@
 
 ScoreBoardModel::ScoreBoardModel()
 {
-    tinyxml2::XMLDocument file;
-    if (file.LoadFile("ScoreBoard.xml") != tinyxml2::XML_SUCCESS)
-    {
-        std::cout << "ScoreBoard.xml not found" << std::endl;
-    }
+    LoadXMLDocument();
 }
 
 
@@ -59,6 +55,53 @@ void ScoreBoardModel::AddGame(GameData data)
 }
 
 
+void ScoreBoardModel::LoadXMLDocument()
+{
+    tinyxml2::XMLDocument file;
+    if (file.LoadFile("ScoreBoard.xml") != tinyxml2::XML_SUCCESS)
+    {
+        std::cerr << "ScoreBoard.xml not found" << std::endl;
+        return;
+    }
+
+    tinyxml2::XMLNode* nScoreBoard = file.FirstChild();
+
+    tinyxml2::XMLNode* nGames = nScoreBoard->FirstChildElement("Games");
+    tinyxml2::XMLNode* nGame = nGames->FirstChild();
+    while (nGame != nullptr)
+    {
+        GameData data = {nGame->FirstChildElement("WinningPlayer")->GetText(),
+                         nGame->FirstChildElement("LoosingPlayer")->GetText(),
+                         static_cast<int>(strtol(nGame->FirstChildElement("Moves")->GetText(), nullptr, 10)),
+                         static_cast<int>(strtol(nGame->FirstChildElement("Time")->GetText(), nullptr, 10))};
+        m_GameList.AddElement(data);
+        nGame = nGame->NextSibling();
+    }
+
+    tinyxml2::XMLNode* nPlayers = nScoreBoard->FirstChildElement("Players");
+    tinyxml2::XMLNode* nPlayer = nPlayers->FirstChild();
+    while (nPlayer != nullptr)
+    {
+        PlayerData player = {nPlayer->FirstChildElement("Name")->GetText(),
+                             static_cast<int>(strtol(nPlayer->FirstChildElement("Games")->GetText(), nullptr, 10)),
+                             static_cast<int>(strtol(nPlayer->FirstChildElement("Victories")->GetText(), nullptr, 10))};
+        m_PlayerList.AddElement(player);
+        nPlayer = nPlayer->NextSibling();
+    }
+
+
+    m_GameList.ForEach([](GameData* game)
+                       {
+                           std::cout << game->winningPlayer << " vs. " << game->loosingPlayer << ": "
+                                     << game->moves << " moves, " << game->time << "s" << std::endl;
+                       });
+    m_PlayerList.ForEach([](PlayerData* player)
+                         {
+                             std::cout << player->name << ": " << player->victories << "/" << player->games << std::endl;
+                         });
+}
+
+
 void ScoreBoardModel::SaveXMLDocument()
 {
     tinyxml2::XMLDocument file;
@@ -70,8 +113,6 @@ void ScoreBoardModel::SaveXMLDocument()
     nScoreBoard->InsertEndChild(nGames);
     m_GameList.ForEach([nGames, &file](GameData* game)
                        {
-                           /*std::cout << game->winningPlayer << " vs. " << game->loosingPlayer << ": "
-                                     << game->moves << " moves, " << game->time << "s" << std::endl;*/
                            AddGameToXMLDocument(game, nGames, &file);
                        });
 
@@ -79,7 +120,6 @@ void ScoreBoardModel::SaveXMLDocument()
     nScoreBoard->InsertEndChild(nPlayers);
     m_PlayerList.ForEach([nPlayers, &file](PlayerData* player)
                          {
-                             //std::cout << player->name << ": " << player->victories << "/" << player->games << std::endl;
                              AddPlayerToXMLDocument(player, nPlayers, &file);
                          });
 
