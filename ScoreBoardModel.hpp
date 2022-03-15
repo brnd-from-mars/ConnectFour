@@ -19,6 +19,8 @@ class ScoreBoardModel : public BaseModel
 
 public:
 
+    ScoreBoardModel();
+
     void Update() override;
 
 

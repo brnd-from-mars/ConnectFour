@@ -2,6 +2,7 @@
 // Created by Brendan Berg on 15.03.22.
 //
 
+#include "ScoreBoardModel.hpp"
 #include "ScoreBoardView.hpp"
 #include "ScoreBoardController.hpp"
 
@@ -21,6 +22,9 @@ ScoreBoardController::ScoreBoardController(float x, float y, float width)
 {
     m_ScoreBoardView = std::make_shared<ScoreBoardView>(x, y, width);
     AppDelegate::Get()->RegisterView(m_ScoreBoardView);
+
+    m_ScoreBoardModel = std::make_shared<ScoreBoardModel>();
+    AppDelegate::Get()->RegisterModel(m_ScoreBoardModel);
 }
 
 

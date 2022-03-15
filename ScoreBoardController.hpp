@@ -8,6 +8,7 @@
 
 #include "BaseController.hpp"
 
+class ScoreBoardModel;
 class ScoreBoardView;
 
 
@@ -27,6 +28,7 @@ public:
 
 private:
 
+    std::shared_ptr<ScoreBoardModel> m_ScoreBoardModel;
     std::shared_ptr<ScoreBoardView> m_ScoreBoardView;
 
 
