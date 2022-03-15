@@ -22,6 +22,7 @@ SessionController::MakeSessionController(const std::weak_ptr<GameController>& ga
     controller->m_SessionModel->m_SessionController = controller;
     controller->m_SessionController = controller;
 
+    controller->InitScoreBoard();
     controller->InitGrid();
     controller->InitGameTerminateButton();
     controller->InitNameTextFields();
@@ -39,6 +40,7 @@ SessionController::MakeSessionController(const SessionController& oldSessionCont
     controller->m_SessionModel->m_SessionController = controller;
     controller->m_SessionController = controller;
 
+    controller->InitScoreBoard();
     controller->InitGrid();
     controller->InitGameTerminateButton();
     controller->InitNameTextFields();
@@ -112,6 +114,12 @@ bool SessionController::IsOngoing() const
 bool SessionController::IsTerminated() const
 {
     return (m_SessionModel->m_State == SessionState::terminated);
+}
+
+
+void SessionController::InitScoreBoard()
+{
+    m_ScoreBoard = ScoreBoardController::MakeScoreBoard(750.0f, 350.0f, 400.0f);
 }
 
 

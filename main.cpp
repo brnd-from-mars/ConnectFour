@@ -89,7 +89,6 @@ int main(int argc, const char** argv)
 
         for (int i = 0; i < 3; i++)
         {
-
             std::cout << "Game " << i + 1 << " time: " << list.getElementAt(i)->time << std::endl;
 
         }

@@ -15,7 +15,7 @@ add_executable(FourWins main.cpp AppDelegate.cpp
         ButtonView.cpp ButtonController.cpp
         TextView.cpp
         ArrowView.cpp
-        ScoreBoardView.cpp
+        ScoreBoardView.cpp ScoreBoardController.cpp
         LinkedList.cpp
         vendor/tinyxml2/tinyxml2.cpp)
 target_link_libraries(FourWins sfml-graphics sfml-window)

@@ -1,37 +1,47 @@
+//
+// Created by Florian Wolff on 15.03.22.
+//
+
 #pragma once
-#include "BaseView.hpp"
-#include <SFML/Graphics.hpp>
-#include <string>
+
 #include <memory>
+#include <string>
+
+#include <SFML/Graphics.hpp>
+
+#include "BaseView.hpp"
+
 
 class ScoreBoardView : public BaseView
 {
 public:
-    ScoreBoardView(float x, float y);
+
+    ScoreBoardView(float x, float y, float width);
+
     void Draw() override;
+
     bool HandleFocusReset() override;
     bool Handle(sf::Event event) override;
-    void SetText(std::string Text); //Altered to SetList to display the ScoreBoard
-    void SetList(std::string Name[5], std::string Score[5]);
-    void SetType(float type);
-    void UpdateView();
 
 
 private:
-    
-    std::string m_Name[5];
-    sf::Text m_NameShape[5];
 
-    std::string m_Score[5];
-    sf::Text m_ScoreShape[5];
+    void SetList(const std::string* names, const std::string* scores);
+    void SetHeadline(const std::string& headline);
+    void UpdateView();
 
-    std::string m_Number[5];
-    sf::Text m_NumberShape[5];
+    float m_X;
+    float m_Y;
+    float m_Width;
 
-    std::string m_type;
-    sf::Text m_TypeShape;
+    sf::RectangleShape m_Box;
+    sf::Text m_HeadlineShape;
 
-    sf::Font m_Standard;
+    sf::Text m_PlacingShapes[5];
+    sf::Text m_NameShapes[5];
+    sf::Text m_ScoreShapes[5];
 
-    bool m_focus = false;
+    sf::Font m_Font;
+
+
 };
