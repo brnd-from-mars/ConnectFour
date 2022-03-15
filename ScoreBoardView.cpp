@@ -1,5 +1,5 @@
 //
-// Created by Florian Wolff on 15.03.22.
+// Created by Florian Wolff on 11.03.22.
 //
 
 #include <string>
@@ -19,15 +19,15 @@ ScoreBoardView::ScoreBoardView(float x, float y, float width)
 
     m_HeadlineShape.setFont(m_Font);
     m_HeadlineShape.setCharacterSize(20);
-    m_HeadlineShape.setPosition(sf::Vector2f(x, y));
     m_HeadlineShape.setFillColor(ColorPalette::Basestar);
     m_HeadlineShape.setOutlineThickness(2.0f);
     m_HeadlineShape.setOutlineColor(ColorPalette::Orange);
-    m_HeadlineShape.setString("Fastest victory");
+    m_HeadlineShape.setPosition(sf::Vector2f(x, y));
+    m_HeadlineShape.setString("XXXXX");
 
     for (int i = 0; i < 5; ++i)
     {
-        auto lineY = y + 50.0f + (i * 25.0f);
+        auto lineY = LineToY(i);
 
         m_PlacingShapes[i].setFont(m_Font);
         m_PlacingShapes[i].setCharacterSize(15);
@@ -38,19 +38,19 @@ ScoreBoardView::ScoreBoardView(float x, float y, float width)
 
         m_NameShapes[i].setFont(m_Font);
         m_NameShapes[i].setCharacterSize(15);
-        m_NameShapes[i].setPosition(sf::Vector2f(x + 20.0f, lineY));
         m_NameShapes[i].setFillColor(ColorPalette::Basestar);
         m_NameShapes[i].setOutlineThickness(2.0f);
         m_NameShapes[i].setOutlineColor(ColorPalette::Orange);
-        m_NameShapes[i].setString("NameNameName");
+        m_NameShapes[i].setString("XXX");
+        m_NameShapes[i].setPosition(sf::Vector2f(x + 20.0f, lineY));
 
         m_ScoreShapes[i].setFont(m_Font);
         m_ScoreShapes[i].setCharacterSize(15);
         m_ScoreShapes[i].setFillColor(ColorPalette::Basestar);
         m_ScoreShapes[i].setOutlineThickness(2.0f);
         m_ScoreShapes[i].setOutlineColor(ColorPalette::Orange);
-        m_ScoreShapes[i].setString("XXX:XX");
-        auto scoreX = x + m_Width - m_ScoreShapes->getGlobalBounds().width;
+        m_ScoreShapes[i].setString("X");
+        auto scoreX = x + width - m_ScoreShapes->getGlobalBounds().width;
         m_ScoreShapes[i].setPosition(sf::Vector2f(scoreX, lineY));
     }
 }
@@ -88,12 +88,20 @@ bool ScoreBoardView::Handle(sf::Event event)
 }
 
 
+float ScoreBoardView::LineToY(int line) const
+{
+    return m_Y + 50.0f + (line * 25.0f);;
+}
+
+
 void ScoreBoardView::SetList(const std::string* names, const std::string* scores)
 {
-    for (int i = 0;i < 5; ++i)
+    for (int i = 0; i < 5; ++i)
     {
         m_NameShapes[i].setString(names[i]);
         m_ScoreShapes[i].setString(scores[i]);
+        auto scoreX = m_X + m_Width - m_ScoreShapes->getGlobalBounds().width;
+        m_ScoreShapes[i].setPosition(sf::Vector2f(scoreX, LineToY(i)));
     }
 }
 

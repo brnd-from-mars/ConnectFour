@@ -1,5 +1,5 @@
 //
-// Created by Florian Wolff on 15.03.22.
+// Created by Florian Wolff on 11.03.22.
 //
 
 #pragma once
@@ -25,6 +25,8 @@ public:
 
 
 private:
+
+    float LineToY(int line) const;
 
     void SetList(const std::string* names, const std::string* scores);
     void SetHeadline(const std::string& headline);
