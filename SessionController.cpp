@@ -14,9 +14,9 @@
 
 
 std::shared_ptr<SessionController>
-SessionController::MakeSessionController(const std::weak_ptr<GameController>& gameController, int columns, int rows)
+SessionController::MakeSessionController(const std::weak_ptr<GameController>& game, int columns, int rows)
 {
-    auto controller = std::make_shared<SessionController>(gameController, columns, rows);
+    auto controller = std::make_shared<SessionController>(game, columns, rows);
     AppDelegate::Get()->RegisterController(controller);
 
     controller->m_SessionModel->m_SessionController = controller;
@@ -59,8 +59,8 @@ SessionController::MakeSessionController(const SessionController& oldSessionCont
 }
 
 
-SessionController::SessionController(std::weak_ptr<GameController> gameController, int columns, int rows)
-    : m_GameController(std::move(gameController))
+SessionController::SessionController(std::weak_ptr<GameController> game, int columns, int rows)
+    : m_Game(std::move(game))
 {
     m_SessionModel = std::make_shared<SessionModel>(columns, rows);
     AppDelegate::Get()->RegisterModel(m_SessionModel);
@@ -70,7 +70,7 @@ SessionController::SessionController(std::weak_ptr<GameController> gameControlle
 
 
 SessionController::SessionController(const SessionController& oldSessionController)
-    : m_GameController(oldSessionController.m_GameController)
+    : m_Game(oldSessionController.m_Game)
 {
     m_SessionModel = std::make_shared<SessionModel>(*oldSessionController.m_SessionModel);
     AppDelegate::Get()->RegisterModel(m_SessionModel);
@@ -96,6 +96,25 @@ void SessionController::Update()
 }
 
 
+void SessionController::HandleColumnClick(int column)
+{
+    m_SessionModel->AddChip(column);
+}
+
+
+bool SessionController::IsOngoing() const
+{
+    return (m_SessionModel->m_State != SessionState::restarted) &&
+           (m_SessionModel->m_State != SessionState::terminated);
+}
+
+
+bool SessionController::IsTerminated() const
+{
+    return (m_SessionModel->m_State == SessionState::terminated);
+}
+
+
 void SessionController::InitGrid()
 {
     m_Grid.resize(m_SessionModel->m_Columns);
@@ -104,7 +123,7 @@ void SessionController::InitGrid()
         m_Grid[column].reserve(m_SessionModel->m_Rows);
         for (auto row = 0; row < m_SessionModel->m_Rows; ++row)
         {
-            auto gridField = GridFieldController::MakeGridFieldController(m_SessionController, column, row);
+            auto gridField = GridFieldController::MakeGridField(m_SessionController, column, row);
             m_Grid[column].push_back(gridField);
         }
     }
@@ -205,12 +224,6 @@ void SessionController::InitGameRestartButton()
 }
 
 
-void SessionController::HandleColumnClick(int column)
-{
-    m_SessionModel->AddChip(column);
-}
-
-
 void SessionController::HandleGameTerminatePress()
 {
     m_SessionModel->m_State = SessionState::terminated;
@@ -288,19 +301,6 @@ void SessionController::HandleGameEnd(PlayerState winState, std::string playerNa
 std::string SessionController::GetName(int index)
 {
     return m_NameTextFields[index]->GetText();
-}
-
-
-bool SessionController::IsOngoing() const
-{
-    return (m_SessionModel->m_State != SessionState::restarted) &&
-           (m_SessionModel->m_State != SessionState::terminated);
-}
-
-
-bool SessionController::IsTerminated() const
-{
-    return (m_SessionModel->m_State == SessionState::terminated);
 }
 
 

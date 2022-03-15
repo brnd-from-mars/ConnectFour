@@ -29,12 +29,12 @@ class SessionController : public BaseController
 
 public:
 
-    static std::shared_ptr<SessionController> MakeSessionController(const std::weak_ptr<GameController>& gameController,
+    static std::shared_ptr<SessionController> MakeSessionController(const std::weak_ptr<GameController>& game,
                                                                     int columns, int rows);
 
     static std::shared_ptr<SessionController> MakeSessionController(const SessionController& oldSessionController);
 
-    SessionController(std::weak_ptr<GameController> gameController, int columns, int rows);
+    SessionController(std::weak_ptr<GameController> game, int columns, int rows);
 
     SessionController(const SessionController& oldSessionController);
 
@@ -42,51 +42,35 @@ public:
 
     void Update() override;
 
-
-    void InitGrid();
-
-    void InitGameTerminateButton();
-
-    void InitNameTextFields();
-
-    void InitColorPickPrompt();
-
-    void InitArrow();
-
-    void InitClock();
-
-    void InitGameRestartButton();
-
-
     void HandleColumnClick(int column);
 
-    void HandleGameTerminatePress();
-
-    void HandleNameEnter();
-
-    void HandleColorPick(int color);
-
-    void HandleGameRestartPress();
-
-    void HandleGameEnd(PlayerState winState, std::string winningPlayer);
-
-
-    std::string GetName(int index);
-
     bool IsOngoing() const;
-
     bool IsTerminated() const;
-
-    int GetPlayerAt(int column, int row) const;
 
 
 private:
 
+    void InitGrid();
+    void InitGameTerminateButton();
+    void InitNameTextFields();
+    void InitColorPickPrompt();
+    void InitArrow();
+    void InitClock();
+    void InitGameRestartButton();
+
+    void HandleGameTerminatePress();
+    void HandleNameEnter();
+    void HandleColorPick(int color);
+    void HandleGameRestartPress();
+    void HandleGameEnd(PlayerState winState, std::string winningPlayer);
+
+    std::string GetName(int index);
+    int GetPlayerAt(int column, int row) const;
+
     std::shared_ptr<SessionModel> m_SessionModel;
     std::weak_ptr<SessionController> m_SessionController;
 
-    std::weak_ptr<GameController> m_GameController;
-
+    std::weak_ptr<GameController> m_Game;
 
     std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
 

@@ -24,12 +24,6 @@ ChipView::ChipView(float x, float y, sf::Color circleColor, sf::Color highlightC
 }
 
 
-void ChipView::EnableRing(bool enable)
-{
-    m_Ring.setFillColor(enable ? m_HighlightColor : m_CircleColor);
-}
-
-
 void ChipView::Draw()
 {
     AppDelegate::Get()->GetWindow()->draw(m_Ring);
@@ -46,4 +40,10 @@ bool ChipView::HandleFocusReset()
 bool ChipView::Handle(sf::Event event)
 {
     return false;
+}
+
+
+void ChipView::EnableRing(bool enable)
+{
+    m_Ring.setFillColor(enable ? m_HighlightColor : m_CircleColor);
 }

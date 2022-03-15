@@ -35,7 +35,7 @@ private:
     std::shared_ptr<GameModel> m_GameModel;
     std::weak_ptr<GameController> m_GameController;
 
-    std::shared_ptr<SessionController> m_SessionController;
+    std::shared_ptr<SessionController> m_Session;
 
     std::shared_ptr<TextView> m_HeadlineCyan;
     std::shared_ptr<TextView> m_HeadlineOrange;

@@ -12,10 +12,10 @@
 #include "SessionController.hpp"
 
 
-std::shared_ptr<GridFieldController> GridFieldController::MakeGridFieldController(
-        const std::weak_ptr<SessionController>& sessionController, int column, int row)
+std::shared_ptr<GridFieldController> GridFieldController::MakeGridField(const std::weak_ptr<SessionController>& session,
+                                                                        int column, int row)
 {
-    auto controller = std::make_shared<GridFieldController>(sessionController, column, row);
+    auto controller = std::make_shared<GridFieldController>(session, column, row);
     AppDelegate::Get()->RegisterController(controller);
 
     controller->m_GridFieldModel->m_GridFieldController = controller;
@@ -25,7 +25,7 @@ std::shared_ptr<GridFieldController> GridFieldController::MakeGridFieldControlle
 }
 
 
-GridFieldController::GridFieldController(const std::weak_ptr<SessionController>& sessionController, int column, int row)
+GridFieldController::GridFieldController(const std::weak_ptr<SessionController>& session, int column, int row)
 {
     m_GridFieldModel = std::make_shared<GridFieldModel>(column, row);
     AppDelegate::Get()->RegisterModel(m_GridFieldModel);
@@ -34,7 +34,7 @@ GridFieldController::GridFieldController(const std::weak_ptr<SessionController>&
                                                       625.0f - row * GridFieldView::m_Size);
     AppDelegate::Get()->RegisterView(m_GridFieldView);
 
-    m_SessionController = sessionController;
+    m_Session = session;
 }
 
 
@@ -42,18 +42,8 @@ void GridFieldController::Update()
 { }
 
 
-void GridFieldController::HandleClick()
-{
-    if (auto session = m_SessionController.lock())
-    {
-        session->HandleColumnClick(m_GridFieldModel->m_Column);
-    }
-}
-
-
 void GridFieldController::SetChip(int player)
 {
-    // chip already exists
     if (m_Chip)
     {
         return;
@@ -102,3 +92,13 @@ int GridFieldController::GetRow() const
 {
     return m_GridFieldModel->m_Row;
 }
+
+
+void GridFieldController::HandleClick()
+{
+    if (auto session = m_Session.lock())
+    {
+        session->HandleColumnClick(m_GridFieldModel->m_Column);
+    }
+}
+

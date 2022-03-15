@@ -28,10 +28,10 @@ public:
 
     bool Handle(sf::Event event) override;
 
-    sf::Vector2f GetCenter() const;
-
 
 private:
+
+    sf::Vector2f GetCenter() const;
 
     std::weak_ptr<GridFieldController> m_GridFieldController;
 

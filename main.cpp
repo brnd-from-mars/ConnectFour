@@ -71,40 +71,40 @@ int main(int argc, const char** argv)
         doc.SaveFile("ScoreBoard.xml");
     }
 
-    //TEST**********************************************************************************************
+    if (false)
+    {
+        LinkedList<GameData> list;
 
-    LinkedList<GameData> list;
+        GameData game1;
+        GameData game2;
+        GameData game3;
 
-    GameData game1;
-    GameData game2;
-    GameData game3;
+        game1.time = 100;
+        game2.time = 50;
+        game3.time = 20;
 
-    game1.time = 100;
-    game2.time = 50;
-    game3.time = 20;
+        list.addElement(game1);
+        list.addElement(game2);
+        list.addElement(game3);
 
-    list.addElement(game1);
-    list.addElement(game2);
-    list.addElement(game3);
+        for (int i = 0; i < 3; i++)
+        {
 
-    for (int i = 0; i < 3; i++) {
-        
-        std::cout << "Game " << i + 1 << " time: " << list.getElementAt(i)->time << std::endl;
- 
+            std::cout << "Game " << i + 1 << " time: " << list.getElementAt(i)->time << std::endl;
+
+        }
+
+        auto sortAfterTime = [](GameData* data) -> int {
+            return data->time;
+        };
+        list.sort(sortAfterTime);
+
+        std::cout << std::endl << "sorted list:" << std::endl;
+        for (int i = 0; i < 3; i++)
+        {
+            std::cout << "Game " << i + 1 << " time: " << list[i]->time << std::endl;
+        }
     }
-
-    auto sortAfterTime = [](GameData* data) -> int
-                         {
-                             return data->time;
-                         };
-    list.sort(sortAfterTime);
-
-    std::cout << std::endl<< "sorted list:" << std::endl;
-    for (int i = 0; i < 3; i++) {
-        std::cout << "Game " << i + 1 << " time: " << list[i]->time << std::endl;
-    }
-
-    //**************************************************************************************************
 
     while (AppDelegate::Get()->Update());
 

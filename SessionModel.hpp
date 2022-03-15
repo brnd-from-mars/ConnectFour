@@ -43,13 +43,14 @@ class SessionModel : public BaseModel
 public:
 
     SessionModel(int columns, int rows);
-
     SessionModel(const SessionModel& oldSessionModel);
 
     void Update() override;
 
-    bool HandleInitialNameEnter();
 
+private:
+
+    bool HandleInitialNameEnter();
     bool HandleColorPick(int color);
 
     std::string GetRandomPlayerForColorPick();
@@ -61,9 +62,11 @@ public:
     PlayerState GetPlayerAt(int column, int row) const;
 
     PlayerState GetWinState(int column, int row);
-
-
-private:
+    void CheckChips(int column, int row, PlayerState& prev, int& count);
+    PlayerState CheckHorizontal(int column, int row);
+    PlayerState CheckVertical(int column, int row);
+    PlayerState CheckDiagonal(int column, int row);
+    PlayerState CheckFieldFull() const;
 
     std::weak_ptr<SessionController> m_SessionController;
 
@@ -71,19 +74,12 @@ private:
     int m_Rows;
 
     SessionState m_State = SessionState::nameEnter;
-
     int m_CurrentPlayer = 1;
 
     int m_RandomNameForColorPick = 0;
     bool m_ColorsChanged = false;
 
     sf::Vector2i m_WinningChips[4];
-
-    void CheckChips(int column, int row, PlayerState& prev, int& count);
-    PlayerState CheckHorizontal(int column, int row);
-    PlayerState CheckVertical(int column, int row);
-    PlayerState CheckDiagonal(int column, int row);
-    PlayerState CheckFieldFull() const;
 
 
 };
