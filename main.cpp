@@ -4,12 +4,10 @@
 #include "AppDelegate.hpp"
 
 #include "GameController.hpp"
-#include "TextFieldController.hpp"
-#include "TextView.hpp"
 
-#include "vendor/tinyxml2/tinyxml2.h"
-
-#include "LinkedList.h" //TEST
+#include "ConnectFourUtility.hpp"
+#include "SessionModel.hpp"
+#include "LinkedList.hpp"
 
 int ParseIntegerArgument(int argc, const char** argv, int n, int min, int max)
 {
@@ -42,36 +40,7 @@ int main(int argc, const char** argv)
 
     auto game = GameController::MakeGameController(columns, rows);
 
-    if (false)
-    {
-        tinyxml2::XMLDocument doc;
-        doc.LoadFile("ScoreBoard.xml");
-
-        auto root = doc.FirstChild();
-
-        auto session = root->FirstChild();
-        while (session != nullptr)
-        {
-            std::cout << session->FirstChildElement("Player")->GetText() << std::endl;
-            std::cout << session->FirstChildElement("Time")->GetText() << std::endl;
-            session = session->NextSibling();
-        }
-
-        session = doc.NewElement("Game");
-        root->InsertEndChild(session);
-
-        auto element = doc.NewElement("Player");
-        element->SetText("Philip");
-        session->InsertEndChild(element);
-
-        element = doc.NewElement("Time");
-        element->SetText(312);
-        session->InsertEndChild(element);
-
-        doc.SaveFile("ScoreBoard.xml");
-    }
-
-    if (false)
+    if (true)
     {
         LinkedList<GameData> list;
 
@@ -89,8 +58,7 @@ int main(int argc, const char** argv)
 
         for (int i = 0; i < 3; i++)
         {
-            std::cout << "Game " << i + 1 << " time: " << list.getElementAt(i)->time << std::endl;
-
+            std::cout << "game" << i + 1 << " time: " << list[i]->time << std::endl;
         }
 
         auto sortAfterTime = [](GameData* data) -> int {
@@ -98,10 +66,10 @@ int main(int argc, const char** argv)
         };
         list.sort(sortAfterTime);
 
-        std::cout << std::endl << "sorted list:" << std::endl;
+        std::cout << std::endl << "Sorted list:" << std::endl;
         for (int i = 0; i < 3; i++)
         {
-            std::cout << "Game " << i + 1 << " time: " << list[i]->time << std::endl;
+            std::cout << "game" << i + 1 << " time: " << list[i]->time << std::endl;
         }
     }
 
