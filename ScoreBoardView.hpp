@@ -11,9 +11,13 @@
 
 #include "BaseView.hpp"
 
+class ScoreBoardController;
+
 
 class ScoreBoardView : public BaseView
 {
+    friend ScoreBoardController;
+
 public:
 
     ScoreBoardView(float x, float y, float width);
@@ -28,9 +32,8 @@ private:
 
     float LineToY(int line) const;
 
-    void SetList(const std::string* names, const std::string* scores);
+    void SetLine(int line, const std::string& name, const std::string& score);
     void SetHeadline(const std::string& headline);
-    void UpdateView();
 
     float m_X;
     float m_Y;

@@ -10,6 +10,8 @@
 
 #include "ConnectFourUtility.hpp"
 
+#include "ButtonController.hpp"
+
 class ScoreBoardModel;
 class ScoreBoardView;
 
@@ -32,8 +34,28 @@ public:
 
 private:
 
+    void InitButtons();
+
+    void PrevScoreBoard();
+    void NextScoreBoard();
+
+    void UpdateView();
+
     std::shared_ptr<ScoreBoardModel> m_ScoreBoardModel;
     std::shared_ptr<ScoreBoardView> m_ScoreBoardView;
+    std::weak_ptr<ScoreBoardController> m_ScoreBoardController;
+
+    std::shared_ptr<ButtonController> m_PrevScoreBoardButton;
+    std::shared_ptr<ButtonController> m_NextScoreBoardButton;
+
+    enum class ScoreBoardType
+    {
+        mostVictories,
+        bestKD,
+        leastMoves,
+        leastTime,
+        num
+    } m_CurrentScoreBoard = ScoreBoardType::bestKD;
 
 
 };

@@ -12,6 +12,28 @@
 ScoreBoardModel::ScoreBoardModel()
 {
     LoadXMLDocument();
+
+    /*
+    m_GameList.ForEach([](GameData* game)
+                       {
+                           std::cout << game->winningPlayer << " vs. " << game->loosingPlayer << ": "
+                                     << game->moves << " moves, " << game->time << "s" << std::endl;
+                       });
+
+    for (int i = 0; i < 5; ++i)
+    {
+        auto game = m_GameList[i];
+        if (game != nullptr)
+        {
+
+        }
+    }
+
+    std::cout << std::endl;
+
+    std::cout << game.winningPlayer << " vs. " << game.loosingPlayer << ": "
+              << game.moves << " moves, " << game.time << "s" << std::endl;
+    */
 }
 
 
@@ -90,7 +112,7 @@ void ScoreBoardModel::LoadXMLDocument()
     }
 
 
-    m_GameList.ForEach([](GameData* game)
+    /*m_GameList.ForEach([](GameData* game)
                        {
                            std::cout << game->winningPlayer << " vs. " << game->loosingPlayer << ": "
                                      << game->moves << " moves, " << game->time << "s" << std::endl;
@@ -98,7 +120,43 @@ void ScoreBoardModel::LoadXMLDocument()
     m_PlayerList.ForEach([](PlayerData* player)
                          {
                              std::cout << player->name << ": " << player->victories << "/" << player->games << std::endl;
-                         });
+                         });*/
+}
+
+
+void ScoreBoardModel::SortPlayerListVictories()
+{
+    m_PlayerList.Sort([](PlayerData* player) -> int
+                      {
+                          return player->victories;
+                      });
+}
+
+
+void ScoreBoardModel::SortPlayerListKD()
+{
+    m_PlayerList.Sort([](PlayerData* player) -> int
+                      {
+                          return 100 * player->victories / player->games;
+                      });
+}
+
+
+void ScoreBoardModel::SortGameListMoves()
+{
+    m_GameList.Sort([](GameData* game) -> int
+                    {
+                        return game->moves;
+                    });
+}
+
+
+void ScoreBoardModel::SortGameListTime()
+{
+    m_GameList.Sort([](GameData* game) -> int
+                    {
+                        return game->time;
+                    });
 }
 
 

@@ -90,19 +90,16 @@ bool ScoreBoardView::Handle(sf::Event event)
 
 float ScoreBoardView::LineToY(int line) const
 {
-    return m_Y + 50.0f + (line * 25.0f);;
+    return m_Y + 50.0f + (line * 25.0f);
 }
 
 
-void ScoreBoardView::SetList(const std::string* names, const std::string* scores)
+void ScoreBoardView::SetLine(int line, const std::string& name, const std::string& score)
 {
-    for (int i = 0; i < 5; ++i)
-    {
-        m_NameShapes[i].setString(names[i]);
-        m_ScoreShapes[i].setString(scores[i]);
-        auto scoreX = m_X + m_Width - m_ScoreShapes->getGlobalBounds().width;
-        m_ScoreShapes[i].setPosition(sf::Vector2f(scoreX, LineToY(i)));
-    }
+    m_NameShapes[line].setString(name);
+    m_ScoreShapes[line].setString(score);
+    auto scoreX = m_X + m_Width - m_ScoreShapes[line].getGlobalBounds().width;
+    m_ScoreShapes[line].setPosition(sf::Vector2f(scoreX, LineToY(line)));
 }
 
 
@@ -110,7 +107,3 @@ void ScoreBoardView::SetHeadline(const std::string& headline)
 {
     m_HeadlineShape.setString(headline);
 }
-
-
-void ScoreBoardView::UpdateView()
-{ }

@@ -18,14 +18,23 @@ class LinkedList
 
 private:
 
-	LinkedListComponent<T>* firstElement = new LinkedListComponent<T>;
+	LinkedListComponent<T>* m_FirstElement = nullptr;
 	
 	
 public:
 
+    // TODO: fix memory leak
+
     void AddElement(T element)
     {
-        LinkedListComponent<T>* current = firstElement;
+        if (m_FirstElement == nullptr)
+        {
+            m_FirstElement = new LinkedListComponent<T>;
+            m_FirstElement->data = element;
+            return;
+        }
+
+        LinkedListComponent<T>* current = m_FirstElement;
 
         while (current->next != nullptr)
         {
@@ -33,80 +42,64 @@ public:
         }
 
         current->next = new LinkedListComponent<T>;
-        LinkedListComponent<T>* previousElement = current;
-
-        current = current->next;
-
-        current->previous = previousElement;
-        current->next = nullptr;
-        current->data = element;
+        current->next->data = element;
+        current->next->previous = current;
     }
 
 
     void ForEach(std::function<void(T*)> function)
     {
-        LinkedListComponent<T>* current = firstElement;
+        LinkedListComponent<T>* current = m_FirstElement;
 
-        while (current->next != nullptr)
+        while (current != nullptr)
         {
-            current = current->next;
             function(&current->data);
+            current = current->next;
         }
     }
 
 
     T* Find(std::function<bool(T*)> filter)
     {
-        LinkedListComponent<T>* current = firstElement;
+        LinkedListComponent<T>* current = m_FirstElement;
 
-        while (current->next != nullptr)
+        while (current != nullptr)
         {
-            current = current->next;
             if (filter(&current->data))
             {
                 return &current->data;
             }
+            current = current->next;
         }
 
         return nullptr;
     }
 
 
-    /*void Sort(std::function<int(T*)> getSortValue)
+    void Sort(std::function<int(T*)> getSortValue)
     {
-        //function sorts linked list with elements of type T with bubble-sort algorithm
-        //gets a lambda-function which tells, by which value to sort
+        LinkedListComponent<T>* current = nullptr;
+        LinkedListComponent<T>* next = nullptr;
 
-        LinkedListComponent<T>* current = firstElement;
-        LinkedListComponent<T>* following;
+        bool changed = true;
 
-        bool wasChange = true;
-
-        while (wasChange) {
-
-            current = firstElement;
-
-            while(current->next != nullptr){ //iterating from begin to end of list as long as there were changes/swaps
-
-                following = current->next;
-
-                if (sortValue(&current->data) > sortValue(&following->data)) { //if following Element is bigger than current
-
-                    T buffer_data = current->data;
-
-                    current->data = following->data; //Swap saved Data
-                    following->data = buffer_data;
-
-                    wasChange = true;
-
-                }else {
-                    wasChange = false;
+        while (changed)
+        {
+            changed = false;
+            current = m_FirstElement;
+            while (current != nullptr && current->next != nullptr)
+            {
+                next = current->next;
+                if (getSortValue(&current->data) > getSortValue(&next->data))
+                {
+                    T buffer = current->data;
+                    current->data = next->data;
+                    next->data = buffer;
+                    changed = true;
                 }
 
                 current = current->next;
             }
-
-            current = firstElement;
         }
     }
 
@@ -117,27 +110,42 @@ public:
         //starts counting from position 0 (beginning) to position index (if index isn't beyond dimension of list)
         //starts counting from end of list if index is negative
 
-        LinkedListComponent<T>* current = firstElement;
+        LinkedListComponent<T>* current = m_FirstElement;
 
-        if (index < 0) {
-            while (current->next != nullptr) { //set current pointer to the last object of the list
-                current = current->next;
-            }
-            for (int i = 1; i <= -index; i++) { //counting to index against in opposite direction
-                if (current != nullptr) {
-                    current = current->previous;
+        if (index >= 0)
+        {
+            for (int i = 0; i < index; ++i)
+            {
+                if (current != nullptr)
+                {
+                    current = current->next;
                 }
-                else {
+                else
+                {
                     // TODO: throw error
                     return nullptr;
                 }
             }
-        } else {
-            for (int i = 0; i <= index; i++) { //counting to index
-                if (current != nullptr) {
-                    current = current->next;
+        }
+        else
+        {
+            if (current == nullptr)
+            {
+                return nullptr;
+            }
+
+            while (current->next != nullptr) //set current pointer to the last object of the list
+            {
+                current = current->next;
+            }
+            for (int i = -1; i > index; --i) //counting to index against in opposite direction
+            {
+                if (current != nullptr)
+                {
+                    current = current->previous;
                 }
-                else {
+                else
+                {
                     // TODO: throw error
                     return nullptr;
                 }
@@ -145,6 +153,6 @@ public:
         }
 
         return &current->data;
-    }*/
+    }
 };
 
