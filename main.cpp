@@ -1,4 +1,5 @@
 #include <cmath>
+#include <iostream>
 
 #include "AppDelegate.hpp"
 
@@ -38,7 +39,15 @@ int main(int argc, const char** argv)
 
     auto game = GameController::MakeGameController(columns, rows);
 
-    while (AppDelegate::Get()->Update());
+    try
+    {
+        while (AppDelegate::Get()->Update());
+    }
+    catch (const std::runtime_error& error)
+    {
+        std::cerr << "AppDelegate Update failed: " << error.what() << std::endl;
+    }
+
 
     AppDelegate::Delete();
 
