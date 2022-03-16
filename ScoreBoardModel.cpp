@@ -40,7 +40,9 @@ void ScoreBoardModel::AddGame(GameData data)
     {
         ++winningPlayer->games;
         ++winningPlayer->victories;
-    } else {
+    }
+    else
+    {
         PlayerData player = {winningPlayerName, 1, 1};
         m_PlayerList.AddElement(player);
     }
@@ -52,8 +54,45 @@ void ScoreBoardModel::AddGame(GameData data)
     if (loosingPlayer)
     {
         ++loosingPlayer->games;
-    } else {
+    }
+    else
+    {
         PlayerData player = {loosingPlayerName, 1, 0};
+        m_PlayerList.AddElement(player);
+    }
+}
+
+
+void ScoreBoardModel::AddTie(const GameData& data)
+{
+    auto playerName1 = data.winningPlayer;
+    auto playerName2 = data.loosingPlayer;
+
+    auto player1 = m_PlayerList.Find([&playerName1](PlayerData* player)
+                                     {
+                                         return player->name == playerName1;
+                                     });
+    if (player1)
+    {
+        ++player1->games;
+    }
+    else
+    {
+        PlayerData player = {playerName1, 1, 0};
+        m_PlayerList.AddElement(player);
+    }
+
+    auto player2 = m_PlayerList.Find([&playerName2](PlayerData* player)
+                                     {
+                                         return player->name == playerName2;
+                                     });
+    if (player2)
+    {
+        ++player2->games;
+    }
+    else
+    {
+        PlayerData player = {playerName2, 1, 0};
         m_PlayerList.AddElement(player);
     }
 }

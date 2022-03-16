@@ -50,6 +50,13 @@ void ScoreBoardController::AddGame(GameData game)
 }
 
 
+void ScoreBoardController::AddTie(const GameData& game)
+{
+    m_ScoreBoardModel->AddTie(game);
+    UpdateView();
+}
+
+
 void ScoreBoardController::InitButtons()
 {
     auto wController = m_ScoreBoardController;

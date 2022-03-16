@@ -275,6 +275,7 @@ void SessionController::HandleGameEnd(PlayerState winState, GameData game)
 {
     m_CurrentPlayerArrow.reset();
     m_Clock->Stop();
+    game.time = m_Clock->GetTotalSeconds();
 
     if (winState == PlayerState::none)
     {
@@ -283,6 +284,14 @@ void SessionController::HandleGameEnd(PlayerState winState, GameData game)
     else if (winState == PlayerState::tie)
     {
         m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard", "It's a tie!", ColorPalette::Orange);
+
+        game.winningPlayer = GetName(0);
+        game.loosingPlayer = GetName(1);
+
+        if (auto gameController = m_Game.lock())
+        {
+            gameController->AddTie(game);
+        }
     }
     else
     {
@@ -296,7 +305,6 @@ void SessionController::HandleGameEnd(PlayerState winState, GameData game)
             m_Grid[chip.x][chip.y]->SetHighlightChip(true);
         }
 
-        game.time = m_Clock->GetTotalSeconds();
         if (auto gameController = m_Game.lock())
         {
             gameController->AddGame(game);

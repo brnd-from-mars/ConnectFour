@@ -32,6 +32,8 @@ public:
 
     void AddGame(GameData game);
 
+    void AddTie(const GameData& game);
+
 
 private:
 

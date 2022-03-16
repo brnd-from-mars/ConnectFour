@@ -72,6 +72,12 @@ void GameController::AddGame(GameData game)
 }
 
 
+void GameController::AddTie(const GameData& game)
+{
+    m_ScoreBoard->AddTie(game);
+}
+
+
 void GameController::InitScoreBoard()
 {
     m_ScoreBoard = ScoreBoardController::MakeScoreBoard(750.0f, 350.0f, 400.0f);
