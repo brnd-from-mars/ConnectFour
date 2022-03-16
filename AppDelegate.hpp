@@ -43,7 +43,7 @@ private:
 
 public:
 
-    // TODO: disallow copy
+    AppDelegate(const AppDelegate&) = delete;
 
     virtual ~AppDelegate();
 
