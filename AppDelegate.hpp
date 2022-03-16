@@ -44,21 +44,15 @@ private:
 public:
 
     AppDelegate(const AppDelegate&) = delete;
-
     virtual ~AppDelegate();
-
     static AppDelegate* Get();
-
     static void Delete();
 
     void SetWindow(unsigned int width, unsigned int height, const std::string& title);
-
     std::shared_ptr<sf::RenderWindow> GetWindow();
 
     void RegisterModel(const std::shared_ptr<BaseModel>& model);
-
     void RegisterView(const std::shared_ptr<BaseView>& view);
-
     void RegisterController(const std::shared_ptr<BaseController>& controller);
 
     int GetRandomNumber();
@@ -67,6 +61,11 @@ public:
 
 
 private:
+
+    void EventPush();
+    void UpdateModels();
+    void UpdateViews();
+    void UpdateControllers();
 
     static AppDelegate* instance;
 

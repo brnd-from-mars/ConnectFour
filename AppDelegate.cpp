@@ -109,15 +109,28 @@ int AppDelegate::GetRandomNumber()
 
 bool AppDelegate::Update()
 {
-    // TODO: add garbage collection
-
     if (m_Window == nullptr)
     {
         throw std::runtime_error("AppDelegate Update was called before SetWindow");
     }
 
-    m_Window->clear(ColorPalette::Basestar);
+    m_Window->clear(ColorPalette::Basestar); // TODO: outsource
 
+    EventPush();
+
+    UpdateModels();
+    UpdateControllers();
+    UpdateViews();
+
+    m_Window->display();
+    m_Window->setFramerateLimit(30);
+
+    return m_Window->isOpen();
+}
+
+
+void AppDelegate::EventPush()
+{
     auto event = sf::Event();
     while (m_Window->pollEvent(event))
     {
@@ -147,33 +160,58 @@ bool AppDelegate::Update()
             }
         }
     }
+}
 
-    for (auto& wModel : m_ModelContainer)
+
+void AppDelegate::UpdateModels()
+{
+    auto it = m_ModelContainer.begin();
+    while (it != m_ModelContainer.end())
     {
-        if (auto model = wModel.lock())
+        auto current = it++;
+        if (auto model = current->lock())
         {
             model->Update();
         }
-    }
-
-    for (auto& wController : m_ControllerContainer)
-    {
-        if (auto controller = wController.lock())
+        else
         {
-            controller->Update();
+            m_ModelContainer.erase(current);
         }
     }
+}
 
-    for (auto& wView : m_ViewContainer)
+
+void AppDelegate::UpdateViews()
+{
+    auto it = m_ViewContainer.begin();
+    while (it != m_ViewContainer.end())
     {
-        if (auto view = wView.lock())
+        auto current = it++;
+        if (auto view = current->lock())
         {
             view->Draw();
         }
+        else
+        {
+            m_ViewContainer.erase(current);
+        }
     }
+}
 
-    m_Window->display();
-    m_Window->setFramerateLimit(30);
 
-    return m_Window->isOpen();
+void AppDelegate::UpdateControllers()
+{
+    auto it = m_ControllerContainer.begin();
+    while (it != m_ControllerContainer.end())
+    {
+        auto current = it++;
+        if (auto controller = current->lock())
+        {
+            controller->Update();
+        }
+        else
+        {
+            m_ControllerContainer.erase(current);
+        }
+    }
 }
