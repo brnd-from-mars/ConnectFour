@@ -72,6 +72,18 @@ std::shared_ptr<sf::RenderWindow> AppDelegate::GetWindow()
 }
 
 
+void AppDelegate::SetBackgroundColor(const sf::Color& backgroundColor)
+{
+    m_BackgroundColor = backgroundColor;
+}
+
+
+void AppDelegate::SetFrameRate(int frameRate)
+{
+    m_FrameRate = frameRate;
+}
+
+
 void AppDelegate::RegisterModel(const std::shared_ptr<BaseModel>& model)
 {
     m_ModelContainer.push_back(model);
@@ -114,7 +126,7 @@ bool AppDelegate::Update()
         throw std::runtime_error("AppDelegate Update was called before SetWindow");
     }
 
-    m_Window->clear(ColorPalette::Basestar); // TODO: outsource
+    m_Window->clear(m_BackgroundColor);
 
     EventPush();
 
@@ -123,7 +135,7 @@ bool AppDelegate::Update()
     UpdateViews();
 
     m_Window->display();
-    m_Window->setFramerateLimit(30);
+    m_Window->setFramerateLimit(m_FrameRate);
 
     return m_Window->isOpen();
 }

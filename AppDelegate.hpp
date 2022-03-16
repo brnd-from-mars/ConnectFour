@@ -50,6 +50,8 @@ public:
 
     void SetWindow(unsigned int width, unsigned int height, const std::string& title);
     std::shared_ptr<sf::RenderWindow> GetWindow();
+    void SetBackgroundColor(const sf::Color& backgroundColor);
+    void SetFrameRate(int frameRate);
 
     void RegisterModel(const std::shared_ptr<BaseModel>& model);
     void RegisterView(const std::shared_ptr<BaseView>& view);
@@ -70,6 +72,8 @@ private:
     static AppDelegate* instance;
 
     std::shared_ptr<sf::RenderWindow> m_Window;
+    sf::Color m_BackgroundColor = sf::Color(0, 0, 0);
+    int m_FrameRate = 60;
 
     std::list<std::weak_ptr<BaseModel>> m_ModelContainer;
     std::list<std::weak_ptr<BaseView>> m_ViewContainer;
