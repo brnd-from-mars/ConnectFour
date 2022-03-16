@@ -6,6 +6,7 @@
 #include "SessionController.hpp"
 
 #include "AppDelegate.hpp"
+#include "ConnectFourUtility.hpp"
 
 
 SessionModel::SessionModel(int columns, int rows)
@@ -101,6 +102,8 @@ void SessionModel::AddChip(int column)
         {
             if (!field->HasChip()) // check if field does not contain chip
             {
+                ++m_Moves[m_CurrentPlayer - 1];
+
                 field->SetChip(m_CurrentPlayer);
 
                 auto row = field->GetRow();
@@ -108,15 +111,17 @@ void SessionModel::AddChip(int column)
 
                 if (winState != PlayerState::none)
                 {
-                    std::string playerName;
+                    GameData game;
 
                     if (winState != PlayerState::tie)
                     {
                         int k = m_ColorsChanged == (winState == PlayerState::player1);
-                        playerName = controller->GetName(k);
+                        game.winningPlayer = controller->GetName(k);
+                        game.loosingPlayer = controller->GetName(1 - k);
+                        game.moves = m_Moves[m_CurrentPlayer - 1];
                     }
 
-                    controller->HandleGameEnd(winState, playerName);
+                    controller->HandleGameEnd(winState, game);
                     m_State = SessionState::finished;
                 }
 

@@ -46,6 +46,7 @@ void ScoreBoardController::Update()
 void ScoreBoardController::AddGame(GameData game)
 {
     m_ScoreBoardModel->AddGame(std::move(game));
+    UpdateView();
 }
 
 

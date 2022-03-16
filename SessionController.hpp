@@ -15,6 +15,8 @@
 #include "ButtonController.hpp"
 #include "TextFieldController.hpp"
 #include "GridFieldController.hpp"
+#include "ConnectFourUtility.hpp"
+
 
 class SessionModel;
 enum class PlayerState;
@@ -62,7 +64,7 @@ private:
     void HandleNameEnter();
     void HandleColorPick(int color);
     void HandleGameRestartPress();
-    void HandleGameEnd(PlayerState winState, std::string winningPlayer);
+    void HandleGameEnd(PlayerState winState, GameData game);
 
     std::string GetName(int index);
     int GetPlayerAt(int column, int row) const;

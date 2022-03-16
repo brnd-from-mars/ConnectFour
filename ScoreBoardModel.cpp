@@ -12,28 +12,12 @@
 ScoreBoardModel::ScoreBoardModel()
 {
     LoadXMLDocument();
+}
 
-    /*
-    m_GameList.ForEach([](GameData* game)
-                       {
-                           std::cout << game->winningPlayer << " vs. " << game->loosingPlayer << ": "
-                                     << game->moves << " moves, " << game->time << "s" << std::endl;
-                       });
 
-    for (int i = 0; i < 5; ++i)
-    {
-        auto game = m_GameList[i];
-        if (game != nullptr)
-        {
-
-        }
-    }
-
-    std::cout << std::endl;
-
-    std::cout << game.winningPlayer << " vs. " << game.loosingPlayer << ": "
-              << game.moves << " moves, " << game.time << "s" << std::endl;
-    */
+ScoreBoardModel::~ScoreBoardModel()
+{
+    SaveXMLDocument();
 }
 
 
@@ -72,8 +56,6 @@ void ScoreBoardModel::AddGame(GameData data)
         PlayerData player = {loosingPlayerName, 1, 0};
         m_PlayerList.AddElement(player);
     }
-
-    SaveXMLDocument();
 }
 
 
@@ -110,17 +92,6 @@ void ScoreBoardModel::LoadXMLDocument()
         m_PlayerList.AddElement(player);
         nPlayer = nPlayer->NextSibling();
     }
-
-
-    /*m_GameList.ForEach([](GameData* game)
-                       {
-                           std::cout << game->winningPlayer << " vs. " << game->loosingPlayer << ": "
-                                     << game->moves << " moves, " << game->time << "s" << std::endl;
-                       });
-    m_PlayerList.ForEach([](PlayerData* player)
-                         {
-                             std::cout << player->name << ": " << player->victories << "/" << player->games << std::endl;
-                         });*/
 }
 
 

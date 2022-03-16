@@ -23,6 +23,8 @@ public:
 
     ScoreBoardModel();
 
+    ~ScoreBoardModel();
+
     void Update() override;
 
     void AddGame(GameData data);

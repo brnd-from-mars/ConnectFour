@@ -271,7 +271,7 @@ void SessionController::HandleGameRestartPress()
 }
 
 
-void SessionController::HandleGameEnd(PlayerState winState, std::string playerName)
+void SessionController::HandleGameEnd(PlayerState winState, GameData game)
 {
     m_CurrentPlayerArrow.reset();
     m_Clock->Stop();
@@ -286,6 +286,7 @@ void SessionController::HandleGameEnd(PlayerState winState, std::string playerNa
     }
     else
     {
+        auto playerName = game.winningPlayer;
         playerName = playerName.append(":");
         m_StatusNameText = TextView::MakeText(750.0f, 250.0f, 20, "Standard", playerName, ColorPalette::Orange);
         m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard", "You won!", ColorPalette::Orange);
@@ -293,6 +294,12 @@ void SessionController::HandleGameEnd(PlayerState winState, std::string playerNa
         for (auto chip : m_SessionModel->m_WinningChips)
         {
             m_Grid[chip.x][chip.y]->SetHighlightChip(true);
+        }
+
+        game.time = m_Clock->GetTotalSeconds();
+        if (auto gameController = m_Game.lock())
+        {
+            gameController->AddGame(game);
         }
     }
 }

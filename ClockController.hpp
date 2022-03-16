@@ -30,10 +30,12 @@ public:
 
     void Stop();
 
-    void SetClockView(int minutes, int seconds, int millis);
+    int GetTotalSeconds() const;
 
 
 private:
+
+    void SetClockView(int minutes, int seconds, int millis);
 
     std::shared_ptr<ClockModel> m_ClockModel;
     std::shared_ptr<ClockView> m_ClockView;

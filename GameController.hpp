@@ -30,6 +30,8 @@ public:
 
     void Update() override;
 
+    void AddGame(GameData game);
+
 
 private:
 

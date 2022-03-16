@@ -25,6 +25,8 @@ public:
 
     void Stop();
 
+    int GetTotalSeconds() const;
+
 
 private:
 

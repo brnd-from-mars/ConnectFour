@@ -35,3 +35,11 @@ void ClockModel::Stop()
     m_Stopped = true;
     m_EndTime = std::chrono::system_clock::now();
 }
+
+
+int ClockModel::GetTotalSeconds() const
+{
+    auto duration = (m_Stopped ? m_EndTime : std::chrono::system_clock::now()) - m_StartTime;
+    auto seconds = std::chrono::duration_cast<std::chrono::seconds>(duration);
+    return seconds.count();
+}

@@ -41,6 +41,12 @@ void ClockController::Stop()
 }
 
 
+int ClockController::GetTotalSeconds() const
+{
+    return m_ClockModel->GetTotalSeconds();
+}
+
+
 void ClockController::SetClockView(int minutes, int seconds, int millis)
 {
     m_ClockView->SetTime(minutes, seconds, millis);

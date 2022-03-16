@@ -66,6 +66,12 @@ void GameController::Update()
 }
 
 
+void GameController::AddGame(GameData game)
+{
+    m_ScoreBoard->AddGame(std::move(game));
+}
+
+
 void GameController::InitScoreBoard()
 {
     m_ScoreBoard = ScoreBoardController::MakeScoreBoard(750.0f, 350.0f, 400.0f);

@@ -75,6 +75,7 @@ private:
 
     SessionState m_State = SessionState::nameEnter;
     int m_CurrentPlayer = 1;
+    int m_Moves[2] = {0, 0};
 
     int m_RandomNameForColorPick = 0;
     bool m_ColorsChanged = false;
