@@ -6,6 +6,7 @@
 #include "TextFieldController.hpp"
 
 #include "AppDelegate.hpp"
+#include "ConnectFourUtility.hpp"
 
 
 TextFieldView::TextFieldView(float x, float y, float width, const std::string& placeholder, sf::Color highlightColor)

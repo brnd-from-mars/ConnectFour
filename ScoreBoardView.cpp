@@ -7,6 +7,7 @@
 #include "ScoreBoardView.hpp"
 
 #include "AppDelegate.hpp"
+#include "ConnectFourUtility.hpp"
 
 
 ScoreBoardView::ScoreBoardView(float x, float y, float width)

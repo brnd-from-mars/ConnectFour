@@ -7,6 +7,7 @@
 #include "GridFieldController.hpp"
 
 #include "AppDelegate.hpp"
+#include "ConnectFourUtility.hpp"
 
 
 GridFieldView::GridFieldView(float x, float y)

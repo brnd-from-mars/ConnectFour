@@ -13,6 +13,7 @@
 #include "BaseController.hpp"
 
 #include "AppDelegate.hpp"
+#include "ConnectFourUtility.hpp"
 
 class ButtonView;
 

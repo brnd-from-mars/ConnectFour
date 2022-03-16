@@ -21,9 +21,10 @@ AppDelegate::AppDelegate()
     if (instance != nullptr)
     {
         // singleton implementation does not guarantee single instance creation (e.g. in multi-threading)
+        // -> throw error
         throw std::runtime_error("Singleton AppDelegate was constructed multiple times");
     }
-    srand(static_cast<unsigned int>(time(nullptr)));
+    srand(static_cast<unsigned int>(time(nullptr))); // initialize random number generator as soon as app starts
     std::clog << "AppDelegate constructed" << std::endl;
 }
 
@@ -60,8 +61,7 @@ void AppDelegate::SetWindow(unsigned int width, unsigned int height, const std::
     {
         m_Window->close();
     }
-    m_Window = std::make_shared<sf::RenderWindow>(sf::VideoMode(width, height),
-                                                  title,
+    m_Window = std::make_shared<sf::RenderWindow>(sf::VideoMode(width, height), title,
                                                   sf::Style::Titlebar | sf::Style::Close);
 }
 
@@ -93,6 +93,8 @@ void AppDelegate::RegisterModel(const std::shared_ptr<BaseModel>& model)
 void AppDelegate::RegisterView(const std::shared_ptr<BaseView>& view)
 {
     auto layer = view->GetLayer();
+    // find position to insert view in container according to the layers
+    // -> drawing all elements from begin to end will automatically draw views on lower layers first
     auto it = std::find_if(m_ViewContainer.begin(),
                            m_ViewContainer.end(),
                            [layer](const std::weak_ptr<BaseView>& wIt) -> bool
@@ -115,6 +117,7 @@ void AppDelegate::RegisterController(const std::shared_ptr<BaseController>& cont
 
 int AppDelegate::GetRandomNumber()
 {
+    // function is not static to ensure that srand has been called before
     return rand();
 }
 
@@ -123,6 +126,7 @@ bool AppDelegate::Update()
 {
     if (m_Window == nullptr)
     {
+        // throw error as most MVC elements require an existing window in AppDelegate
         throw std::runtime_error("AppDelegate Update was called before SetWindow");
     }
 
@@ -152,6 +156,9 @@ void AppDelegate::EventPush()
         }
         else if (event.type == sf::Event::MouseButtonPressed)
         {
+            // if the user clicks somewhere, the focus will likely be shifted to something else or nothing at all
+            // -> focus reset required
+            // -> if an element is clicked while it is in focus, the focus will be reestablished in the next loop
             for (auto& wView : m_ViewContainer)
             {
                 if (auto view = wView.lock())
@@ -161,6 +168,8 @@ void AppDelegate::EventPush()
             }
         }
 
+        // iterate through all views from the top to bottom layer and push event
+        // break as soon as the first view has completely handled the event
         for (auto wView = m_ViewContainer.rbegin(); wView != m_ViewContainer.rend(); ++wView)
         {
             if (auto view = wView->lock())

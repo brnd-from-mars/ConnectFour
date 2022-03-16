@@ -5,6 +5,7 @@
 #include "ChipController.hpp"
 
 #include "AppDelegate.hpp"
+#include "ConnectFourUtility.hpp"
 
 #include "ChipModel.hpp"
 #include "ChipView.hpp"
