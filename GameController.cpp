@@ -17,6 +17,8 @@ std::shared_ptr<GameController> GameController::MakeGameController(int columns, 
     controller->m_GameModel->m_GameController = controller;
     controller->m_GameController = controller;
 
+    controller->InitScoreBoard();
+
     return controller;
 }
 
@@ -61,4 +63,10 @@ void GameController::Update()
             m_Session = SessionController::MakeSessionController(*m_Session);
         }
     }
+}
+
+
+void GameController::InitScoreBoard()
+{
+    m_ScoreBoard = ScoreBoardController::MakeScoreBoard(750.0f, 350.0f, 400.0f);
 }

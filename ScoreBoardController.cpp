@@ -34,7 +34,7 @@ ScoreBoardController::ScoreBoardController(float x, float y, float width)
     m_ScoreBoardModel = std::make_shared<ScoreBoardModel>();
     AppDelegate::Get()->RegisterModel(m_ScoreBoardModel);
 
-    m_PrevScoreBoardButton = ButtonController::MakeButton(x + width - 50.0f, y, 25.f, "<", ColorPalette::Orange);
+    m_PrevScoreBoardButton = ButtonController::MakeButton(x + width - 65.0f, y, 25.f, "<", ColorPalette::Orange);
     m_NextScoreBoardButton = ButtonController::MakeButton(x + width - 25.0f, y, 25.f, ">", ColorPalette::Orange);
 }
 

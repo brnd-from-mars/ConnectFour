@@ -11,6 +11,7 @@
 #include "GameModel.hpp"
 
 #include "SessionController.hpp"
+#include "ScoreBoardController.hpp"
 #include "TextView.hpp"
 
 
@@ -32,10 +33,14 @@ public:
 
 private:
 
+    void InitScoreBoard();
+
     std::shared_ptr<GameModel> m_GameModel;
     std::weak_ptr<GameController> m_GameController;
 
     std::shared_ptr<SessionController> m_Session;
+
+    std::shared_ptr<ScoreBoardController> m_ScoreBoard;
 
     std::shared_ptr<TextView> m_HeadlineCyan;
     std::shared_ptr<TextView> m_HeadlineOrange;

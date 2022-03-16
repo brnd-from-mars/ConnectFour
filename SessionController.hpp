@@ -15,7 +15,6 @@
 #include "ButtonController.hpp"
 #include "TextFieldController.hpp"
 #include "GridFieldController.hpp"
-#include "ScoreBoardController.hpp"
 
 class SessionModel;
 enum class PlayerState;
@@ -51,7 +50,6 @@ public:
 
 private:
 
-    void InitScoreBoard();
     void InitGrid();
     void InitGameTerminateButton();
     void InitNameTextFields();
@@ -73,8 +71,6 @@ private:
     std::weak_ptr<SessionController> m_SessionController;
 
     std::weak_ptr<GameController> m_Game;
-
-    std::shared_ptr<ScoreBoardController> m_ScoreBoard;
 
     std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
 
