@@ -13,7 +13,7 @@
 #include "BaseController.hpp"
 
 
-AppDelegate* AppDelegate::instance = nullptr;
+AppDelegate* AppDelegate::m_Instance = nullptr;
 
 
 /*!
@@ -26,7 +26,7 @@ AppDelegate* AppDelegate::instance = nullptr;
  */
 AppDelegate::AppDelegate()
 {
-    if (instance != nullptr)
+    if (m_Instance != nullptr)
     {
         // singleton implementation does not guarantee single instance creation (e.g. in multi-threading)
         // -> throw error
@@ -57,11 +57,11 @@ AppDelegate::~AppDelegate()
  */
 AppDelegate* AppDelegate::Get()
 {
-    if (instance == nullptr)
+    if (m_Instance == nullptr)
     {
-        instance = new AppDelegate;
+        m_Instance = new AppDelegate;
     }
-    return instance;
+    return m_Instance;
 }
 
 
@@ -70,7 +70,7 @@ AppDelegate* AppDelegate::Get()
  */
 void AppDelegate::Delete()
 {
-    delete instance;
+    delete m_Instance;
 }
 
 

@@ -58,7 +58,7 @@ private:
     /*!
      * @brief Static pointer to AppDelegate singleton instance
      */
-    static AppDelegate* instance;
+    static AppDelegate* m_Instance;
 
     /*!
      * @brief Shared pointer to associated SFML RenderWindow
