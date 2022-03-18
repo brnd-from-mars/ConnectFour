@@ -16,7 +16,7 @@ ClockView::ClockView(float x, float y, sf::Color color)
 
     if (!m_Font.loadFromFile("Standard.ttf"))
     {
-        throw std::runtime_error("FAIL!");
+        throw std::runtime_error("Font Standard.ttf not loaded");
     }
 
     m_PrefixTextShape.setString("T+");

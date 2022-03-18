@@ -16,7 +16,7 @@ ButtonView::ButtonView(float x, float y, float width, const std::string& text,
 
     if (!m_Font.loadFromFile("Standard.ttf"))
     {
-        throw std::runtime_error("Error while loading Standard.ttf");
+        throw std::runtime_error("Font Standard.ttf not loaded");
     }
 
     m_ButtonField.setSize(sf::Vector2f(width, 25.0f));

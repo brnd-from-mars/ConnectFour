@@ -115,12 +115,8 @@ public:
     }
 
 
-    T* operator[] (int index) //overloading []-operator  to make code look cooler :)
+    T* operator[] (int index)
     {
-        //Function returns pointer at Element (type T) at index in the list
-        //starts counting from position 0 (beginning) to position index (if index isn't beyond dimension of list)
-        //starts counting from end of list if index is negative
-
         LinkedListComponent<T>* current = m_FirstElement;
 
         if (index >= 0)
@@ -133,7 +129,6 @@ public:
                 }
                 else
                 {
-                    // TODO: throw error
                     return nullptr;
                 }
             }
@@ -145,11 +140,11 @@ public:
                 return nullptr;
             }
 
-            while (current->next != nullptr) //set current pointer to the last object of the list
+            while (current->next != nullptr) // set current pointer to the last object of the list
             {
                 current = current->next;
             }
-            for (int i = -1; i > index; --i) //counting to index against in opposite direction
+            for (int i = -1; i > index; --i) // counting to index against in opposite direction
             {
                 if (current != nullptr)
                 {
@@ -157,7 +152,6 @@ public:
                 }
                 else
                 {
-                    // TODO: throw error
                     return nullptr;
                 }
             }
