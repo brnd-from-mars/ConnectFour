@@ -23,7 +23,18 @@ private:
 	
 public:
 
-    // TODO: fix memory leak
+    ~LinkedList()
+    {
+        LinkedListComponent<T>* current = m_FirstElement;
+
+        while (current != nullptr)
+        {
+            LinkedListComponent<T>* next = current->next;
+            delete current;
+            current = next;
+        }
+    }
+
 
     void AddElement(T element)
     {
@@ -155,4 +166,3 @@ public:
         return &current->data;
     }
 };
-
