@@ -51,10 +51,7 @@ bool ButtonView::Handle(sf::Event event)
 {
     if (event.type == sf::Event::MouseButtonPressed)
     {
-        // TODO outsource to utility function
-        auto dx = event.mouseButton.x - (m_ButtonField.getPosition().x);
-        auto dy = event.mouseButton.y - (m_ButtonField.getPosition().y);
-        if (((dx >= 0) && (dx <= m_ButtonField.getSize().x)) && ((dy >= 0) && (dy <= m_ButtonField.getSize().y)))
+        if (m_ButtonField.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
         {
             m_Pressed = true;
             UpdateView();
@@ -64,11 +61,8 @@ bool ButtonView::Handle(sf::Event event)
 
     if (event.type == sf::Event::MouseButtonReleased && m_Pressed)
     {
-        auto dx = event.mouseButton.x - (m_ButtonField.getPosition().x);
-        auto dy = event.mouseButton.y - (m_ButtonField.getPosition().y);
-        if (((dx >= 0) && (dx <= m_ButtonField.getSize().x)) && ((dy >= 0) && (dy <= m_ButtonField.getSize().y)))
+        if (m_ButtonField.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
         {
-
             if (auto controller = m_ButtonController.lock())
             {
                 controller->HandleMousePress();

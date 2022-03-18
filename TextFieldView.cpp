@@ -58,9 +58,7 @@ bool TextFieldView::Handle(sf::Event event)
 {
     if (event.type == sf::Event::MouseButtonPressed)
     {
-        auto dx = event.mouseButton.x - (m_TextField.getPosition().x);
-        auto dy = event.mouseButton.y - (m_TextField.getPosition().y);
-        if (((dx >= 0) && (dx <= m_TextField.getSize().x)) && ((dy >= 0) && (dy <= m_TextField.getSize().y)))
+        if (m_TextField.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
         {
             m_InFocus = true;
             UpdateView();
