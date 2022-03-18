@@ -290,7 +290,7 @@ void SessionController::HandleGameEnd(PlayerState winState, GameData game)
 
         if (auto gameController = m_Game.lock())
         {
-            gameController->AddTie(game);
+            gameController->AddTieToScoreBoard(game);
         }
     }
     else
@@ -307,7 +307,7 @@ void SessionController::HandleGameEnd(PlayerState winState, GameData game)
 
         if (auto gameController = m_Game.lock())
         {
-            gameController->AddGame(game);
+            gameController->AddGameToScoreBoard(game);
         }
     }
 }

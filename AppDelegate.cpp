@@ -16,14 +16,6 @@
 AppDelegate* AppDelegate::m_Instance = nullptr;
 
 
-/*!
- * @brief Private constructor for the AppDelegate singleton.
- *
- * Private constructor for the AppDelegate singleton checks whether the singleton instance already exists or not.
- * Provides time based seed for random number generator.
- *
- * @throw std::runtime_error in case instance already exists
- */
 AppDelegate::AppDelegate()
 {
     if (m_Instance != nullptr)
@@ -37,9 +29,6 @@ AppDelegate::AppDelegate()
 }
 
 
-/*!
- * @brief Destructor for AppDelegate singleton closes associated SFML RenderWindow.
- */
 AppDelegate::~AppDelegate()
 {
     if (m_Window != nullptr && m_Window->isOpen())
@@ -50,11 +39,6 @@ AppDelegate::~AppDelegate()
 }
 
 
-/*!
- * @brief Static function returns pointer to singleton instance and constructs it if necessary.
- *
- * @return pointer to AppDelegate singleton instance
- */
 AppDelegate* AppDelegate::Get()
 {
     if (m_Instance == nullptr)
@@ -65,23 +49,12 @@ AppDelegate* AppDelegate::Get()
 }
 
 
-/*!
- * @brief Static function deletes singleton instance. HAS to be called at the end of the program.
- */
 void AppDelegate::Delete()
 {
     delete m_Instance;
 }
 
 
-/*!
- * @brief Creates a new SFML RenderWindow with the provided configuration. Closes the previous instantiated window in
- * case one exists.
- *
- * @param width width of the window
- * @param height height of the window
- * @param title title of the window
- */
 void AppDelegate::SetWindow(unsigned int width, unsigned int height, const std::string& title)
 {
     if (m_Window != nullptr)
@@ -93,54 +66,30 @@ void AppDelegate::SetWindow(unsigned int width, unsigned int height, const std::
 }
 
 
-/*!
- * @return Shared pointer to associated SFML RenderWindow
- */
 std::shared_ptr<sf::RenderWindow> AppDelegate::GetWindow()
 {
     return m_Window;
 }
 
 
-/*!
- * @brief Sets background color of associated SFML RenderWindow
- *
- * @param backgroundColor SFML background color
- */
 void AppDelegate::SetBackgroundColor(const sf::Color& backgroundColor)
 {
     m_BackgroundColor = backgroundColor;
 }
 
 
-/*!
- * @brief Sets frameRate for application updates
- *
- * @param frameRate frame rate
- */
 void AppDelegate::SetFrameRate(int frameRate)
 {
     m_FrameRate = frameRate;
 }
 
 
-/*!
- * @brief Adds a new BaseModel derivative to the update handling list. AppDelegate will hold a weak pointer.
- *
- * @param model shared pointer to the model
- */
 void AppDelegate::RegisterModel(const std::shared_ptr<BaseModel>& model)
 {
     m_ModelContainer.push_back(model);
 }
 
 
-/*!
- * @brief Add a new BaseView derivative to the draw handling list while maintaining the layer order. AppDelegate will
- * hold a weak pointer.
- *
- * @param view shared pointer to the view
- */
 void AppDelegate::RegisterView(const std::shared_ptr<BaseView>& view)
 {
     auto layer = view->GetLayer();
@@ -160,19 +109,12 @@ void AppDelegate::RegisterView(const std::shared_ptr<BaseView>& view)
 }
 
 
-/*!
- * Adds a new BaseController derivative to the update handling list. AppDelegate will hold a weak pointer.
- *
- * @param controller shared pointer to the controller
- */
 void AppDelegate::RegisterController(const std::shared_ptr<BaseController>& controller)
 {
     m_ControllerContainer.push_back(controller);
 }
 
-/*!
- * @return random integer
- */
+
 int AppDelegate::GetRandomNumber()
 {
     // function is not static to ensure that srand has been called before
@@ -180,11 +122,6 @@ int AppDelegate::GetRandomNumber()
 }
 
 
-/*!
- * Application update handler pushes SFML events and updates MVC elements.
- *
- * @return Application still running
- */
 bool AppDelegate::Update()
 {
     if (m_Window == nullptr)
@@ -208,12 +145,6 @@ bool AppDelegate::Update()
 }
 
 
-/*!
- * @brief Pushes events to all views starting from the top layer until they are handled successfully.
- *
- * Pushes events to all views starting from the top layer until they are handled successfully. Before a
- * MouseButtonPressed event is sent, the FocusReset event will be send.
- */
 void AppDelegate::EventPush()
 {
     auto event = sf::Event();
@@ -253,9 +184,6 @@ void AppDelegate::EventPush()
 }
 
 
-/*!
- * @brief Updates all models in the model update list and erases invalid weak pointers to deleted models.
- */
 void AppDelegate::UpdateModels()
 {
     auto it = m_ModelContainer.begin();
@@ -274,9 +202,6 @@ void AppDelegate::UpdateModels()
 }
 
 
-/*!
- * Draws all views in the view draw list and erases invalid weak pointers to deleted views.
- */
 void AppDelegate::UpdateViews()
 {
     auto it = m_ViewContainer.begin();
@@ -295,9 +220,6 @@ void AppDelegate::UpdateViews()
 }
 
 
-/*!
- * Updates all controllers in the controller update list and erases invalid weak pointers to deleted controllers.
- */
 void AppDelegate::UpdateControllers()
 {
     auto it = m_ControllerContainer.begin();
