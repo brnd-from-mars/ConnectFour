@@ -32,6 +32,12 @@ void ButtonController::Update()
 { }
 
 
+void ButtonController::RegisterMousePressCallback(const std::function<void()>& callback)
+{
+    m_MousePressCallback = callback;
+}
+
+
 void ButtonController::HandleMousePress()
 {
     if (m_MousePressCallback)
@@ -39,10 +45,4 @@ void ButtonController::HandleMousePress()
         auto callback = m_MousePressCallback.value();
         callback();
     }
-}
-
-
-void ButtonController::RegisterMousePressCallback(const std::function<void()>& callback)
-{
-    m_MousePressCallback = callback;
 }

@@ -27,9 +27,9 @@ public:
 
     void Update() override;
 
-    void AddGame(GameData data);
+    void AddGame(GameData game);
 
-    void AddTie(const GameData& data);
+    void AddTie(const GameData& game);
 
 
 private:

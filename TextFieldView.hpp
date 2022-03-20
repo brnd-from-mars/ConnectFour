@@ -33,10 +33,10 @@ public:
 
     void SetText(const std::string& text);
 
-    void UpdateView();
-
 
 private:
+
+    void UpdateView();
 
     std::weak_ptr<TextFieldController> m_TextFieldController;
 

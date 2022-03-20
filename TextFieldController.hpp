@@ -31,12 +31,6 @@ public:
 
     void Update() override;
 
-    void HandleTextEntry(char character);
-
-    void HandleBackspaceKeyPress();
-
-    void HandleEnterKeyPress();
-
     void RegisterEnterKeyPressCallback(const std::function<void()>& callback);
 
     void SetHighlightColor(sf::Color highlightColor);
@@ -45,10 +39,16 @@ public:
 
     std::string GetText() const;
 
-    void UpdateView();
-
 
 private:
+
+    void HandleTextEntry(char character);
+
+    void HandleBackspaceKeyPress();
+
+    void HandleEnterKeyPress();
+
+    void UpdateView();
 
     std::shared_ptr<TextFieldModel> m_TextFieldModel;
     std::shared_ptr<TextFieldView> m_TextFieldView;

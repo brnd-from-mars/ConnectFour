@@ -25,12 +25,12 @@ void ScoreBoardModel::Update()
 { }
 
 
-void ScoreBoardModel::AddGame(GameData data)
+void ScoreBoardModel::AddGame(GameData game)
 {
-    auto winningPlayerName = data.winningPlayer;
-    auto loosingPlayerName = data.loosingPlayer;
+    auto winningPlayerName = game.winningPlayer;
+    auto loosingPlayerName = game.loosingPlayer;
 
-    m_GameList.AddElement(std::move(data));
+    m_GameList.AddElement(std::move(game));
 
     auto winningPlayer = m_PlayerList.Find([&winningPlayerName](PlayerData* player) -> bool
                                            {
@@ -63,10 +63,10 @@ void ScoreBoardModel::AddGame(GameData data)
 }
 
 
-void ScoreBoardModel::AddTie(const GameData& data)
+void ScoreBoardModel::AddTie(const GameData& game)
 {
-    auto playerName1 = data.winningPlayer;
-    auto playerName2 = data.loosingPlayer;
+    auto playerName1 = game.winningPlayer;
+    auto playerName2 = game.loosingPlayer;
 
     auto player1 = m_PlayerList.Find([&playerName1](PlayerData* player)
                                      {

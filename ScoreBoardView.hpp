@@ -39,7 +39,6 @@ private:
     float m_Y;
     float m_Width;
 
-    sf::RectangleShape m_Box;
     sf::Text m_HeadlineShape;
 
     sf::Text m_PlacingShapes[5];

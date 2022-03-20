@@ -34,12 +34,12 @@ public:
 
     void Update() override;
 
-    void HandleMousePress();
-
     void RegisterMousePressCallback(const std::function<void()>& callback);
 
 
 private:
+
+    void HandleMousePress();
 
     std::shared_ptr<ButtonView> m_ButtonView;
 

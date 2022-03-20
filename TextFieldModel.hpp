@@ -21,12 +21,12 @@ public:
 
     void Update() override;
 
+
+private:
+
     void AddCharacter(char character);
 
     void DeleteCharacter();
-
-
-private:
 
     std::string m_Text;
 
