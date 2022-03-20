@@ -34,13 +34,13 @@ public:
 
 private:
 
-    void LoadXMLDocument();
-    void SaveXMLDocument();
-
     void SortPlayerListVictories();
     void SortPlayerListKD();
     void SortGameListMoves();
     void SortGameListTime();
+
+    void LoadXMLDocument();
+    void SaveXMLDocument();
 
     static void AddGameToXMLDocument(GameData* game, tinyxml2::XMLElement* nGames, tinyxml2::XMLDocument* file);
     static void AddPlayerToXMLDocument(PlayerData* player, tinyxml2::XMLElement* nPlayers, tinyxml2::XMLDocument* file);
