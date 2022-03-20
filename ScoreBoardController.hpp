@@ -56,7 +56,7 @@ private:
         bestKD,
         leastMoves,
         leastTime,
-        num
+        count
     } m_CurrentScoreBoard = ScoreBoardType::bestKD;
 
 

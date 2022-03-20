@@ -32,7 +32,7 @@ void ScoreBoardModel::AddGame(GameData data)
 
     m_GameList.AddElement(std::move(data));
 
-    auto winningPlayer = m_PlayerList.Find([&winningPlayerName](PlayerData* player)
+    auto winningPlayer = m_PlayerList.Find([&winningPlayerName](PlayerData* player) -> bool
                                            {
                                                return player->name == winningPlayerName;
                                            });
@@ -47,7 +47,7 @@ void ScoreBoardModel::AddGame(GameData data)
         m_PlayerList.AddElement(player);
     }
 
-    auto loosingPlayer = m_PlayerList.Find([&loosingPlayerName](PlayerData* player)
+    auto loosingPlayer = m_PlayerList.Find([&loosingPlayerName](PlayerData* player) -> bool
                                            {
                                                return player->name == loosingPlayerName;
                                            });
@@ -103,7 +103,7 @@ void ScoreBoardModel::LoadXMLDocument()
     tinyxml2::XMLDocument file;
     if (file.LoadFile("ScoreBoard.xml") != tinyxml2::XML_SUCCESS)
     {
-        std::cerr << "ScoreBoard.xml not found" << std::endl;
+        std::clog << "ScoreBoard.xml not found" << std::endl;
         return;
     }
 
@@ -113,11 +113,11 @@ void ScoreBoardModel::LoadXMLDocument()
     tinyxml2::XMLNode* nGame = nGames->FirstChild();
     while (nGame != nullptr)
     {
-        GameData data = {nGame->FirstChildElement("WinningPlayer")->GetText(),
+        GameData game = {nGame->FirstChildElement("WinningPlayer")->GetText(),
                          nGame->FirstChildElement("LoosingPlayer")->GetText(),
                          static_cast<int>(strtol(nGame->FirstChildElement("Moves")->GetText(), nullptr, 10)),
                          static_cast<int>(strtol(nGame->FirstChildElement("Time")->GetText(), nullptr, 10))};
-        m_GameList.AddElement(data);
+        m_GameList.AddElement(game);
         nGame = nGame->NextSibling();
     }
 

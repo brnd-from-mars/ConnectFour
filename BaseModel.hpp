@@ -4,8 +4,6 @@
 
 #pragma once
 
-class AppDelegate; // forward-declaration to avoid cyclic include
-
 
 class BaseModel
 {

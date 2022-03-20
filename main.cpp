@@ -33,21 +33,20 @@ int main(int argc, const char** argv)
     auto columns = ParseIntegerArgument(argc, argv, 1, 4, 25);
     auto rows = ParseIntegerArgument(argc, argv, 2, 4, 20);
 
-    AppDelegate::Get()->SetWindow(1200, 700, "Connect Four");
-    AppDelegate::Get()->SetBackgroundColor(ColorPalette::Basestar);
-    AppDelegate::Get()->SetFrameRate(60);
-
-    auto game = GameController::MakeGameController(columns, rows);
-
     try
     {
+        AppDelegate::Get()->SetWindow(1200, 700, "Connect Four");
+        AppDelegate::Get()->SetBackgroundColor(ColorPalette::Basestar);
+        AppDelegate::Get()->SetFrameRate(60);
+
+        auto game = GameController::MakeGameController(columns, rows);
+
         while (AppDelegate::Get()->Update());
     }
     catch (const std::runtime_error& error)
     {
-        std::cerr << "AppDelegate Update failed: " << error.what() << std::endl;
+        std::cerr << "Program failed: " << error.what() << std::endl;
     }
-
 
     AppDelegate::Delete();
 

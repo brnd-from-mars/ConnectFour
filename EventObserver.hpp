@@ -6,8 +6,6 @@
 
 #include <SFML/Graphics.hpp>
 
-class AppDelegate; // forward-declaration to avoid cyclic include
-
 
 class EventObserver
 {

@@ -73,7 +73,7 @@ bool GridFieldController::HasChip() const
 
 int GridFieldController::GetPlayer() const
 {
-    if (!HasChip())
+    if (!m_Chip)
     {
         return 0;
     }

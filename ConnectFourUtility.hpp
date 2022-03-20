@@ -36,7 +36,3 @@ namespace ColorPalette
     const sf::Color Pred = sf::Color(255, 0, 85);
     const sf::Color Cyan = sf::Color(0, 255, 255);
 }
-
-
-// TODO: add fonts
-// TODO: add view coordinates and sizes

@@ -115,6 +115,7 @@ void SessionModel::AddChip(int column)
 
                     if (winState != PlayerState::tie)
                     {
+                        // interpret as (ColorsChanged XOR (player1 won))
                         int k = m_ColorsChanged == (winState == PlayerState::player1);
                         game.winningPlayer = controller->GetName(k);
                         game.loosingPlayer = controller->GetName(1 - k);
@@ -125,6 +126,8 @@ void SessionModel::AddChip(int column)
                     m_State = SessionState::finished;
                 }
 
+                // player 1 -> player 2
+                // player 2 -> player 1
                 m_CurrentPlayer = 3 - m_CurrentPlayer;
 
                 return;

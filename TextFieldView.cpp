@@ -76,6 +76,7 @@ bool TextFieldView::Handle(sf::Event event)
                 {
                     controller->HandleTextEntry(static_cast<char>(event.text.unicode));
                 }
+                return true;
             }
             else if (event.type == sf::Event::KeyPressed)
             {
@@ -91,6 +92,7 @@ bool TextFieldView::Handle(sf::Event event)
                     default:
                         break;
                 }
+                return true;
             }
         }
     }

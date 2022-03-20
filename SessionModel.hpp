@@ -51,6 +51,7 @@ public:
 private:
 
     bool HandleInitialNameEnter();
+
     bool HandleColorPick(int color);
 
     std::string GetRandomPlayerForColorPick();

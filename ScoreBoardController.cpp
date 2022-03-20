@@ -81,7 +81,7 @@ void ScoreBoardController::InitButtons()
 void ScoreBoardController::PrevScoreBoard()
 {
     auto current = static_cast<int>(m_CurrentScoreBoard);
-    constexpr auto max = static_cast<int>(ScoreBoardType::num);
+    constexpr auto max = static_cast<int>(ScoreBoardType::count);
 
     current = (current + max - 1) % max;
     m_CurrentScoreBoard = static_cast<ScoreBoardType>(current);
@@ -93,7 +93,7 @@ void ScoreBoardController::PrevScoreBoard()
 void ScoreBoardController::NextScoreBoard()
 {
     auto current = static_cast<int>(m_CurrentScoreBoard);
-    constexpr auto max = static_cast<int>(ScoreBoardType::num);
+    constexpr auto max = static_cast<int>(ScoreBoardType::count);
 
     current = (current + 1) % max;
     m_CurrentScoreBoard = static_cast<ScoreBoardType>(current);

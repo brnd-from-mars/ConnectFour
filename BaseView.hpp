@@ -6,8 +6,6 @@
 
 #include "EventObserver.hpp"
 
-class AppDelegate; // forward-declaration to avoid cyclic include
-
 
 class BaseView : public EventObserver
 {
