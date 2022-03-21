@@ -148,7 +148,7 @@ private:
     /*!
      * @brief Draws all views in the view draw list and erases invalid weak pointers to deleted views.
      */
-    void UpdateViews();
+    void DrawViews();
 
 
     /*!

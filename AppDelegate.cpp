@@ -136,7 +136,7 @@ bool AppDelegate::Update()
 
     UpdateModels();
     UpdateControllers();
-    UpdateViews();
+    DrawViews();
 
     m_Window->display();
     m_Window->setFramerateLimit(m_FrameRate);
@@ -202,7 +202,7 @@ void AppDelegate::UpdateModels()
 }
 
 
-void AppDelegate::UpdateViews()
+void AppDelegate::DrawViews()
 {
     auto it = m_ViewContainer.begin();
     while (it != m_ViewContainer.end())

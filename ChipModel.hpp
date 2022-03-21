@@ -22,10 +22,10 @@ public:
 
     void Update() override;
 
-    void SetHighlight(bool highlight);
-
 
 private:
+
+    void SetHighlight(bool highlight);
 
     std::weak_ptr<ChipController> m_ChipController;
 

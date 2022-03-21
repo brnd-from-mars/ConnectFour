@@ -32,10 +32,10 @@ public:
 
     int GetPlayer() const;
 
-    void UpdateView();
-
 
 private:
+
+    void UpdateView();
 
     std::shared_ptr<ChipModel> m_ChipModel;
     std::shared_ptr<ChipView> m_ChipView;

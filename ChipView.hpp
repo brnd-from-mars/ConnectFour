@@ -28,10 +28,10 @@ public:
 
     bool Handle(sf::Event event) override;
 
-    void EnableRing(bool enable);
-
 
 private:
+
+    void EnableRing(bool enable);
 
     std::weak_ptr<ChipController> m_ChipController;
 

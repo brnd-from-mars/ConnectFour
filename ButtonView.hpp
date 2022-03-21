@@ -30,10 +30,10 @@ public:
 
     bool Handle(sf::Event event) override;
 
-    void UpdateView();
-
 
 private:
+
+    void UpdateView();
 
     std::weak_ptr<ButtonController> m_ButtonController;
 

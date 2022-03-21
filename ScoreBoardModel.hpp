@@ -27,12 +27,12 @@ public:
 
     void Update() override;
 
+
+private:
+
     void AddGame(GameData game);
 
     void AddTie(const GameData& game);
-
-
-private:
 
     void SortPlayerListVictories();
     void SortPlayerListKD();

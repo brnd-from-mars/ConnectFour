@@ -23,12 +23,12 @@ public:
 
     void Update() override;
 
+
+private:
+
     void Stop();
 
     int GetTotalSeconds() const;
-
-
-private:
 
     std::weak_ptr<ClockController> m_ClockController;
 

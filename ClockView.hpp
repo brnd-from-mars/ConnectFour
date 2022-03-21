@@ -29,10 +29,10 @@ public:
 
     bool Handle(sf::Event event) override;
 
-    void SetTime(int minutes, int seconds, int millis);
-
 
 private:
+
+    void SetTime(int minutes, int seconds, int millis);
 
     sf::Text m_PrefixTextShape;
     sf::Text m_MinutesTextShape;
