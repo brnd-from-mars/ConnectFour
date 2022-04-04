@@ -56,7 +56,7 @@ void GridFieldController::SetChip(int player)
 }
 
 
-void GridFieldController::SetHighlightChip(bool highlight)
+void GridFieldController::SetHighlight(bool highlight)
 {
     // abort if field does not contain a chip
     if (!m_Chip)

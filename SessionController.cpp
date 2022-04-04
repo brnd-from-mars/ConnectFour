@@ -329,7 +329,7 @@ void SessionController::HandleGameEnd(PlayerState winState, GameData game)
         // highlight 4 chips that lead to the victory
         for (auto chip : m_SessionModel->m_WinningChips)
         {
-            m_Grid[chip.x][chip.y]->SetHighlightChip(true);
+            m_Grid[chip.x][chip.y]->SetHighlight(true);
         }
 
         if (auto gameController = m_Game.lock())

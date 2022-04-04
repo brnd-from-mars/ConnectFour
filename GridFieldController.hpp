@@ -61,11 +61,11 @@ public:
     void SetChip(int player);
 
     /*!
-     * @brief Enable / Disable highlight of the current field
+     * @brief Enable / disable highlight of the field and its contained chip
      *
      * @param highlight enable highlight?
      */
-    void SetHighlightChip(bool highlight);
+    void SetHighlight(bool highlight);
 
     /*!
      * @brief Does the field contain a chip?
