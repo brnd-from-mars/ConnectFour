@@ -39,7 +39,7 @@ public:
      * @brief Static factory function creates a new empty session, sets references between the MVC elements as well as
      * initiates the grid, terminate button and name text fields.
      *
-     * @param game weak pointer to the parent in the MVC tree GameController
+     * @param game weak pointer to the parent GameController in the MVC tree
      * @param columns number of columns in the ConnectFour grid
      * @param rows number of rows in the ConnectFour grid
      * @return shared pointer to the new SessionController

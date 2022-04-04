@@ -22,7 +22,7 @@ class GameModel : public BaseModel
 public:
 
     /*!
-     * @brief Constructs the GameModel with given number of columns and rows
+     * @brief Constructor constructs the GameModel with given number of columns and rows
      *
      * @param columns number of columns in the ConnectFour grid
      * @param rows number of rows in the ConnectFour grid
@@ -39,7 +39,7 @@ public:
 private:
 
     /*!
-     * @brief Weak pointer to the associated controller
+     * @brief weak pointer to the associated controller
      */
     std::weak_ptr<GameController> m_GameController;
 
