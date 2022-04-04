@@ -173,7 +173,7 @@ void SessionController::InitColorPickPrompt()
     playerName = playerName.append(":");
 
     m_StatusNameText = TextView::MakeText(750.0f, 250.0f, 20, "Standard", playerName, ColorPalette::Orange);
-    m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard", "Pick your color!", ColorPalette::Orange);
+    m_StatusMessageText = TextView::MakeText(750.0f, 275.0f, 20, "Standard", "Pick your color!", ColorPalette::Orange);
 
     auto wController = m_SessionController;
 
@@ -254,7 +254,7 @@ void SessionController::HandleColorPick(int color)
         m_NameTextFields[1]->SetHighlightColor(ColorPalette::Pred);
     }
 
-    m_StatusPromptText.reset();
+    m_StatusMessageText.reset();
     m_StatusNameText.reset();
     m_ColorPickButtons[0].reset();
     m_ColorPickButtons[1].reset();
@@ -283,9 +283,9 @@ void SessionController::HandleGameEnd(PlayerState winState, GameData game)
     }
     else if (winState == PlayerState::tie)
     {
-        m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard", "It's a tie!", ColorPalette::Orange);
+        m_StatusMessageText = TextView::MakeText(750.0f, 275.0f, 20, "Standard", "It's a tie!", ColorPalette::Orange);
 
-        game.winningPlayer = GetName(0);
+        game.winningPlayer = GetName(0); // TODO: outsource to
         game.loosingPlayer = GetName(1);
 
         if (auto gameController = m_Game.lock())
@@ -298,7 +298,7 @@ void SessionController::HandleGameEnd(PlayerState winState, GameData game)
         auto playerName = game.winningPlayer;
         playerName = playerName.append(":");
         m_StatusNameText = TextView::MakeText(750.0f, 250.0f, 20, "Standard", playerName, ColorPalette::Orange);
-        m_StatusPromptText = TextView::MakeText(750.0f, 275.0f, 20, "Standard", "You won!", ColorPalette::Orange);
+        m_StatusMessageText = TextView::MakeText(750.0f, 275.0f, 20, "Standard", "You won!", ColorPalette::Orange);
 
         for (auto chip : m_SessionModel->m_WinningChips)
         {
@@ -307,7 +307,7 @@ void SessionController::HandleGameEnd(PlayerState winState, GameData game)
 
         if (auto gameController = m_Game.lock())
         {
-            gameController->AddGameToScoreBoard(game);
+            gameController->AddGameToScoreBoard(game); // TODO: unify AddGameToScoreBoard and AddTieToScoreBoard
         }
     }
 }

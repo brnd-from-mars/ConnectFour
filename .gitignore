@@ -14,3 +14,4 @@
 
 # Doxygen exclude paths
 /documentation/
+/doc.sh

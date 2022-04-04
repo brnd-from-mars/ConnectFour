@@ -28,7 +28,11 @@ public:
 
     /*
      * @brief Static factory function for GameController sets references between MCV GameController and GameModel.
-     */
+     *
+     * @param columns number of columns in the ConnectFour grid
+     * @param rows number of rows in the ConnectFour grid
+     * @return Shared pointer to the new GameController
+    */
     static std::shared_ptr<GameController> MakeGameController(int columns, int rows);
 
     /*!
@@ -40,7 +44,7 @@ public:
     GameController(int columns, int rows);
 
     /*!
-     * @brief Destructs GameController
+     * @brief Destructor destructs GameController.
      */
     virtual ~GameController();
 
