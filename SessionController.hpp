@@ -36,8 +36,8 @@ public:
 
 
     /*!
-     * @brief Static factory function creates a new empty session, sets references between MCV SessionController and
-     * SessionModel as well as initiates the grid, terminate button and name text fields.
+     * @brief Static factory function creates a new empty session, sets references between the MVC elements as well as
+     * initiates the grid, terminate button and name text fields.
      *
      * @param game weak pointer to the parent in the MVC tree GameController
      * @param columns number of columns in the ConnectFour grid
@@ -67,14 +67,14 @@ public:
     SessionController(std::weak_ptr<GameController> game, int columns, int rows);
 
     /*!
-     * @brief Copy-Constructor creates associated SessionModel
+     * @brief Copy-Constructor creates associated SessionModel.
      *
      * @param oldSessionController SessionController that will be copied
      */
     SessionController(const SessionController& oldSessionController);
 
     /*!
-     * @brief No-op
+     * @brief No-op.
      */
     virtual ~SessionController();
 

@@ -12,13 +12,16 @@
 
 ClockView::ClockView(float x, float y, sf::Color color)
 {
+    // set layer
     m_Layer = 1;
 
+    // load font
     if (!m_Font.loadFromFile("Standard.ttf"))
     {
         throw std::runtime_error("Font Standard.ttf not loaded");
     }
 
+    // initiate all SFML-texts (default message: "T+00:00:000")
     m_PrefixTextShape.setString("T+");
     m_PrefixTextShape.setCharacterSize(20);
     m_PrefixTextShape.setPosition(sf::Vector2f(x, y));
@@ -59,11 +62,13 @@ ClockView::ClockView(float x, float y, sf::Color color)
 
 void ClockView::Draw()
 {
+    // render prefix and time texts
     AppDelegate::Get()->GetWindow()->draw(m_PrefixTextShape);
     AppDelegate::Get()->GetWindow()->draw(m_MinutesTextShape);
     AppDelegate::Get()->GetWindow()->draw(m_SecondsTextShape);
     AppDelegate::Get()->GetWindow()->draw(m_MillisTextShape);
 
+    // blink dots or render them continuously after the clock was stopped
     if (m_DotsVisible | m_ForceDotsVisible)
     {
         AppDelegate::Get()->GetWindow()->draw(m_Dots1TextShape);
@@ -88,16 +93,20 @@ void ClockView::SetTime(int minutes, int seconds, int millis)
 {
     std::stringstream string;
 
+    // output minutes (force 2 digits with leading zeros / showing XX after overflow)
     string << std::setw(2) << std::setfill('0') << minutes;
     m_MinutesTextShape.setString(minutes < 100 ? string.str() : "XX");
 
+    // output seconds (force 2 digits with leading zeros)
     string.str(std::string());
     string << std::setw(2) << std::setfill('0') << seconds;
     m_SecondsTextShape.setString(string.str());
 
+    // output milliseconds (force 3 digits with leading zeros)
     string.str(std::string());
     string << std::setw(3) << std::setfill('0') << millis;
     m_MillisTextShape.setString(string.str());
 
+    // blink dots at the first half of every second
     m_DotsVisible = millis < 500;
 }

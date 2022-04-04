@@ -27,7 +27,7 @@ class GameController : public BaseController
 public:
 
     /*
-     * @brief Static factory function for GameController sets references between MCV GameController and GameModel.
+     * @brief Static factory function for GameController sets references between the MVC elements.
      *
      * @param columns number of columns in the ConnectFour grid
      * @param rows number of rows in the ConnectFour grid
