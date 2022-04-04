@@ -40,9 +40,12 @@ void ButtonController::RegisterMousePressCallback(const std::function<void()>& c
 
 void ButtonController::HandleMousePress()
 {
+    // if callback registered
     if (m_MousePressCallback)
     {
+        // extract std::function pointer from std::optional
         auto callback = m_MousePressCallback.value();
+        // call function
         callback();
     }
 }
