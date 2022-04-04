@@ -17,9 +17,11 @@ SessionModel::SessionModel(int columns, int rows)
 SessionModel::SessionModel(const SessionModel& oldSessionModel)
     : m_Columns(oldSessionModel.m_Columns), m_Rows(oldSessionModel.m_Rows)
 {
+    // copy color change data
     m_RandomNameForColorPick = oldSessionModel.m_RandomNameForColorPick;
     m_ColorsChanged = oldSessionModel.m_ColorsChanged;
 
+    // skip nameEnter and colorPick SessionState
     m_State = SessionState::inGame;
 }
 
@@ -30,22 +32,26 @@ void SessionModel::Update()
 
 bool SessionModel::HandleInitialNameEnter()
 {
+    // abort if SessionState is in wrong state
     if (m_State != SessionState::nameEnter)
     {
         return false;
     }
 
+    // abort if controller does not exist
     auto controller = m_SessionController.lock();
     if (!controller)
     {
         return false;
     }
 
+    // abort if not both names are entered
     if (controller->GetName(0).empty() || controller->GetName(1).empty())
     {
         return false;
     }
 
+    // go to next state
     m_State = SessionState::colorPick;
     return true;
 }
@@ -53,13 +59,16 @@ bool SessionModel::HandleInitialNameEnter()
 
 bool SessionModel::HandleColorPick(int color)
 {
+    // abort if SessionState is in wrong state
     if (m_State != SessionState::colorPick)
     {
         return false;
     }
 
+    // Check if player index does not match with color chosen -> colors were changed
     m_ColorsChanged = color != m_RandomNameForColorPick;
 
+    // go to next state
     m_State = SessionState::inGame;
     return true;
 }
@@ -67,71 +76,100 @@ bool SessionModel::HandleColorPick(int color)
 
 std::string SessionModel::GetRandomPlayerForColorPick()
 {
+    // abort if SessionState is in wrong state
     if (m_State != SessionState::colorPick)
     {
         return std::string();
     }
 
+    // abort if controller does not exist
     auto controller = m_SessionController.lock();
     if (!controller)
     {
         return std::string();
     }
 
+    // get random player (0 = player in upper text field, 1 = player in lower text field)
     m_RandomNameForColorPick = AppDelegate::Get()->GetRandomNumber() % 2;
+    // return name of the chosen random player
     return controller->GetName(m_RandomNameForColorPick);
 }
 
 
 int SessionModel::GetCurrentPlayerIndex() const
 {
+    // current player is 1 for red and 2 for blue
+    // if colors were not changed: index will be 0 for red and 1 for blue
+    // if colors were changed: index will be 1 for red and 0 for blue
+    // IMPORTANT: current player always refers to the color (red or blue) and not which text field the name is in
     return (m_ColorsChanged ? 3 - m_CurrentPlayer : m_CurrentPlayer) - 1;
 }
 
 
 void SessionModel::AddChip(int column)
 {
+    // abort if SessionState is in wrong state
     if (m_State != SessionState::inGame)
     {
         return;
     }
 
-    if (auto controller = m_SessionController.lock())
+    // abort if controller does not exist
+    auto controller = m_SessionController.lock();
+    if (!controller)
     {
-        for (auto& field : controller->m_Grid[column]) // go through each field in column
+        return;
+    }
+
+    // go through each field in column
+    for (auto& field : controller->m_Grid[column])
+    {
+        // check if field does not contain chip
+        if (!field->HasChip())
         {
-            if (!field->HasChip()) // check if field does not contain chip
+            // add the chip
+            field->SetChip(m_CurrentPlayer);
+
+            // increment move count of current player
+            ++m_Moves[m_CurrentPlayer - 1];
+
+            // get row number of added chip
+            auto row = field->GetRow();
+
+            // compute if a victory or tie have occurred due to the added chip at position column, row
+            auto winState = GetWinState(column, row);
+            if (winState != PlayerState::none)
             {
-                ++m_Moves[m_CurrentPlayer - 1];
+                GameData game;
+                game.moves = m_Moves[m_CurrentPlayer - 1];
 
-                field->SetChip(m_CurrentPlayer);
-
-                auto row = field->GetRow();
-                auto winState = GetWinState(column, row);
-
-                if (winState != PlayerState::none)
+                // if a tie has occurred
+                if (winState == PlayerState::tie)
                 {
-                    GameData game;
-
-                    if (winState != PlayerState::tie)
-                    {
-                        // interpret as (ColorsChanged XOR (player1 won))
-                        int k = m_ColorsChanged == (winState == PlayerState::player1);
-                        game.winningPlayer = controller->GetName(k);
-                        game.loosingPlayer = controller->GetName(1 - k);
-                        game.moves = m_Moves[m_CurrentPlayer - 1];
-                    }
-
-                    controller->HandleGameEnd(winState, game);
-                    m_State = SessionState::finished;
+                    // fill in results, order of player names is negligible in a tie
+                    game.winningPlayer = controller->GetName(0);
+                    game.loosingPlayer = controller->GetName(1);
+                }
+                else
+                {
+                    // interpret the RHS statement as !(ColorsChanged XOR (player1 won))
+                    int index = m_ColorsChanged == (winState == PlayerState::player1);
+                    // fill in results
+                    game.winningPlayer = controller->GetName(index);
+                    game.loosingPlayer = controller->GetName(1 - index);
                 }
 
-                // player 1 -> player 2
-                // player 2 -> player 1
-                m_CurrentPlayer = 3 - m_CurrentPlayer;
+                // controller should adapt UI to game end and forward results to the GameController to save them
+                controller->HandleGameEnd(winState, game);
 
-                return;
+                // go to next state
+                m_State = SessionState::finished;
             }
+
+            // change current player (player1 -> player2, player2 -> player1)
+            m_CurrentPlayer = 3 - m_CurrentPlayer;
+
+            return;
         }
     }
 }
@@ -139,23 +177,29 @@ void SessionModel::AddChip(int column)
 
 PlayerState SessionModel::GetPlayerAt(int column, int row) const
 {
+    // if cout of bounds -> return none
     if ((column < 0) || (m_Columns <= column) || (row < 0) || (m_Rows <= row))
     {
         return PlayerState::none;
     }
-	if (auto controller = m_SessionController.lock())
-	{
-	    switch (controller->GetPlayerAt(column, row))
-        {
-            case 1:
-                return PlayerState::player1;
-            case 2:
-                return PlayerState::player2;
-            default:
-                return PlayerState::none;
-        }
-	}
-    return PlayerState::none;
+
+    // abort if controller does not exist
+    auto controller = m_SessionController.lock();
+    if (!controller)
+    {
+        return PlayerState::none;
+    }
+
+    // return chip color at the coordinates
+    switch (controller->GetPlayerAt(column, row))
+    {
+        case 1:
+            return PlayerState::player1;
+        case 2:
+            return PlayerState::player2;
+        default:
+            return PlayerState::none;
+    }
 }
 
 
