@@ -71,49 +71,49 @@ public:
 private:
 
     /*!
-     * @brief Handles the any name enter. Only if two valid names were entered for the FIRST time, the SessionState will
+     * @brief   Handles the any name enter. Only if two valid names were entered for the FIRST time, the SessionState will
      * be changed and true returned.
      *
-     * @return Does the controller have to initialize the color pick prompt UI?
+     * @return  Does the controller have to initialize the color pick prompt UI?
      */
     bool HandleInitialNameEnter();
 
     /*!
-     * @brief Handles color pick by checking if the colors were changed or kept the same.
+     * @brief   Handles color pick by checking if the colors were changed or kept the same.
      *
-     * @param color 0 (red) or 1 (blue)
-     * @return Does the controller have to initialize the inGame UI?
+     * @param   color 0 (red) or 1 (blue)
+     * @return  Does the controller have to initialize the inGame UI?
      */
     bool HandleColorPick(int color);
 
     /*!
-     * @brief Chooses a random player for a color pick and saves the corresponding INDEX (which text field?).
+     * @brief   Chooses a random player for a color pick and saves the corresponding INDEX (which text field?).
      *
-     * @return name of the chosen player
+     * @return  name of the chosen player
      */
     std::string GetRandomPlayerForColorPick();
 
     /*!
-     * @brief Computes the INDEX (which text field?) of the current player depending on if a color change has occurred.
+     * @brief   Computes the INDEX (which text field?) of the current player depending on if a color change has occurred.
      *
-     * @return INDEX of the current player
+     * @return  INDEX of the current player
      */
     int GetCurrentPlayerIndex() const;
 
     /*!
-     * @brief Adds a chip to the specified column if the SessionState is in the correct state and the columns is not
-     * full. Computes if the game was finished due to the added chip.
+     * @brief   Adds a chip to the specified column if the SessionState is in the correct state and the columns is not
+     *          full. Computes if the game was finished due to the added chip.
      *
-     * @param column column that was clicked by one of the players.
+     * @param   column  column that was clicked by one of the players.
      */
     void AddChip(int column);
 
     /*!
-     * @brief Returns the chip at given coordinates. Returns none for out of bounds coordinates.
+     * @brief   Returns the chip at given coordinates. Returns none for out of bounds coordinates.
      *
-     * @param column column where to determine the chip color
-     * @param row row where to determine the chip color
-     * @return none (no chip / out of bounds), player1 (red), player2 (blue)
+     * @param   column  column where to determine the chip color
+     * @param   row     row where to determine the chip color
+     * @return  none (no chip / out of bounds), player1 (red), player2 (blue)
      */
     PlayerState GetPlayerAt(int column, int row) const;
 

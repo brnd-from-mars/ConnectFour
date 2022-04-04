@@ -18,11 +18,20 @@ class LinkedList
 
 private:
 
+    /*! 
+    *   @brief  Pointer at first Element of a linked list, which can contain
+    *           objects of any type T;
+    *           declared as nullpointer by default 
+    */
 	LinkedListComponent<T>* m_FirstElement = nullptr;
 	
 	
 public:
 
+    /*!
+   *   @brief   destructor of LinkedList object;
+   *            when called, iterates through list and deletes every element
+   */
     ~LinkedList()
     {
         LinkedListComponent<T>* current = m_FirstElement;
@@ -35,7 +44,11 @@ public:
         }
     }
 
-
+    /*!
+    *   @brief  Function adds an element of a specified type T to the end of a linked list
+    *
+    *   @param  object to be added to the linked list
+    */
     void AddElement(T element)
     {
         if (m_FirstElement == nullptr)
@@ -57,7 +70,12 @@ public:
         current->next->previous = current;
     }
 
-
+    /*!
+   *   @brief  
+   *
+   *   @return
+   *   @param
+   */
     void ForEach(std::function<void(T*)> function)
     {
         LinkedListComponent<T>* current = m_FirstElement;
@@ -69,7 +87,12 @@ public:
         }
     }
 
-
+    /*!
+    *   @brief  
+    *   
+    *   @return
+    *   @param
+    */
     T* Find(std::function<bool(T*)> filter)
     {
         LinkedListComponent<T>* current = m_FirstElement;
@@ -86,7 +109,13 @@ public:
         return nullptr;
     }
 
-
+    /*!
+    *   @brief  Function sorts a linked List with Elements of a specified Type T 
+    *           by a passed lambda-function;
+    *           Used sorting algorithm is bubblesort
+    * 
+    *   @param  Lambda-function which contains value to sort by
+    */
     void Sort(std::function<int(T*)> getSortValue)
     {
         LinkedListComponent<T>* current = nullptr;
@@ -114,7 +143,15 @@ public:
         }
     }
 
-
+    /*!
+    *   @brief  Operator [] used for an object of type LinkedList to return 
+    *           pointer at element at a specified index in this list
+    * 
+    *   @return pointer at element at specified index in linked list
+    *   @param  index   index of the list-element to return;
+    *                   first element of list at index 0;
+    *                   negative indizes mean counting from end of the list towards first element
+    */
     T* operator[] (int index)
     {
         LinkedListComponent<T>* current = m_FirstElement;
