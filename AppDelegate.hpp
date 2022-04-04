@@ -25,10 +25,8 @@ class AppDelegate
 private:
 
     /*!
-     * @brief Private constructor for the AppDelegate singleton.
-     *
-     * Private constructor for the AppDelegate singleton checks whether the singleton instance already exists or not.
-     * Provides time based seed for random number generator.
+     * @brief Private constructor for the AppDelegate singleton checks whether the singleton instance already exists
+     * or not. Sets time based seed for random number generator.
      *
      * @throw std::runtime_error in case instance already exists
      */
@@ -38,7 +36,7 @@ private:
 public:
 
     /*!
-     * @brief Destructor for AppDelegate singleton closes associated SFML RenderWindow.
+     * @brief Destructor closes associated SFML RenderWindow.
      */
     virtual ~AppDelegate();
 

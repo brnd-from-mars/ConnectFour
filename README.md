@@ -1,3 +1,3 @@
-# FourWins
+# ConnectFour
 
 ### It's cool. Kinda.
