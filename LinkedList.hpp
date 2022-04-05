@@ -11,7 +11,10 @@ struct LinkedListComponent
 	LinkedListComponent* previous = nullptr;
 };
 
-
+    /*!
+    *   @brief  Template class LinkedList can handle, create and sort double linked lists 
+    *           with Elements of any datatype 
+    */
 template <typename T>
 class LinkedList
 {
@@ -29,9 +32,9 @@ private:
 public:
 
     /*!
-   *   @brief   destructor of LinkedList object;
-   *            when called, iterates through list and deletes every element
-   */
+    *   @brief   Destructor of LinkedList object;
+    *            when called, iterates through list and deletes every element
+    */
     ~LinkedList()
     {
         LinkedListComponent<T>* current = m_FirstElement;
@@ -71,10 +74,10 @@ public:
     }
 
     /*!
-   *   @brief  
+   *   @brief   Function iterates through a linked list and executes given (lambda-)function
+   *            for each list-element
    *
-   *   @return
-   *   @param
+   *   @param   lambda-function to be executed for every element of a linked list
    */
     void ForEach(std::function<void(T*)> function)
     {
@@ -88,10 +91,12 @@ public:
     }
 
     /*!
-    *   @brief  
+    *   @brief  Function finds elements for which a given lamda-function returns true
+    *           and returns data of these elements
     *   
-    *   @return
-    *   @param
+    *   @return data of elements for which the given lamda-function returns true
+    *   @param  lamda-function which compares data from list-element with a search-value and 
+    *           returns 'true' if both are equal
     */
     T* Find(std::function<bool(T*)> filter)
     {
@@ -111,7 +116,7 @@ public:
 
     /*!
     *   @brief  Function sorts a linked List with Elements of a specified Type T 
-    *           by a passed lambda-function;
+    *           by a given lambda-function;
     *           Used sorting algorithm is bubblesort
     * 
     *   @param  Lambda-function which contains value to sort by
