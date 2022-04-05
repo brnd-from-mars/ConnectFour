@@ -26,7 +26,8 @@ class ChipController : public BaseController
 public:
 
     /*!
-     * @brief Static factory function creates a new chip from the specified player at the given coordinates.
+     * @brief Static factory function creates a new chip for the specified player at the given coordinates and sets
+     * references between the MVC elements
      *
      * @param player 0 (red), 1 (blue)
      * @param x x-coordinate on the screen

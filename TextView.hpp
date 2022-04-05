@@ -27,7 +27,7 @@ public:
      * @param y y-coordinate of the text on the screen
      * @param size font size
      * @param font font in which the text will be displayed
-     * @param text text as a string to display
+     * @param text text string to display
      * @param color color of the displayed text
      * @param layer layer of the text
      * @return shared pointer to the new TextView
@@ -42,7 +42,7 @@ public:
      * @param y y-coordinate of the text on the screen
      * @param size font size
      * @param font font in which the text will be displayed
-     * @param text text as a string to display
+     * @param text text string to display
      * @param color color of the displayed text
      * @param layer layer of the text
      */
@@ -55,9 +55,9 @@ public:
     void Draw() override;
 
     /*!
-     * @brief Sets the text as a string that will be displayed.
+     * @brief Sets the text string that will be displayed.
      *
-     * @param text text as a string to display
+     * @param text text string to display
      */
     void SetText(const std::string& text);
 

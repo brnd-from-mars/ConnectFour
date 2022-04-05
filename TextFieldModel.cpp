@@ -11,7 +11,8 @@ void TextFieldModel::Update()
 
 void TextFieldModel::AddCharacter(char character)
 {
-    if (31 < character && character < 127)
+    // is the character printable?
+    if (0x20 < character && character < 0x7f)
     {
         m_Text.push_back(character);
     }

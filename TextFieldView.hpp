@@ -67,7 +67,7 @@ public:
     /*!
      * @brief Overrides the text entered into the text field.
      *
-     * @param text text as a string to display
+     * @param text text string to display
      */
     void SetText(const std::string& text);
 
