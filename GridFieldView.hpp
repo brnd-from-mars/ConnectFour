@@ -12,8 +12,9 @@
 
 class GridFieldController;
 
+
 /*!
- * @brief GridFieldView respresents one field of the grid each
+ * @brief GridFieldView displays a single field inside the ConnectFour grid on the screen and handles mouse events.
  */
 class GridFieldView : public BaseView
 {
@@ -21,31 +22,33 @@ class GridFieldView : public BaseView
 
 
 public:
+
     /*!
-    * @brief Constructor creates the GridFieldView
-    *
-    * @param x X-coordinate on the screen
-    * @param y Y-coordinate on the screen
-    */
+     * @brief Constructor initializes all SFML elements.
+     *
+     * @param x x-coordinate on the screen
+     * @param y y-coordinate on the screen
+     */
     GridFieldView(float x, float y);
 
     /*!
-    *@brief Adresses the AppDelegate and draws the grid field on the screen
-    */
+     * @brief Draws the grid field to the RenderWindow in the AppDelegate.
+     */
     void Draw() override;
 
     /*!
-    * @brief No-op.
-    *
-    * @return Returns false
-    */
+     * @brief No-op.
+     *
+     * @return false
+     */
     bool HandleFocusReset() override;
 
     /*!
-     * @brief Checks if a mouseclick event is within its boundarys and reports back to the controller if so
+     * @brief Checks if a MouseButtonPressed event occurred within its boundaries and reports back to the controller in
+     * that case by triggering a HandleClick event.
      *
-     * @param event Event which is given to handle
-     * @return Returns false
+     * @param event SFML-Event
+     * @return Was the event handled by the view?
      */
     bool Handle(sf::Event event) override;
 
@@ -53,30 +56,30 @@ public:
 private:
 
     /*!
-     * @brief Gets the center of the field
+     * @brief Returns the center coordinates of the field
      * 
-     * @return Vector to center
+     * @return float vector of the center
      */
     sf::Vector2f GetCenter() const;
 
     /*!
-     * @brief Weak pointer to the associated controller
+     * @brief weak pointer to the associated controller
      */
     std::weak_ptr<GridFieldController> m_GridFieldController;
 
     /*!
-    * @brief Shape of the field
-    */
+     * @brief SFML-RectangleShape: grid field
+     */
     sf::RectangleShape m_FieldShape;
 
     /*!
-    *@brief Static value of the fields edge length
-    */
+     * @brief horizontal and vertical distance between two neighboring fields
+     */
     static constexpr float m_Size = 25.0;
 
     /*!
-    *@brief Static value of the fields outline thickness
-    */
+     * @brief padding inside the field for the m_FieldShape
+     */
     static constexpr float m_Outline = 1.0;
 
 

@@ -48,9 +48,14 @@ void TextFieldView::Draw()
 
 bool TextFieldView::HandleFocusReset()
 {
+    if (!m_InFocus)
+    {
+        return false;
+    }
+
     m_InFocus = false;
     UpdateView();
-	return true;
+    return true;
 }
 
 

@@ -11,81 +11,82 @@
 
 #include "BaseView.hpp"
 
+
 /*!
-* @brief TextView represents a simple displayed text
-*/
+ * @brief TextView displays a text with a given size and color on the screen.
+ */
 class TextView : public BaseView
 {
 
 public:
 
     /*!
-    * @brief Static factory function creates a new text
-    *
-    * @param x X-coordinate of the text on the screen
-    * @param y Y-coordinate of the text on the screen
-    * @param size Size of the text in pixels
-    * @param font Font in which the text should be displayed
-    * @param text Text to display
-    * @param color Color of the displayed text
-    * @param layer Layer of the text
-    * @return Shared pointer to the TextView
-    */
+     * @brief Static factory function creates a new text.
+     *
+     * @param x x-coordinate of the text on the screen
+     * @param y y-coordinate of the text on the screen
+     * @param size font size
+     * @param font font in which the text will be displayed
+     * @param text text as a string to display
+     * @param color color of the displayed text
+     * @param layer layer of the text
+     * @return shared pointer to the new TextView
+     */
     static std::shared_ptr<TextView> MakeText(float x, float y, unsigned int size, const std::string& font,
                                               const std::string& text, sf::Color color, int layer = 0);
 
     /*!
-    * @brief Constructor creates the associated TextView
-    *
-    * @param x X-coordinate of the text on the screen
-    * @param y Y-coordinate of the text on the screen
-    * @param size Size of the text in pixels
-    * @param font Font in which the text should be displayed
-    * @param text Text to display
-    * @param color Color of the displayed text
-    * @param layer Layer of the text
-    */
+     * @brief Constructor loads the font and initializes all SFML elements.
+     *
+     * @param x x-coordinate of the text on the screen
+     * @param y y-coordinate of the text on the screen
+     * @param size font size
+     * @param font font in which the text will be displayed
+     * @param text text as a string to display
+     * @param color color of the displayed text
+     * @param layer layer of the text
+     */
     TextView(float x, float y, unsigned int size, const std::string& font,
              const std::string& text, sf::Color color, int layer);
 
     /*!
-    *@brief Adresses the AppDelegate and draws the text on the screen
-    */
+     * @brief Draws the text to the RenderWindow in the AppDelegate.
+     */
     void Draw() override;
 
     /*!
-    *@brief Sets the text which should be displayed
-    * 
-    * @param text String with the text to diplay
-    */
+     * @brief Sets the text as a string that will be displayed.
+     *
+     * @param text text as a string to display
+     */
     void SetText(const std::string& text);
 
     /*!
-    * @brief No-op.
-    *
-    * @return Returns false
-    */
+     * @brief No-op.
+     *
+     * @return false
+     */
     bool HandleFocusReset() override;
 
     /*!
-    * @brief No-op.
-    *
-    * @param event Event to handle
-    * @return Returns false
-    */
+     * @brief No-op.
+     *
+     * @param event SFML-Event
+     * @return false
+     */
     bool Handle(sf::Event event) override;
 
 
 private:
 
     /*!
-   * @brief Shape of the text which should be displayed
-   */
+     * @brief SFML-Text: graphical representation of the text that will be displayed
+     */
     sf::Text m_TextShape;
 
     /*!
-   * @brief Font in which the text is displayed
-   */
+     * @brief SFML-Font: font in which the text will be displayed
+     */
     sf::Font m_Font;
 
 

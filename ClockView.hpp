@@ -35,18 +35,21 @@ public:
     ClockView(float x, float y, sf::Color color);
 
     /*!
-     * @brief Draws the clock to the screen.
+     * @brief Draws the clock to the RenderWindow in the AppDelegate.
      */
     void Draw() override;
 
     /*!
      * @brief No-op.
+     *
      * @return false
      */
     bool HandleFocusReset() override;
 
     /*!
      * @brief No-op.
+     *
+     * @param event SFML-Event
      * @return false
      */
     bool Handle(sf::Event event) override;

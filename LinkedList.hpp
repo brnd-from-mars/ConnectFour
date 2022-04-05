@@ -3,18 +3,37 @@
 #include <functional>
 
 
+/*!
+ * @brief Template struct LinkedListComponent can store data of any type T and pointers to a previous and following
+ * element as to be used by the LinkedList class.
+ *
+ * @tparam T type of the stored data
+ */
 template <typename T>
 struct LinkedListComponent
 {
+    /*!
+     * @brief Data that is stored in this component of the LinkedList
+     */
 	T data;
+
+	/*!
+	 * @brief Pointer to the next element in the LinkedList
+	 */
 	LinkedListComponent* next = nullptr;
+
+    /*!
+     * @brief Pointer to the previous element in the LinkedList
+     */
 	LinkedListComponent* previous = nullptr;
 };
 
-    /*!
-    *   @brief  Template class LinkedList can handle, create and sort double linked lists 
-    *           with Elements of any datatype 
-    */
+
+/*!
+ * @brief Template class LinkedList can handle, create and sort double linked lists with Elements of any type T.
+ *
+ * @tparam T type of the stored data
+ */
 template <typename T>
 class LinkedList
 {
@@ -22,19 +41,16 @@ class LinkedList
 private:
 
     /*! 
-    *   @brief  Pointer at first Element of a linked list, which can contain
-    *           objects of any type T;
-    *           declared as nullpointer by default 
-    */
+     * @brief Pointer to first component of the double linked list. nullptr if linked list is empty
+     */
 	LinkedListComponent<T>* m_FirstElement = nullptr;
 	
 	
 public:
 
     /*!
-    *   @brief   Destructor of LinkedList object;
-    *            when called, iterates through list and deletes every element
-    */
+     * @brief Destructor deletes every LinkedListComponent in the linked list.
+     */
     ~LinkedList()
     {
         LinkedListComponent<T>* current = m_FirstElement;
@@ -48,10 +64,10 @@ public:
     }
 
     /*!
-    *   @brief  Function adds an element of a specified type T to the end of a linked list
-    *
-    *   @param  object to be added to the linked list
-    */
+     * @brief Adds data of the specified type T to the end of the linked list in a new LinkedListComponent.
+     *
+     * @param element element that will be added (by copy) to the linked list
+     */
     void AddElement(T element)
     {
         if (m_FirstElement == nullptr)
@@ -74,11 +90,11 @@ public:
     }
 
     /*!
-   *   @brief   Function iterates through a linked list and executes given (lambda-)function
-   *            for each list-element
-   *
-   *   @param   lambda-function to be executed for every element of a linked list
-   */
+     * @brief Iterates through the linked list and executes the given given lambda-function for each element in the
+     * linked list.
+     *
+     * @param function lambda-function that will be executed with every element of the linked list
+     */
     void ForEach(std::function<void(T*)> function)
     {
         LinkedListComponent<T>* current = m_FirstElement;
@@ -91,13 +107,13 @@ public:
     }
 
     /*!
-    *   @brief  Function finds elements for which a given lamda-function returns true
-    *           and returns data of these elements
-    *   
-    *   @return data of elements for which the given lamda-function returns true
-    *   @param  lamda-function which compares data from list-element with a search-value and 
-    *           returns 'true' if both are equal
-    */
+     * @brief Finds the first element for which a given lambda-function returns true. Returns pointer to the stored data
+     * of the element.
+     *
+     * @param filter lambda-function which compares data from a list-element with a search-value and returns true if
+     * both are equal
+     * @return pointer to the data of the first element for which filter returned true
+     */
     T* Find(std::function<bool(T*)> filter)
     {
         LinkedListComponent<T>* current = m_FirstElement;
@@ -115,12 +131,11 @@ public:
     }
 
     /*!
-    *   @brief  Function sorts a linked List with Elements of a specified Type T 
-    *           by a given lambda-function;
-    *           Used sorting algorithm is bubblesort
-    * 
-    *   @param  Lambda-function which contains value to sort by
-    */
+     * @brief Sorts the linked list using Bubble Sort. The sort key for a given element of type T will be determined by
+     * the provided lambda-function.
+     *
+     * @param getSortValue lambda-function which return the sort key for a given element of type T
+     */
     void Sort(std::function<int(T*)> getSortValue)
     {
         LinkedListComponent<T>* current = nullptr;
@@ -149,14 +164,13 @@ public:
     }
 
     /*!
-    *   @brief  Operator [] used for an object of type LinkedList to return 
-    *           pointer at element at a specified index in this list
-    * 
-    *   @return pointer at element at specified index in linked list
-    *   @param  index   index of the list-element to return;
-    *                   first element of list at index 0;
-    *                   negative indizes mean counting from end of the list towards first element
-    */
+     * @brief [index] returns a pointer to the data T stored in the linked list at position index. A negative index is
+     * allowed. Here, the linked list will be searched trough from the end.
+     *
+     * @param index index of the element to return starting at 0, negative index will lead to a count from the end of
+     * the list (Python-like behaviour)
+     * @return pointer to the data at the specified index in the linked list. nullptr if index is out-of-bounds
+     */
     T* operator[] (int index)
     {
         LinkedListComponent<T>* current = m_FirstElement;
@@ -186,7 +200,7 @@ public:
             {
                 current = current->next;
             }
-            for (int i = -1; i > index; --i) // counting to index against in opposite direction
+            for (int i = -1; i > index; --i) // counting to index in opposite direction
             {
                 if (current != nullptr)
                 {

@@ -59,7 +59,6 @@ ScoreBoardView::ScoreBoardView(float x, float y, float width)
 
 void ScoreBoardView::Draw()
 {
-    // AppDelegate::Get()->GetWindow()->draw(m_Box);
     AppDelegate::Get()->GetWindow()->draw(m_HeadlineShape);
 
     for (const auto & placingShape : m_PlacingShapes)

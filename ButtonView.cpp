@@ -23,11 +23,13 @@ ButtonView::ButtonView(float x, float y, float width, const std::string& text,
     m_ButtonField.setPosition(sf::Vector2f(x, y));
     m_ButtonField.setFillColor(ColorPalette::BasestarLight);
     m_ButtonField.setOutlineThickness(2.0f);
+    // determine horizontal center coordinates of the button rectangle
     auto center = x + width / 2;
 
     m_TextShape.setFont(m_Font);
     m_TextShape.setCharacterSize(20);
     m_TextShape.setString(text);
+    // align the text centered inside the m_ButtonField
     auto xText = center - (m_TextShape.getGlobalBounds().width / 2);
     m_TextShape.setPosition(sf::Vector2f(xText, y));
 
@@ -61,8 +63,10 @@ bool ButtonView::Handle(sf::Event event)
 
     if (event.type == sf::Event::MouseButtonReleased && m_Pressed)
     {
+        // only send MousePress event to controller if press AND release occurred with the buttons boundaries
         if (m_ButtonField.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
         {
+            // hello controller, u still alive bro?
             if (auto controller = m_ButtonController.lock())
             {
                 controller->HandleMousePress();

@@ -42,6 +42,8 @@ bool GridFieldView::Handle(sf::Event event)
             {
                 controller->HandleClick();
             }
+
+            return true;
         }
     }
     return false;

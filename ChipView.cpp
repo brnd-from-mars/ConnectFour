@@ -2,9 +2,6 @@
 // Created by Brendan Berg on 09.03.22.
 //
 
-#include <cmath>
-#include <iostream>
-
 #include "ChipView.hpp"
 #include "ChipController.hpp"
 

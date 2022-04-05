@@ -13,9 +13,10 @@
 
 class ScoreBoardController;
 
+
 /*!
-* @brief ScoreBoardView represents the whole scoreboard without buttons and title
-*/
+ * @brief TextView displays a headline and the top 5 scores with their placement and player name on the screen.
+ */
 class ScoreBoardView : public BaseView
 {
     friend ScoreBoardController;
@@ -23,98 +24,99 @@ class ScoreBoardView : public BaseView
 public:
 
     /*!
-     * @brief Constructor creates the scoreboard
+     * @brief Constructor initializes all SFML elements.
      *
      * @param x x-coordinate on the screen
      * @param y y-coordinate on the screen
-     * @param width width of the scoreboard
+     * @param width total width of the scoreboard
      */
     ScoreBoardView(float x, float y, float width);
 
     /*!
-    *@brief Adresses the AppDelegate and draws the shapes of the scoreboard on the screen
-    */
+     * @brief Draws the scoreboard to the RenderWindow in the AppDelegate.
+     */
     void Draw() override;
 
     /*!
-   * @brief No-op.
-   *
-   * @return Returns false
-   */
+     * @brief No-op.
+     *
+     * @return false
+     */
     bool HandleFocusReset() override;
 
     /*!
-   * @brief No-op.
-   *
-   * @return Returns false
-   */
+     * @brief No-op.
+     *
+     * @param event SFML-Event
+     * @return Returns false
+     */
     bool Handle(sf::Event event) override;
 
 
 private:
 
     /*!
-   * @brief Function to determine the y-coordinate of a certain line
-   *
-   * @param line Number of the requested line
-   * @return Returns the y-coordinate of the requested line
-   */
+     * @brief Determines the y-coordinate of a certain line
+     *
+     * @param line number of the line (0...4)
+     * @return y-coordinate of the line
+     */
     float LineToY(int line) const;
 
     /*!
-   * @brief Sets a line with given name and score
-   *
-   * @param line Number of the line to set
-   * @param name Name of the player
-   * @param score Scorevalue to display
-   */
+     * @brief Sets a line with given name and score
+     *
+     * @param line number of the line to set (0...4)
+     * @param name name of the player
+     * @param score score value to display (e.g. victories, time, etc.)
+     */
     void SetLine(int line, const std::string& name, const std::string& score);
 
     /*!
-   * @brief Sets the headline of the displayed scoretype
-   *
-   * @param headline String of the displayed scoretype
-   */
+     * @brief Sets the headline of the displayed score type
+     *
+     * @param headline headline as a string of the displayed score type
+     */
     void SetHeadline(const std::string& headline);
 
     /*!
-   * @brief X-Coordinate of the scoreboard
-   */
+     * @brief x-coordinate of the scoreboard (upper-left corner)
+     */
     float m_X;
 
     /*!
-   * @brief Y-Coordinate of the scoreboard
-   */
+     * @brief y-coordinate of the scoreboard (upper-left corner)
+     */
     float m_Y;
 
     /*!
-   * @brief Total width of the scoreboard
-   */
+     * @brief total width of the scoreboard
+     */
     float m_Width;
 
     /*!
-   * @brief Shape of the headline to display the type of score
-   */
+     * @brief SFML-Text: graphical representation of the headline for the current scoreboard
+     */
     sf::Text m_HeadlineShape;
 
     /*!
-   * @brief Array of shapes to display the placement number
-   */
+     * @brief array of SFML-Text elements with graphical representations for the strings "1." to "5."
+     */
     sf::Text m_PlacingShapes[5];
 
     /*!
-   * @brief Array of shapes to display the player name for each score
-   */
+     * @brief array of SFML-Text elements with graphical representations for the top 5 player names
+     */
     sf::Text m_NameShapes[5];
 
     /*!
-   * @brief Array of shapes to display the score a player achieved
-   */
+     * @brief array of SFML-Text elements with graphical representations for the top 5 scores
+     */
     sf::Text m_ScoreShapes[5];
 
     /*!
-   * @brief Font in which the text is displayed
-   */
+     * @brief SFML-Font: font in which the texts and headline will be displayed
+     */
     sf::Font m_Font;
 
 

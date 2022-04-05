@@ -13,9 +13,10 @@
 
 class ButtonController;
 
+
 /*!
-* @brief ButtonView class represents a clickable button on the screen
-*/
+ * @brief ButtonView displays the current time on the screen and handles mouse events.
+ */
 class ButtonView : public BaseView
 {
     friend ButtonController;
@@ -24,7 +25,7 @@ class ButtonView : public BaseView
 public:
 
     /*!
-     * @brief Constructor creates a new button
+     * @brief Constructor loads the font and initializes all SFML elements.
      *
      * @param x x-coordinate on the screen
      * @param y y-coordinate on the screen
@@ -37,67 +38,68 @@ public:
                sf::Color defaultColor, sf::Color highlightColor);
 
     /*!
-    *@brief Adresses the AppDelegate and draws the button on the screen
-    */
+     * @brief Draws the button to the RenderWindow in the AppDelegate.
+     */
     void Draw() override;
 
     /*!
-   * @brief No-op.
-   *
-   * @return Returns false
-   */
+     * @brief No-op.
+     *
+     * @return false
+     */
     bool HandleFocusReset() override;
 
     /*!
-   * @brief Checks if a mouseclick event is within its boundarys, sets variables and returnvalue accordingly and reports back
-   * to the controller
-   *
-   * @param event Event which is given to handle
-   * @return Returns if this button was clicked or not
-   */
+     * @brief Checks if a MouseButtonPressed SFML-Event is within its boundaries to update the view. Reports a
+     * HandleMousePress event back to the reported after the MouseButtonReleased SFML-Event also occurred within its
+     * boundaries.
+     *
+     * @param event SFML-Event
+     * @return Was the event handled by the view?
+     */
     bool Handle(sf::Event event) override;
 
 
 private:
 
     /*!
-   * @brief Updates the view and highlights the button if it was pressed
-   */
+     * @brief Updates the view by setting the highlight color for the button while it is pressed.
+     */
     void UpdateView();
 
     /*!
-   * @brief Weak pointer to the associated controller
-   */
+     * @brief weak pointer to the associated controller
+     */
     std::weak_ptr<ButtonController> m_ButtonController;
 
     /*!
-   * @brief Shape of the button itself
-   */
+     * @brief SFML-RectangleShape: Button outline and clickable area
+     */
     sf::RectangleShape m_ButtonField;
 
     /*!
-   * @brief Shape of the text displayed on the button
-   */
+     * @brief SFML-Text: Text displayed on the button
+     */
     sf::Text m_TextShape;
 
     /*!
-   * @brief Font in which the text is displayed
-   */
+     * @brief SFML-Font: Standard
+     */
     sf::Font m_Font;
 
     /*!
-   * @brief Default color of the outline
-   */
+     * @brief default color for the outline
+     */
     sf::Color m_DefaultColor;
 
     /*!
-    * @brief Color of the outline if the button was pressed
-    */
+     * @brief color of the outline while the button is pressed
+     */
     sf::Color m_HighlightColor;
 
     /*!
-    * @brief Variable weather the button was pressed
-    */
+     * @brief Is the button currently pressed?
+     */
     bool m_Pressed = false;
 
 

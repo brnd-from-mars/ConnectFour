@@ -27,7 +27,7 @@ public:
      * @brief Handle in all EventObservers will get called by the AppDelegate until one EventObserver successfully
      * handles the result and returns true.
      *
-     * @param event Occurred SFML-Event
+     * @param event SFML-Event
      * @return Did the class handle the event?
      */
     virtual bool Handle(sf::Event event) = 0;
