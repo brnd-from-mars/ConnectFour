@@ -56,29 +56,29 @@ public:
 private:
 
     /*!
-     * @brief Returns the center coordinates of the field
+     * @brief Returns the center coordinates of the field.
      * 
      * @return float vector of the center
      */
     sf::Vector2f GetCenter() const;
 
     /*!
-     * @brief weak pointer to the associated controller
+     * @brief Weak pointer to the associated controller.
      */
     std::weak_ptr<GridFieldController> m_GridFieldController;
 
     /*!
-     * @brief SFML-RectangleShape: grid field
+     * @brief SFML-RectangleShape: Grid field.
      */
     sf::RectangleShape m_FieldShape;
 
     /*!
-     * @brief horizontal and vertical distance between two neighboring fields
+     * @brief Horizontal and vertical distance between two neighboring fields.
      */
     static constexpr float m_Size = 25.0;
 
     /*!
-     * @brief padding inside the field for the m_FieldShape
+     * @brief Padding inside the field for the m_FieldShape.
      */
     static constexpr float m_Outline = 1.0;
 

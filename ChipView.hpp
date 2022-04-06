@@ -63,37 +63,37 @@ private:
     void EnableRing(bool enable);
 
     /*!
-     * @brief weak pointer to the associated controller
+     * @brief Weak pointer to the associated controller.
      */
     std::weak_ptr<ChipController> m_ChipController;
 
     /*!
-    * @brief SFML-CircleShape: inner part of the chip
+    * @brief SFML-CircleShape: Inner part of the chip.
     */
     sf::CircleShape m_Circle;
 
     /*!
-     * @brief SFML-CircleShape: ring around the chip that is displayed in m_HighlightColor whilst highlighted
+     * @brief SFML-CircleShape: Ring around the chip that is displayed in m_HighlightColor whilst highlighted.
      */
     sf::CircleShape m_Ring; // TODO: remove m_Ring and use outline attribute of CircleShape
 
     /*!
-     * @brief color of the chip
+     * @brief Color of the chip.
      */
     sf::Color m_CircleColor;
 
     /*!
-     * @brief color of the ring whilst highlighted
+     * @brief Color of the ring whilst highlighted.
      */
     sf::Color m_HighlightColor;
 
     /*!
-     * @brief inner radius to the ring
+     * @brief Inner radius of the ring.
      */
     static constexpr float m_InnerRadius = 10.0f;
 
     /*!
-     * @brief outer radius of the ring
+     * @brief Outer radius of the ring.
      */
     static constexpr float m_OuterRadius = 12.0f;
 

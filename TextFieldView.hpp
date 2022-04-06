@@ -80,33 +80,33 @@ private:
     void UpdateView();
 
     /*!
-     * @brief weak pointer to the associated controller
+     * @brief Weak pointer to the associated controller.
      */
     std::weak_ptr<TextFieldController> m_TextFieldController;
 
     /*!
-     * @brief SFML-RectangleShape: text field boundaries
+     * @brief SFML-RectangleShape: Text field boundaries.
      */
     sf::RectangleShape m_TextField;
 
     /*!
-     * @brief SFML-Text: graphical representation of the text inside the text field
+     * @brief SFML-Text: Graphical representation of the text inside the text field.
      */
     sf::Text m_TextShape;
 
     /*!
-     * @brief SFML-Text: graphical representation of the placeholder text that will be displayed as long as the entered
-     * string is empty in a discrete color
+     * @brief SFML-Text: Graphical representation of the placeholder text that will be displayed as long as the entered
+     * string is empty in a discrete color.
      */
     sf::Text m_PlaceholderShape;
 
     /*!
-   * @brief SFML-Font: font in which the text will be displayed
+   * @brief SFML-Font: Font in which the text will be displayed.
    */
     sf::Font m_Font;
 
     /*!
-     * @brief Color for the outline of the field while in focus as well as the entered text
+     * @brief Color for the outline of the field while in focus as well as the entered text.
      */
     sf::Color m_HighlightColor;
 

@@ -62,7 +62,7 @@ public:
     void Update() override;
 
     /*!
-     * @brief Registers a given function pointer as the callback for a mouse press event
+     * @brief Registers a given function pointer as the callback for a mouse press event.
      *
      * @param callback void() function pointer to the event listener
      */
@@ -77,12 +77,12 @@ private:
     void HandleMousePress();
 
     /*!
-     * @brief shared pointer (ownership) to the ButtonView
+     * @brief Shared pointer (ownership) to the ButtonView.
      */
     std::shared_ptr<ButtonView> m_ButtonView;
 
     /*!
-     * @brief function pointer for the mouse press event callback
+     * @brief Function pointer for the mouse press event callback.
      */
     std::optional<std::function<void()>> m_MousePressCallback = std::nullopt;
 

@@ -22,7 +22,8 @@ class GridFieldModel : public BaseModel
 public:
 
     /*!
-     * @brief Constructor constructs the GridFieldModel with the given column and row position
+     * @brief Constructor constructs the GridFieldModel with the given column and row position.
+     *
      * @param column column where the field is positioned
      * @param row row where the field is positioned
      */
@@ -37,17 +38,17 @@ public:
 private:
 
     /*!
-     * @brief weak pointer to the associated controller
+     * @brief Weak pointer to the associated controller.
      */
     std::weak_ptr<GridFieldController> m_GridFieldController;
 
     /*!
-     * @brief column where the filed is positioned
+     * @brief Column where the filed is positioned.
      */
     int m_Column;
 
     /*!
-     * @brief row where the filed is positioned
+     * @brief Row where the field is positioned.
      */
     int m_Row;
 

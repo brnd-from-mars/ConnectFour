@@ -56,7 +56,7 @@ public:
 private:
 
     /*!
-     * @brief Determines the y-coordinate of a certain line
+     * @brief Determines the y-coordinate of a certain line.
      *
      * @param line number of the line (0...4)
      * @return y-coordinate of the line
@@ -64,7 +64,7 @@ private:
     float LineToY(int line) const;
 
     /*!
-     * @brief Sets a line with given name and score
+     * @brief Sets a line with given name and score.
      *
      * @param line number of the line to set (0...4)
      * @param name name of the player
@@ -73,49 +73,49 @@ private:
     void SetLine(int line, const std::string& name, const std::string& score);
 
     /*!
-     * @brief Sets the headline of the displayed score type
+     * @brief Sets the headline of the displayed score type.
      *
      * @param headline headline as a string of the displayed score type
      */
     void SetHeadline(const std::string& headline);
 
     /*!
-     * @brief x-coordinate of the scoreboard (upper-left corner)
+     * @brief X-coordinate of the scoreboard (upper-left corner).
      */
     float m_X;
 
     /*!
-     * @brief y-coordinate of the scoreboard (upper-left corner)
+     * @brief Y-coordinate of the scoreboard (upper-left corner).
      */
     float m_Y;
 
     /*!
-     * @brief total width of the scoreboard
+     * @brief Total width of the scoreboard.
      */
     float m_Width;
 
     /*!
-     * @brief SFML-Text: graphical representation of the headline for the current scoreboard
+     * @brief SFML-Text: Graphical representation of the headline for the current scoreboard.
      */
     sf::Text m_HeadlineShape;
 
     /*!
-     * @brief array of SFML-Text elements with graphical representations for the strings "1." to "5."
+     * @brief Array of SFML-Text elements with graphical representations for the strings "1." to "5.".
      */
     sf::Text m_PlacingShapes[5];
 
     /*!
-     * @brief array of SFML-Text elements with graphical representations for the top 5 player names
+     * @brief Array of SFML-Text elements with graphical representations for the top 5 player names.
      */
     sf::Text m_NameShapes[5];
 
     /*!
-     * @brief array of SFML-Text elements with graphical representations for the top 5 scores
+     * @brief Array of SFML-Text elements with graphical representations for the top 5 scores.
      */
     sf::Text m_ScoreShapes[5];
 
     /*!
-     * @brief SFML-Font: font in which the texts and headline will be displayed
+     * @brief SFML-Font: Font in which the texts and headline will be displayed.
      */
     sf::Font m_Font;
 

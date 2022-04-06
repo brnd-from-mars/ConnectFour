@@ -90,7 +90,7 @@ private:
     void SaveXMLDocument();
 
     /*!
-     * @brief Static auxiliary function adds a game to the <Games> tag in a xml-file
+     * @brief Static auxiliary function adds a game to the <Games> tag in a xml-file.
      *
      * @param game results of the game to be added
      * @param nGames pointer to the <Games> tag
@@ -99,7 +99,7 @@ private:
     static void AddGameToXMLDocument(GameData* game, tinyxml2::XMLElement* nGames, tinyxml2::XMLDocument* file);
 
     /*!
-     * @brief Static auxiliary function adds a player to the <Players> tag in a xml-file
+     * @brief Static auxiliary function adds a player to the <Players> tag in a xml-file.
      *
      * @param player player data
      * @param nPlayers pointer to the <Players> tag
@@ -108,12 +108,12 @@ private:
     static void AddPlayerToXMLDocument(PlayerData* player, tinyxml2::XMLElement* nPlayers, tinyxml2::XMLDocument* file);
 
     /*!
-     * @brief LinkedList containing all game results
+     * @brief LinkedList containing all game results.
      */
     LinkedList<GameData> m_GameList;
 
     /*!
-     * @brief LinkedList containing all players
+     * @brief LinkedList containing all players.
      */
     LinkedList<PlayerData> m_PlayerList;
 

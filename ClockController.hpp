@@ -73,12 +73,12 @@ private:
     void SetClockView(int minutes, int seconds, int millis);
 
     /*!
-     * @brief shared pointer (ownership) to the ClockModel
+     * @brief Shared pointer (ownership) to the ClockModel.
      */
     std::shared_ptr<ClockModel> m_ClockModel;
 
     /*!
-     * @brief shared pointer (ownership) to the ClockView
+     * @brief Shared pointer (ownership) to the ClockView.
      */
     std::shared_ptr<ClockView> m_ClockView;
 

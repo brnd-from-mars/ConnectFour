@@ -68,32 +68,32 @@ private:
     void UpdateView();
 
     /*!
-     * @brief weak pointer to the associated controller
+     * @brief Weak pointer to the associated controller.
      */
     std::weak_ptr<ButtonController> m_ButtonController;
 
     /*!
-     * @brief SFML-RectangleShape: Button outline and clickable area
+     * @brief SFML-RectangleShape: Button outline and clickable area.
      */
     sf::RectangleShape m_ButtonField;
 
     /*!
-     * @brief SFML-Text: Text displayed on the button
+     * @brief SFML-Text: Text displayed on the button.
      */
     sf::Text m_TextShape;
 
     /*!
-     * @brief SFML-Font: Standard
+     * @brief SFML-Font: Font to be used for the text inside the button.
      */
     sf::Font m_Font;
 
     /*!
-     * @brief default color for the outline
+     * @brief Default color for the outline and text inside the button.
      */
     sf::Color m_DefaultColor;
 
     /*!
-     * @brief color of the outline while the button is pressed
+     * @brief Color for the outline and text inside the button to be used while the button is pressed.
      */
     sf::Color m_HighlightColor;
 

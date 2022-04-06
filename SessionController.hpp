@@ -109,7 +109,7 @@ public:
 private:
 
     /*!
-     * @brief Initiated the m_Columns x m_Rows GridFieldController vector m_Grid.
+     * @brief Initiates the m_Columns x m_Rows GridFieldController vector m_Grid.
      */
     void InitGrid();
 
@@ -198,47 +198,47 @@ private:
     int GetPlayerAt(int column, int row) const;
 
     /*!
-     * @brief Shared pointer (ownership) to associated SessionModel
+     * @brief Shared pointer (ownership) to associated SessionModel.
      */
     std::shared_ptr<SessionModel> m_SessionModel;
 
     /*!
-     * @brief Weak pointer to this. Use of weak pointer avoids reference cycle
+     * @brief Weak pointer to this. Use of weak pointer avoids reference cycle.
      */
     std::weak_ptr<SessionController> m_SessionController;
 
     /*!
-     * @brief Weak pointer to parent GameController
+     * @brief Weak pointer to parent GameController.
      */
     std::weak_ptr<GameController> m_Game;
 
     /*!
-     * @brief Shared pointer (ownership) to all grid fields in a 2D vector [m_Columns x m_Rows]
+     * @brief Shared pointer (ownership) to all grid fields in a 2D vector [m_Columns x m_Rows].
      */
     std::vector<std::vector<std::shared_ptr<GridFieldController>>> m_Grid;
 
     /*!
-     * @brief Shared pointer (ownership) to ButtonController for a game termination
+     * @brief Shared pointer (ownership) to ButtonController for a game termination.
      */
     std::shared_ptr<ButtonController> m_GameTerminateButton;
 
     /*!
-     * @brief Shared pointer (ownership) to ButtonController for a game restart
+     * @brief Shared pointer (ownership) to ButtonController for a game restart.
      */
     std::shared_ptr<ButtonController> m_GameRestartButton;
 
     /*!
-     * @brief Array of shared pointers (ownership) to TextFieldController for entering player names
+     * @brief Array of shared pointers (ownership) to TextFieldController for entering player names.
      */
     std::shared_ptr<TextFieldController> m_NameTextFields[2];
 
     /*!
-     * @brief Shared pointer (ownership) to TextView for small "vs." text between names
+     * @brief Shared pointer (ownership) to TextView for small "vs." text between names.
      */
     std::shared_ptr<TextView> m_VSTextView;
 
     /*!
-     * @brief Shared pointer (ownership) to TextView for showing the player name associated with status prompt
+     * @brief Shared pointer (ownership) to TextView for showing the player name associated with status prompt.
      */
     std::shared_ptr<TextView> m_StatusNameText;
 
@@ -248,18 +248,18 @@ private:
     std::shared_ptr<TextView> m_StatusMessageText;
 
     /*!
-     * @brief Array of shared pointer (ownership) to ButtonController for entering color choice
+     * @brief Array of shared pointers (ownership) to ButtonController for entering color choice.
      */
     std::shared_ptr<ButtonController> m_ColorPickButtons[2];
 
     /*!
-     * @brief Shared pointer (ownership) to ArrowView for pointing to text field of the current player
+     * @brief Shared pointer (ownership) to ArrowView for pointing to text field of the current player.
      */
     std::shared_ptr<ArrowView> m_CurrentPlayerArrow;
 
     /*!
      * @brief Shared pointer (ownership) to ClockController for showing the current inGame time or total time after
-     * game ended
+     * game ended.
      */
     std::shared_ptr<ClockController> m_Clock;
 };

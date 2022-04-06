@@ -22,7 +22,7 @@ class ChipModel : public BaseModel
 public:
 
     /*!
-     * @brief Constructor constructs the ChipModel for the given player
+     * @brief Constructor constructs the ChipModel for the given player.
      *
      * @param player 0 (red), 1 (blue)
      */
@@ -37,24 +37,24 @@ public:
 private:
 
     /*!
-     * @brief Enable / disable highlight of the chip
+     * @brief Enable / disable highlight of the chip.
      *
      * @param highlight enable highlight?
      */
     void SetHighlight(bool highlight);
 
     /*!
-     * @brief weak pointer to the associated controller
+     * @brief weak pointer to the associated controller.
      */
     std::weak_ptr<ChipController> m_ChipController;
 
     /*!
-     * @brief 0 (red), 1 (blue)
+     * @brief 0 (red), 1 (blue).
      */
     int m_Player;
 
     /*!
-     * @brief highlight enabled?
+     * @brief Highlight enabled?
      */
     bool m_Highlighted = false;
 

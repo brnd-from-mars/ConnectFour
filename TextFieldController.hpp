@@ -41,7 +41,7 @@ public:
                                                               const std::string& placeholder, sf::Color highlightColor);
 
     /*!
-     * @brief Constructor creates associated TextFieldModel and TextFieldView
+     * @brief Constructor creates associated TextFieldModel and TextFieldView.
      *
      * @param x x-coordinate on the screen
      * @param y y-coordinate on the screen
@@ -57,7 +57,7 @@ public:
     void Update() override;
 
     /*!
-     * @brief Registers a given function pointer as the callback for a enter key press event
+     * @brief Registers a given function pointer as the callback for a enter key press event.
      *
      * @param callback void() function pointer to the event listener
      */
@@ -78,7 +78,7 @@ public:
     void SetText(const std::string& text);
 
     /*!
-     * @brief Gets the currently entered text
+     * @brief Gets the currently entered text.
      *
      * @return entered text string
      */
@@ -108,17 +108,17 @@ private:
     void UpdateView();
 
     /*!
-     * shared pointer (ownership) to the TextFieldModel
+     * Shared pointer (ownership) to the TextFieldModel.
      */
     std::shared_ptr<TextFieldModel> m_TextFieldModel;
 
     /*!
-     * shared pointer (ownership) to the TextFieldView
+     * Shared pointer (ownership) to the TextFieldView.
      */
     std::shared_ptr<TextFieldView> m_TextFieldView;
 
     /*!
-     * @brief function pointer for the enter key press event callback
+     * @brief Function pointer for the enter key press event callback.
      */
     std::optional<std::function<void()>> m_EnterKeyPressCallback = std::nullopt;
 

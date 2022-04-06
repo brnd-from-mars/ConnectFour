@@ -61,7 +61,7 @@ public:
     void SetChip(int player);
 
     /*!
-     * @brief Enable / disable highlight of the field and its contained chip
+     * @brief Enable / disable highlight of the field and its contained chip.
      *
      * @param highlight enable highlight?
      */
@@ -82,14 +82,14 @@ public:
     int GetPlayer() const;
 
     /*!
-     * @brief Returns column of the field
+     * @brief Returns column of the field.
      *
      * @return column
      */
     int GetColumn() const;
 
     /*!
-     * @brief Returns row of the field
+     * @brief Returns row of the field.
      *
      * @return row
      */
@@ -104,22 +104,22 @@ private:
     void HandleClick();
 
     /*!
-     * @brief shared pointer (ownership) to associated GridFieldModel
+     * @brief Shared pointer (ownership) to associated GridFieldModel.
      */
     std::shared_ptr<GridFieldModel> m_GridFieldModel;
 
     /*!
-     * @brief shared pointer (ownership) to associated GridFieldView
+     * @brief Shared pointer (ownership) to associated GridFieldView.
      */
     std::shared_ptr<GridFieldView> m_GridFieldView;
 
     /*!
-     * weak pointer to the parent SessionController in the MVC-tree
+     * Weak pointer to the parent SessionController in the MVC-tree.
      */
     std::weak_ptr<SessionController> m_Session;
 
     /*!
-     * shared pointer (ownership) to the (maybe) contained ChipController
+     * Shared pointer (ownership) to the (maybe) contained ChipController.
      */
     std::shared_ptr<ChipController> m_Chip;
 

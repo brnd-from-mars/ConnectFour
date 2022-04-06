@@ -73,32 +73,32 @@ public:
 private:
 
     /*!
-     * @brief Shared pointer (ownership) to associated GameModel
+     * @brief Shared pointer (ownership) to associated GameModel.
      */
     std::shared_ptr<GameModel> m_GameModel;
 
     /*!
-     * @brief Weak pointer to this. Use of weak pointer avoids reference cycle
+     * @brief Weak pointer to this. Use of weak pointer avoids reference cycle.
      */
     std::weak_ptr<GameController> m_GameController;
 
     /*!
-     * @brief Shared pointer (ownership) to current SessionController
+     * @brief Shared pointer (ownership) to current SessionController.
      */
     std::shared_ptr<SessionController> m_Session;
 
     /*!
-     * @brief Shared pointer (ownership) to ScoreBoardController
+     * @brief Shared pointer (ownership) to ScoreBoardController.
      */
     std::shared_ptr<ScoreBoardController> m_ScoreBoard;
 
     /*!
-     * @brief Shared pointer (ownership) to TextView to output headline ("Connect Four") in cyan
+     * @brief Shared pointer (ownership) to TextView to output headline ("Connect Four") in cyan.
      */
     std::shared_ptr<TextView> m_HeadlineCyan;
 
     /*!
-     * @brief Shared pointer (ownership) to TextView to output headline ("Connect Four") in orange
+     * @brief Shared pointer (ownership) to TextView to output headline ("Connect Four") in orange.
      */
     std::shared_ptr<TextView> m_HeadlineOrange;
 

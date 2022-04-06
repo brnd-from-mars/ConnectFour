@@ -42,22 +42,23 @@ private:
 
     /*!
      * @brief Returns the totals seconds to this point in time or when the clock was stopped.
+     *
      * @return total seconds
      */
     int GetTotalSeconds() const;
 
     /*!
-     * @brief Weak pointer to parent ClockController
+     * @brief Weak pointer to parent ClockController.
      */
     std::weak_ptr<ClockController> m_ClockController;
 
     /*!
-     * @brief Point in time when this class was constructed
+     * @brief Point in time when the instance was constructed.
      */
     std::chrono::time_point<std::chrono::system_clock> m_StartTime;
 
     /*!
-     * @brief Point in time when Stop was called
+     * @brief Point in time when Stop was called.
      */
     std::chrono::time_point<std::chrono::system_clock> m_EndTime;
 

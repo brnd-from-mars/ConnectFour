@@ -22,7 +22,7 @@ public:
     virtual void Draw() = 0;
 
     /*!
-     * @brief Returns the layer of the view
+     * @brief Returns the layer of the view.
      *
      * @return layer of the view
      */
@@ -35,8 +35,8 @@ public:
 protected:
 
     /*!
-     * @brief The layer will be used by the AppDelegate to sort the views (0: background; higher number: foreground). It
-     * is necessary that the layer shall be set by the derived class BEFORE the view gets registered to the AppDelegate.
+     * @brief Layer will be used by the AppDelegate to sort the views (0: background; higher number: foreground). It is
+     * necessary that the layer shall be set by the derived class BEFORE the view gets registered to the AppDelegate.
      */
     int m_Layer = 0;
 

@@ -70,7 +70,7 @@ public:
     SessionModel(const SessionModel& oldSessionModel);
 
     /*!
-     * @brief No-op
+     * @brief No-op.
      */
     void Update() override;
 
@@ -184,47 +184,47 @@ private:
     PlayerState CheckFieldFull() const;
 
     /*!
-     * @brief weak pointer to the associated controller
+     * @brief Weak pointer to the associated controller.
      */
     std::weak_ptr<SessionController> m_SessionController;
 
     /*!
-     * @brief number of columns in the ConnectFour grid
+     * @brief Number of columns in the ConnectFour grid.
      */
     int m_Columns;
 
     /*!
-     * @brief number of rows in the ConnectFour grid
+     * @brief Number of rows in the ConnectFour grid.
      */
     int m_Rows;
 
     /*!
-     * @brief current state of the SessionModel state machine
+     * @brief Current state of the SessionModel state machine.
      */
     SessionState m_State = SessionState::nameEnter;
 
     /*!
-     * @brief  current Player. Set to Player 1 by default
+     * @brief Current Player. Set to Player 1 by default.
      */
     int m_CurrentPlayer = 1;
 
     /*!
-     * @brief array that contains number of moves that each, player1 and player2, made
+     * @brief Array that contains number of moves that each player made.
      */
     int m_Moves[2] = {0, 0};
 
     /*!
-     * @brief contains randomly chosen player INDEX who may choose his/her color (0 or 1)
+     * @brief Contains randomly chosen player INDEX who may choose his/her color (0 or 1).
      */
     int m_RandomNameForColorPick = 0;
 
     /*!
-     * @brief true if the colors associated with the player names have been changed
+     * @brief True if the colors associated with the player names have been changed.
      */
     bool m_ColorsChanged = false;
 
     /*!
-     * @brief array that contains x-y-coordinates of the 4 chips that lead to the victory
+     * @brief Array that contains x-y-coordinates of the 4 chips that lead to the victory.
      */
     sf::Vector2i m_WinningChips[4];
 

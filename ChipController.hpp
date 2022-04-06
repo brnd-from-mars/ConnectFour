@@ -27,7 +27,7 @@ public:
 
     /*!
      * @brief Static factory function creates a new chip for the specified player at the given coordinates and sets
-     * references between the MVC elements
+     * references between the MVC elements.
      *
      * @param player 0 (red), 1 (blue)
      * @param x x-coordinate on the screen
@@ -37,7 +37,7 @@ public:
     static std::shared_ptr<ChipController> MakeChip(int player, float x, float y);
 
     /*!
-     * @brief Constructor creates associated ChipModel and ChipView
+     * @brief Constructor creates associated ChipModel and ChipView.
      *
      * @param player 0 (red), 1 (blue)
      * @param x x-coordinate on the screen
@@ -51,7 +51,7 @@ public:
     void Update() override;
 
     /*!
-     * @brief Enable / disable highlight of the chip
+     * @brief Enable / disable highlight of the chip.
      *
      * @param highlight enable highlight?
      */
@@ -68,17 +68,17 @@ public:
 private:
 
     /*!
-     * @brief Push highlight setting to the view
+     * @brief Push highlight setting to the view.
      */
     void UpdateView();
 
     /*!
-     * @brief shared pointer (ownership) to associated ChipModel
+     * @brief Shared pointer (ownership) to associated ChipModel.
      */
     std::shared_ptr<ChipModel> m_ChipModel;
 
     /*!
-     * @brief shared pointer (ownership) to associated ChipView
+     * @brief Shared pointer (ownership) to associated ChipView.
      */
     std::shared_ptr<ChipView> m_ChipView;
 

@@ -156,37 +156,37 @@ private:
     void UpdateControllers();
 
     /*!
-     * @brief Static pointer to AppDelegate singleton instance
+     * @brief Static pointer to AppDelegate singleton instance.
      */
     static AppDelegate* m_Instance;
 
     /*!
-     * @brief Shared pointer to associated SFML RenderWindow
+     * @brief Shared pointer to associated SFML RenderWindow.
      */
     std::shared_ptr<sf::RenderWindow> m_Window;
 
     /*!
-     * @brief Background color for SFML RenderWindow
+     * @brief Background color for SFML RenderWindow.
      */
     sf::Color m_BackgroundColor = sf::Color(0, 0, 0);
 
     /*!
-     * @brief Application framerate
+     * @brief Application framerate.
      */
     int m_FrameRate = 60;
 
     /*!
-     * @brief List of weak pointers to all registered models
+     * @brief List of weak pointers to all registered models.
      */
     std::list<std::weak_ptr<BaseModel>> m_ModelContainer;
 
     /*!
-     * @brief List of weak pointers to all registered views
+     * @brief List of weak pointers to all registered views.
      */
     std::list<std::weak_ptr<BaseView>> m_ViewContainer;
 
     /*!
-     * @brief List of weak pointers to all registered controllers
+     * @brief List of weak pointers to all registered controllers.
      */
     std::list<std::weak_ptr<BaseController>> m_ControllerContainer;
 

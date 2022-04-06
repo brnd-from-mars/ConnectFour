@@ -13,7 +13,7 @@ class TextFieldController;
 
 
 /*!
- * @brief ChipModel represents data associated with a text field
+ * @brief ChipModel represents data associated with a text field.
  */
 class TextFieldModel : public BaseModel
 {
@@ -31,19 +31,19 @@ public:
 private:
 
     /*!
-     * @brief Adds a character to the stored string as long as it is a printable ascii-character
+     * @brief Adds a character to the stored string as long as it is a printable ascii-character.
      *
      * @param character ascii character
      */
     void AddCharacter(char character);
 
     /*!
-     * @brief Deletes the last character of the stored string as long as it is not empty already
+     * @brief Deletes the last character of the stored string as long as it is not empty already.
      */
     void DeleteCharacter();
 
     /*!
-     * @brief string that represents the entered text
+     * @brief String that represents the entered text.
      */
     std::string m_Text;
 

@@ -80,12 +80,12 @@ public:
 private:
 
     /*!
-     * @brief SFML-Text: graphical representation of the text that will be displayed
+     * @brief SFML-Text: Graphical representation of the text that will be displayed.
      */
     sf::Text m_TextShape;
 
     /*!
-     * @brief SFML-Font: font in which the text will be displayed
+     * @brief SFML-Font: Font in which the text will be displayed.
      */
     sf::Font m_Font;
 
