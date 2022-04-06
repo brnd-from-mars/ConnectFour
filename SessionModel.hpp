@@ -15,6 +15,9 @@
 class SessionController;
 
 
+/*!
+ * @brief SessionState names the states that the SessionModel can be in.
+ */
 enum class SessionState
 {
     nameEnter,
@@ -26,6 +29,10 @@ enum class SessionState
 };
 
 
+/*!
+ * @brief PlayerState identifies either which chip is positioned on a field or if a win by a player / a tie  has
+ * occurred.
+ */
 enum class PlayerState
 {
     none = 0,
