@@ -70,6 +70,7 @@ public:
      */
     void AddElement(T element)
     {
+        //no first element exiting -> create new first element
         if (m_FirstElement == nullptr)
         {
             m_FirstElement = new LinkedListComponent<T>;
@@ -79,18 +80,20 @@ public:
 
         LinkedListComponent<T>* current = m_FirstElement;
 
+        //iterating through whole list to last element
         while (current->next != nullptr)
         {
             current = current->next;
         }
-
+        //create new list element
+        //writing given data into new element 
         current->next = new LinkedListComponent<T>;
         current->next->data = element;
         current->next->previous = current;
     }
 
     /*!
-     * @brief Iterates through the linked list and executes the given given lambda-function for each element in the
+     * @brief Iterates through the linked list and executes the given lambda-function for each element in the
      * linked list.
      *
      * @param function lambda-function that will be executed with every element of the linked list
@@ -99,6 +102,8 @@ public:
     {
         LinkedListComponent<T>* current = m_FirstElement;
 
+        //iterating though whole list and 
+        //executing given lamda-function for each element
         while (current != nullptr)
         {
             function(&current->data);
@@ -118,10 +123,13 @@ public:
     {
         LinkedListComponent<T>* current = m_FirstElement;
 
+        //iterating through whole list
         while (current != nullptr)
         {
+            //checking if given filter-function for data of current element return true
             if (filter(&current->data))
             {
+                //return data of element which satisfies searching criteria
                 return &current->data;
             }
             current = current->next;
@@ -143,13 +151,19 @@ public:
 
         bool changed = true;
 
+        //repeat as long as no change of elements happens while going through list
+        //no change means list is fully sorted
         while (changed)
         {
             changed = false;
             current = m_FirstElement;
+
+            //iterating through whole list 
             while (current != nullptr && current->next != nullptr)
             {
                 next = current->next;
+                //changing current and following element if sorting-value of following element is 
+                //smaller than current one
                 if (getSortValue(&current->data) > getSortValue(&next->data))
                 {
                     T buffer = current->data;
@@ -175,10 +189,13 @@ public:
     {
         LinkedListComponent<T>* current = m_FirstElement;
 
+        //index >= zero -> counting from start of list
         if (index >= 0)
         {
+            //going through list to given index 
             for (int i = 0; i < index; ++i)
             {
+                //if element at this index exists: return pointer at data-element
                 if (current != nullptr)
                 {
                     current = current->next;
@@ -189,19 +206,24 @@ public:
                 }
             }
         }
+        //index smaller than zero -> counting from end of list
         else
         {
+            //checking if a first list-element exists 
             if (current == nullptr)
             {
                 return nullptr;
             }
 
-            while (current->next != nullptr) // set current pointer to the last object of the list
+            // set current pointer to the last object of the list
+            while (current->next != nullptr) 
             {
                 current = current->next;
             }
-            for (int i = -1; i > index; --i) // counting to index in opposite direction
+            //going through list to given index in opposite direction
+            for (int i = -1; i > index; --i) 
             {
+                //if element at this index exists: return pointer at data-element
                 if (current != nullptr)
                 {
                     current = current->previous;
