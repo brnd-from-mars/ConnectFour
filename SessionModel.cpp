@@ -208,6 +208,7 @@ PlayerState SessionModel::GetWinState(int column, int row)
 {
     PlayerState winState;
 
+    // checking current winstate in horizontal, vertical and diagonal direction
     winState = CheckHorizontal(column, row);
     if (winState != PlayerState::none)
     {
@@ -232,17 +233,23 @@ PlayerState SessionModel::GetWinState(int column, int row)
         return winState;
     }
 
+    //if none of the called functions return a win or a tie
     return PlayerState::none;
 
 }
 
 
 void SessionModel::CheckChips(int column, int row, PlayerState& prev, int& count)
-{
+
+{   //property of chip in current gridfield
     PlayerState current = GetPlayerAt(column, row); 
 
+    //checking, if gridfield is filled with chip
     if ((current == PlayerState::player1) || (current == PlayerState::player2))
     {
+        //checking if current chip equals previous chip. 
+        //If yes: increase counter of consecutive equal chips
+        //If no: reset counter of conecutive chips to 1
         if (current == prev)
         {
             ++count;
@@ -251,99 +258,142 @@ void SessionModel::CheckChips(int column, int row, PlayerState& prev, int& count
         {
             count = 1;
         }
-
-        m_WinningChips[count - 1].x = column;   //add location of current Chip to a Vector 
-        m_WinningChips[count - 1].y = row;      //vector contains coordinates of the 4 winnning chips
+        //add location of current Chip to a Vector to display winning chips in GUI later
+        //vector contains coordinates of the 4 winnning chips
+        m_WinningChips[count - 1].x = column;   
+        m_WinningChips[count - 1].y = row;      
     }
-    else
+    else 
     {
+        //if current gridfild is empty, reset counter of consecutive similar chips to 0
         count = 0;
     }
 
-    prev = current;                             //going to the next Field: current Chip is now the previous
+    //going to the next Field: current Chip is now the previous
+    prev = current;                             
 }
 
 
 PlayerState SessionModel::CheckHorizontal(int column, int row) {
 
-    int count = 0;                              //reset control variables                                            
-    PlayerState prev = PlayerState::none;       //
+    //counter of conecutive similar chips; set to 0 by default
+    int count = 0;      
+    //property of chip in current gridfield; set to none (no chip in gridfield) by default
+    PlayerState prev = PlayerState::none;       
 
+    //going in a horizontal line through location of the last added chip
     for (int x = column - 3; x <= column + 3; ++x)
     {
+        // checks for current location, if previous chip equals current chips
+        // and counts consecutive similar chips in a row
         CheckChips(x, row, prev, count);
+
+        //if 4 similar chips in a row -> a player won
+        //return the winning player
         if (count == 4)
         {
             return prev;
         }
     }
-
+    //no player won
     return PlayerState::none;
 }
 
 
 PlayerState SessionModel::CheckVertical(int column, int row) {
 
+    //counter of conecutive similar chips; set to 0 by default
     int count = 0;
-    PlayerState prev = PlayerState::none; 
+    //property of chip in current gridfield; set to none (no chip in gridfield) by default
+    PlayerState prev = PlayerState::none;
 
+    //going in a vertical line through location of the last added chip
     for (int y = row - 3; y <= row; ++y)
     {
+        // checks for current location, if previous chip equals current chips
+        // and counts consecutive similar chips in a row
         CheckChips(column, y, prev, count);
+
+        // checks for current location, if previous chip equals current chips
+        // and counts consecutive similar chips in a row
         if (count == 4)
         {
             return prev;
         }
     }
 
+    //no player won 
     return PlayerState::none;
 }
 
 
 PlayerState SessionModel::CheckDiagonal(int column, int row)
 {
-    int count = 0;                          //reset control variables
-    PlayerState prev = PlayerState::none;   // 
+    //counter of conecutive similar chips; set to 0 by default
+    int count = 0;
+    //property of chip in current gridfield; set to none (no chip in gridfield) by default
+    PlayerState prev = PlayerState::none;
 
+    //going in a diagonal line through location of last added chip
+    //staring in the left bottom corner going to right top corner
 	int y = row - 3;
 	for (int x = column - 3; x <= column + 3; ++x)
 	{
+        // checks for current location, if previous chip equals current chips
+        // and counts consecutive similar chips in a row
 		CheckChips(x, y, prev, count);
+
+        // checks for current location, if previous chip equals current chips
+        // and counts consecutive similar chips in a row
         if (count == 4)
         {
             return prev;
         }
+        //go one row up
 		++y;
 	}
 
+    //reset control variables
+	count = 0;                               
+	prev = PlayerState::none;                
 
-	count = 0;                               //reset control variables
-	prev = PlayerState::none;                //
-
+    //going in a diagonal line through location of last added chip
+    //staring in the left top corner going to bottom right corner
 	y = row + 3;
 	for (int x = column - 3; x <= column + 3; ++x)
 	{
+        // checks for current location, if previous chip equals current chips
+        // and counts consecutive similar chips in a row
 		CheckChips(x, y, prev, count);
+
+        // checks for current location, if previous chip equals current chips
+        // and counts consecutive similar chips in a row
         if (count == 4)
         {
             return prev;
         }
+        //going one row down
         --y;
 	}
 
+    //no player won
 	return PlayerState::none;
 }
 
 
 PlayerState SessionModel::CheckFieldFull() const
 {
+    //iterating through top row of gridfield from left to right
 	for (int x = 0; x < m_Columns; ++x)
 	{
+        //checking if current field is empty
 		if (GetPlayerAt(x, m_Rows - 1) == PlayerState::none)
 		{
+            //if one of the top row gridfield is empty, there is no tie
             return PlayerState::none;
         }
 	}
-
+    //top row of gridfield is fully filled with chips -> whole Field must be full
+    //-> tie
 	return PlayerState::tie;
 }
