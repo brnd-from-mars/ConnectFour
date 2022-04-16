@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.17)
-project(FourWins)
+project(ConnectFour)
 
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(SFML 2.5 COMPONENTS graphics window REQUIRED)
 
-add_executable(FourWins main.cpp AppDelegate.cpp
+add_executable(ConnectFour main.cpp AppDelegate.cpp
         GameModel.cpp GameController.cpp
         SessionModel.cpp SessionController.cpp
         ScoreBoardModel.cpp ScoreBoardView.cpp ScoreBoardController.cpp
@@ -17,4 +17,4 @@ add_executable(FourWins main.cpp AppDelegate.cpp
         TextView.cpp
         ArrowView.cpp
         vendor/tinyxml2/tinyxml2.cpp)
-target_link_libraries(FourWins sfml-graphics sfml-window)
+target_link_libraries(ConnectFour sfml-graphics sfml-window)
